@@ -533,6 +533,8 @@
       // enable click-to-zoom for images
       enableImageZoom('ndviImage');
       enableImageZoom('ndwiImage');
+      // preload 3D images for faster switching
+      preload3DImages();
     }
 
     function backToAgriculture() {
@@ -619,11 +621,31 @@
       handle.style.left = p + '%';
     }
 
+    // Preload 3D images for faster switching
+    let ndvi3DLoaded = false;
+    let ndwi3DLoaded = false;
+    function preload3DImages() {
+      if (!ndvi3DLoaded) {
+        const ndvi3D = new Image();
+        ndvi3D.src = 'https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDVI_1D3D.png';
+        ndvi3D.onload = () => { ndvi3DLoaded = true; };
+      }
+      if (!ndwi3DLoaded) {
+        const ndwi3D = new Image();
+        ndwi3D.src = 'https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDWI_3DV.png';
+        ndwi3D.onload = () => { ndwi3DLoaded = true; };
+      }
+    }
+
     // NDVI view toggle (2D <-> 3D)
     let ndviView3D = false;
     function toggleNDVIView() {
       const img = document.getElementById('ndviImage');
       const btn = document.querySelector('#ndviControls button');
+      
+      // Show loading state
+      btn.textContent = 'Loading...';
+      btn.disabled = true;
       
       if (ndviView3D) {
         // Switch to 2D
@@ -631,11 +653,23 @@
         img.alt = 'NDVI Map';
         btn.textContent = 'Next: 3D View';
         ndviView3D = false;
+        btn.disabled = false;
       } else {
         // Switch to 3D
         img.src = 'https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDVI_1D3D.png';
         img.alt = 'NDVI 3D Visualization';
-        btn.textContent = 'Back: 2D View';
+        
+        img.onload = () => {
+          btn.textContent = 'Back: 2D View';
+          btn.disabled = false;
+        };
+        
+        img.onerror = () => {
+          btn.textContent = 'Next: 3D View';
+          btn.disabled = false;
+          alert('Failed to load 3D visualization');
+        };
+        
         ndviView3D = true;
       }
     }
@@ -646,17 +680,33 @@
       const img = document.getElementById('ndwiImage');
       const btn = document.querySelector('#ndwiControls button');
       
+      // Show loading state
+      btn.textContent = 'Loading...';
+      btn.disabled = true;
+      
       if (ndwiView3D) {
         // Switch to 2D
         img.src = 'https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDWI._NEW1png.png';
         img.alt = 'NDWI Map';
         btn.textContent = 'Next: 3D View';
         ndwiView3D = false;
+        btn.disabled = false;
       } else {
         // Switch to 3D
         img.src = 'https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDWI_3DV.png';
         img.alt = 'NDWI 3D Visualization';
-        btn.textContent = 'Back: 2D View';
+        
+        img.onload = () => {
+          btn.textContent = 'Back: 2D View';
+          btn.disabled = false;
+        };
+        
+        img.onerror = () => {
+          btn.textContent = 'Next: 3D View';
+          btn.disabled = false;
+          alert('Failed to load 3D visualization');
+        };
+        
         ndwiView3D = true;
       }
     }
