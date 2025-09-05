@@ -1058,16 +1058,20 @@
       followUpNeeded: false
     };
 
-    // Advanced NLP patterns and intent recognition
+    // Universal NLP patterns and intent recognition
     const intentPatterns = {
-      greeting: ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening'],
-      inquiry: ['what', 'how', 'when', 'where', 'why', 'can you', 'do you', 'is it possible'],
-      problem: ['problem', 'issue', 'challenge', 'struggling', 'difficulty', 'trouble', 'help'],
-      comparison: ['compare', 'difference', 'better', 'best', 'versus', 'vs', 'which'],
-      pricing: ['price', 'cost', 'budget', 'expensive', 'cheap', 'affordable', 'quote'],
-      timeline: ['when', 'how long', 'timeline', 'schedule', 'deadline', 'urgent'],
-      technical: ['technical', 'specs', 'specifications', 'features', 'capabilities', 'integration'],
-      contact: ['contact', 'speak', 'meeting', 'call', 'email', 'representative', 'sales']
+      greeting: ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 'greetings', 'howdy'],
+      inquiry: ['what', 'how', 'when', 'where', 'why', 'can you', 'do you', 'is it possible', 'tell me', 'explain', 'describe', 'show me'],
+      problem: ['problem', 'issue', 'challenge', 'struggling', 'difficulty', 'trouble', 'help', 'stuck', 'failing', 'broken', 'not working'],
+      comparison: ['compare', 'difference', 'better', 'best', 'versus', 'vs', 'which', 'prefer', 'choose', 'recommend'],
+      pricing: ['price', 'cost', 'budget', 'expensive', 'cheap', 'affordable', 'quote', 'pricing', 'fee', 'charge', 'investment'],
+      timeline: ['when', 'how long', 'timeline', 'schedule', 'deadline', 'urgent', 'asap', 'quickly', 'fast', 'immediate'],
+      technical: ['technical', 'specs', 'specifications', 'features', 'capabilities', 'integration', 'api', 'sdk', 'documentation'],
+      contact: ['contact', 'speak', 'meeting', 'call', 'email', 'representative', 'sales', 'demo', 'consultation'],
+      capability: ['can', 'able', 'capable', 'support', 'handle', 'process', 'analyze', 'monitor', 'track'],
+      requirement: ['need', 'require', 'want', 'looking for', 'seeking', 'searching', 'find'],
+      solution: ['solution', 'solve', 'fix', 'resolve', 'address', 'tackle', 'handle'],
+      information: ['info', 'information', 'details', 'about', 'learn', 'know', 'understand']
     };
 
     // Emotional intelligence patterns
@@ -1079,33 +1083,99 @@
       skeptical: ['skeptical', 'doubt', 'not sure', 'hesitant', 'concerned', 'worried']
     };
 
-    // Advanced entity extraction
+    // Universal entity extraction with comprehensive coverage
     function extractEntities(message) {
       const entities = [];
       const lowerMessage = message.toLowerCase();
       
-      // Industry entities
-      const industries = ['agriculture', 'farming', 'defense', 'military', 'security', 'urban', 'city', 'environment', 'transportation', 'logistics', 'energy', 'utilities'];
-      industries.forEach(industry => {
-        if (lowerMessage.includes(industry)) entities.push({type: 'industry', value: industry});
+      // Industry entities (expanded)
+      const industries = {
+        'agriculture': ['agriculture', 'farming', 'crop', 'farm', 'agricultural', 'farming', 'crops', 'livestock', 'irrigation', 'harvest'],
+        'defense': ['defense', 'military', 'security', 'tactical', 'surveillance', 'intelligence', 'combat', 'strategic', 'military', 'armed forces'],
+        'urban': ['urban', 'city', 'municipal', 'smart city', 'infrastructure', 'planning', 'development', 'metropolitan', 'civic'],
+        'environment': ['environment', 'environmental', 'climate', 'conservation', 'sustainability', 'ecology', 'green', 'carbon', 'emission'],
+        'transportation': ['transportation', 'logistics', 'fleet', 'shipping', 'delivery', 'supply chain', 'traffic', 'road', 'highway', 'route'],
+        'energy': ['energy', 'utilities', 'power', 'electricity', 'grid', 'renewable', 'solar', 'wind', 'oil', 'gas', 'utility']
+      };
+      
+      Object.entries(industries).forEach(([industry, keywords]) => {
+        keywords.forEach(keyword => {
+          if (lowerMessage.includes(keyword)) {
+            entities.push({type: 'industry', value: industry, keyword: keyword});
+          }
+        });
       });
       
-      // Technology entities
-      const technologies = ['satellite', 'gps', 'ai', 'machine learning', 'ndvi', 'ndwi', 'geotrace', 'drone', 'sensor'];
-      technologies.forEach(tech => {
-        if (lowerMessage.includes(tech)) entities.push({type: 'technology', value: tech});
+      // Technology entities (expanded)
+      const technologies = {
+        'satellite': ['satellite', 'satellite imagery', 'remote sensing', 'earth observation', 'orbital'],
+        'gps': ['gps', 'global positioning', 'location', 'coordinates', 'geolocation', 'positioning'],
+        'ai': ['ai', 'artificial intelligence', 'machine learning', 'ml', 'neural network', 'algorithm', 'intelligent'],
+        'ndvi': ['ndvi', 'vegetation index', 'crop health', 'plant health', 'vegetation analysis'],
+        'ndwi': ['ndwi', 'water index', 'moisture', 'water content', 'hydration'],
+        'geotrace': ['geotrace', 'tracking', 'monitoring', 'real-time', 'tactical'],
+        'drone': ['drone', 'uav', 'unmanned', 'aerial', 'quadcopter'],
+        'sensor': ['sensor', 'detection', 'monitoring', 'measurement', 'data collection'],
+        'gis': ['gis', 'geographic information', 'mapping', 'spatial analysis', 'geospatial'],
+        'bigdata': ['big data', 'analytics', 'data processing', 'insights', 'intelligence']
+      };
+      
+      Object.entries(technologies).forEach(([tech, keywords]) => {
+        keywords.forEach(keyword => {
+          if (lowerMessage.includes(keyword)) {
+            entities.push({type: 'technology', value: tech, keyword: keyword});
+          }
+        });
       });
       
-      // Scale entities
-      const scales = ['small', 'medium', 'large', 'enterprise', 'startup', 'corporation', 'government'];
-      scales.forEach(scale => {
-        if (lowerMessage.includes(scale)) entities.push({type: 'scale', value: scale});
+      // Scale entities (expanded)
+      const scales = {
+        'small': ['small', 'startup', 'individual', 'personal', 'local', 'small-scale'],
+        'medium': ['medium', 'mid-size', 'regional', 'department', 'team'],
+        'large': ['large', 'enterprise', 'corporation', 'company', 'organization', 'institution'],
+        'government': ['government', 'public', 'federal', 'state', 'municipal', 'official', 'agency']
+      };
+      
+      Object.entries(scales).forEach(([scale, keywords]) => {
+        keywords.forEach(keyword => {
+          if (lowerMessage.includes(keyword)) {
+            entities.push({type: 'scale', value: scale, keyword: keyword});
+          }
+        });
       });
       
-      // Location entities (basic)
-      const locations = ['nigeria', 'africa', 'europe', 'america', 'asia', 'local', 'global', 'regional'];
-      locations.forEach(location => {
-        if (lowerMessage.includes(location)) entities.push({type: 'location', value: location});
+      // Location entities (expanded)
+      const locations = {
+        'nigeria': ['nigeria', 'nigerian', 'lagos', 'abuja', 'kano', 'port harcourt'],
+        'africa': ['africa', 'african', 'west africa', 'east africa', 'south africa'],
+        'global': ['global', 'worldwide', 'international', 'universal', 'world'],
+        'regional': ['regional', 'local', 'area', 'zone', 'district', 'province']
+      };
+      
+      Object.entries(locations).forEach(([location, keywords]) => {
+        keywords.forEach(keyword => {
+          if (lowerMessage.includes(keyword)) {
+            entities.push({type: 'location', value: location, keyword: keyword});
+          }
+        });
+      });
+      
+      // Problem entities
+      const problems = {
+        'monitoring': ['monitor', 'track', 'observe', 'watch', 'surveillance', 'oversight'],
+        'analysis': ['analyze', 'analysis', 'examine', 'study', 'evaluate', 'assess'],
+        'optimization': ['optimize', 'improve', 'enhance', 'efficiency', 'performance', 'productivity'],
+        'planning': ['plan', 'planning', 'strategy', 'roadmap', 'blueprint', 'design'],
+        'prediction': ['predict', 'forecast', 'anticipate', 'project', 'estimate', 'prognosis'],
+        'automation': ['automate', 'automatic', 'streamline', 'simplify', 'reduce manual work']
+      };
+      
+      Object.entries(problems).forEach(([problem, keywords]) => {
+        keywords.forEach(keyword => {
+          if (lowerMessage.includes(keyword)) {
+            entities.push({type: 'problem', value: problem, keyword: keyword});
+          }
+        });
       });
       
       return entities;
@@ -1260,53 +1330,274 @@
       return questions;
     }
 
+    // Universal solution scanner - analyzes all sectors and products
+    function scanAllSolutions(message, entities, context) {
+      const lowerMessage = message.toLowerCase();
+      const allSolutions = [];
+      
+      // Comprehensive solution database
+      const solutionDatabase = {
+        // Agriculture Solutions
+        'crop_health': {
+          name: 'Crop Health Assessment',
+          sector: 'agriculture',
+          keywords: ['crop', 'health', 'vegetation', 'ndvi', 'ndwi', 'plant', 'farming', 'agriculture', 'yield', 'harvest'],
+          description: 'Advanced crop health monitoring using NDVI/NDWI analysis with 3D visualization',
+          capabilities: ['Real-time crop monitoring', 'Disease detection', 'Yield prediction', '3D visualization'],
+          problems: ['monitoring', 'analysis', 'prediction']
+        },
+        'precision_farming': {
+          name: 'Precision Farming',
+          sector: 'agriculture',
+          keywords: ['precision', 'farming', 'irrigation', 'fertilizer', 'pesticide', 'zone', 'optimization'],
+          description: 'Zone-specific recommendations for fertilizers, pesticides, and irrigation',
+          capabilities: ['Zone mapping', 'Resource optimization', 'Cost reduction', 'Yield improvement'],
+          problems: ['optimization', 'planning', 'efficiency']
+        },
+        
+        // Defense & Security Solutions
+        'geotrace': {
+          name: 'PF-GEOTRACE',
+          sector: 'defense',
+          keywords: ['geotrace', 'tracking', 'tactical', 'military', 'defense', 'security', 'surveillance', 'gps', 'location'],
+          description: 'Cutting-edge geolocation platform for tactical dominance and mission-critical intelligence',
+          capabilities: ['Real-time GPS precision', 'Dynamic marker systems', 'Strategic buffer zones', 'Satellite imagery'],
+          problems: ['monitoring', 'tracking', 'surveillance', 'planning']
+        },
+        'tactical_surveillance': {
+          name: 'Tactical Surveillance',
+          sector: 'defense',
+          keywords: ['surveillance', 'tactical', 'military', 'security', 'monitoring', 'intelligence', 'threat'],
+          description: 'Advanced surveillance and threat detection systems',
+          capabilities: ['Real-time monitoring', 'Threat detection', 'Intelligence gathering', 'Strategic analysis'],
+          problems: ['monitoring', 'analysis', 'surveillance']
+        },
+        
+        // Urban Planning Solutions
+        'smart_city': {
+          name: 'Smart City Development',
+          sector: 'urban',
+          keywords: ['smart city', 'urban', 'infrastructure', 'planning', 'development', 'municipal', 'city'],
+          description: 'Comprehensive smart city development and infrastructure monitoring',
+          capabilities: ['Infrastructure monitoring', 'Urban planning', 'Traffic optimization', 'Resource management'],
+          problems: ['planning', 'optimization', 'monitoring']
+        },
+        'infrastructure_monitoring': {
+          name: 'Infrastructure Monitoring',
+          sector: 'urban',
+          keywords: ['infrastructure', 'monitoring', 'bridge', 'road', 'building', 'structure', 'maintenance'],
+          description: 'Real-time infrastructure health monitoring and maintenance planning',
+          capabilities: ['Structural analysis', 'Maintenance scheduling', 'Risk assessment', 'Cost optimization'],
+          problems: ['monitoring', 'analysis', 'planning']
+        },
+        
+        // Environmental Solutions
+        'climate_tracking': {
+          name: 'Climate Tracking',
+          sector: 'environment',
+          keywords: ['climate', 'environment', 'carbon', 'emission', 'sustainability', 'green', 'conservation'],
+          description: 'Advanced climate monitoring and environmental impact assessment',
+          capabilities: ['Carbon tracking', 'Emission monitoring', 'Sustainability metrics', 'Environmental impact'],
+          problems: ['monitoring', 'analysis', 'prediction']
+        },
+        'conservation_monitoring': {
+          name: 'Conservation Monitoring',
+          sector: 'environment',
+          keywords: ['conservation', 'wildlife', 'forest', 'biodiversity', 'ecosystem', 'protection'],
+          description: 'Wildlife and ecosystem conservation monitoring systems',
+          capabilities: ['Wildlife tracking', 'Ecosystem analysis', 'Biodiversity assessment', 'Protection planning'],
+          problems: ['monitoring', 'analysis', 'planning']
+        },
+        
+        // Transportation Solutions
+        'fleet_management': {
+          name: 'Fleet Management',
+          sector: 'transportation',
+          keywords: ['fleet', 'transportation', 'logistics', 'shipping', 'delivery', 'vehicle', 'route'],
+          description: 'Comprehensive fleet tracking and logistics optimization',
+          capabilities: ['Real-time tracking', 'Route optimization', 'Fuel efficiency', 'Maintenance scheduling'],
+          problems: ['optimization', 'monitoring', 'planning']
+        },
+        'traffic_optimization': {
+          name: 'Traffic Optimization',
+          sector: 'transportation',
+          keywords: ['traffic', 'road', 'highway', 'congestion', 'optimization', 'route', 'transportation'],
+          description: 'Intelligent traffic flow optimization and congestion management',
+          capabilities: ['Traffic analysis', 'Congestion prediction', 'Route optimization', 'Signal control'],
+          problems: ['optimization', 'analysis', 'prediction']
+        },
+        
+        // Energy Solutions
+        'grid_monitoring': {
+          name: 'Grid Monitoring',
+          sector: 'energy',
+          keywords: ['grid', 'energy', 'power', 'electricity', 'utility', 'renewable', 'solar', 'wind'],
+          description: 'Smart grid monitoring and renewable energy optimization',
+          capabilities: ['Grid analysis', 'Energy optimization', 'Renewable integration', 'Demand forecasting'],
+          problems: ['monitoring', 'optimization', 'prediction']
+        },
+        'renewable_energy': {
+          name: 'Renewable Energy Planning',
+          sector: 'energy',
+          keywords: ['renewable', 'solar', 'wind', 'energy', 'sustainability', 'green', 'clean'],
+          description: 'Renewable energy site assessment and optimization',
+          capabilities: ['Site assessment', 'Energy potential', 'Optimization', 'ROI analysis'],
+          problems: ['planning', 'analysis', 'optimization']
+        }
+      };
+      
+      // Scan all solutions and calculate relevance scores
+      Object.entries(solutionDatabase).forEach(([key, solution]) => {
+        let relevanceScore = 0;
+        let matchedKeywords = [];
+        
+        // Check keyword matches
+        solution.keywords.forEach(keyword => {
+          if (lowerMessage.includes(keyword)) {
+            relevanceScore += 2;
+            matchedKeywords.push(keyword);
+          }
+        });
+        
+        // Check problem matches
+        solution.problems.forEach(problem => {
+          if (lowerMessage.includes(problem)) {
+            relevanceScore += 3;
+            matchedKeywords.push(problem);
+          }
+        });
+        
+        // Check entity matches
+        entities.forEach(entity => {
+          if (entity.type === 'industry' && entity.value === solution.sector) {
+            relevanceScore += 5;
+          }
+          if (entity.type === 'technology' && solution.keywords.includes(entity.value)) {
+            relevanceScore += 3;
+          }
+          if (entity.type === 'problem' && solution.problems.includes(entity.value)) {
+            relevanceScore += 4;
+          }
+        });
+        
+        // Check context matches
+        if (context.userProfile.preferences.includes(solution.sector)) {
+          relevanceScore += 2;
+        }
+        
+        if (relevanceScore > 0) {
+          allSolutions.push({
+            ...solution,
+            key: key,
+            relevanceScore: relevanceScore,
+            matchedKeywords: matchedKeywords
+          });
+        }
+      });
+      
+      // Sort by relevance score
+      return allSolutions.sort((a, b) => b.relevanceScore - a.relevanceScore);
+    }
+
     // Advanced solution recommendation with context
     function generateAdvancedRecommendation(bestMatch, context, entities) {
-      let recommendation = `🎯 **Intelligent Analysis Complete**\n\n`;
+      let recommendation = `🎯 Perfect Match Found!\n\n`;
       
       // Confidence level with explanation
       const confidenceLevel = context.confidence > 0.8 ? 'extremely confident' : 
                              context.confidence > 0.6 ? 'highly confident' : 
                              context.confidence > 0.4 ? 'confident' : 'somewhat confident';
       
-      recommendation += `I'm ${confidenceLevel} that our **${bestMatch.name}** solution is perfect for your needs.\n\n`;
+      recommendation += `I'm ${confidenceLevel} that our ${bestMatch.name} solution is perfect for your needs.\n\n`;
       
       // Context-aware explanation
       if (context.userProfile.experience === 'beginner') {
-        recommendation += `**Perfect for Beginners:** This solution is designed to be user-friendly while providing powerful capabilities.\n\n`;
+        recommendation += `Perfect for Beginners: This solution is designed to be user-friendly while providing powerful capabilities.\n\n`;
       } else if (context.userProfile.experience === 'expert') {
-        recommendation += `**Advanced Capabilities:** This solution offers the sophisticated features and customization options you need.\n\n`;
+        recommendation += `Advanced Capabilities: This solution offers the sophisticated features and customization options you need.\n\n`;
       }
       
       // Industry-specific benefits
       const industryEntity = entities.find(e => e.type === 'industry');
       if (industryEntity) {
-        recommendation += `**${industryEntity.value.charAt(0).toUpperCase() + industryEntity.value.slice(1)} Focus:** This solution is specifically optimized for ${industryEntity.value} applications.\n\n`;
+        recommendation += `${industryEntity.value.charAt(0).toUpperCase() + industryEntity.value.slice(1)} Focus: This solution is specifically optimized for ${industryEntity.value} applications.\n\n`;
       }
       
       // Timeline considerations
       if (context.userProfile.timeline === 'urgent') {
-        recommendation += `**Rapid Deployment:** We can have this solution implemented quickly to meet your urgent timeline.\n\n`;
+        recommendation += `Rapid Deployment: We can have this solution implemented quickly to meet your urgent timeline.\n\n`;
       }
       
       // Budget considerations
       if (context.userProfile.budget) {
-        recommendation += `**Budget Optimized:** This solution provides excellent value within your budget of ${context.userProfile.budget}.\n\n`;
+        recommendation += `Budget Optimized: This solution provides excellent value within your budget of ${context.userProfile.budget}.\n\n`;
       }
       
-      recommendation += `**Why This Solution Fits:**\n${bestMatch.description}\n\n`;
+      recommendation += `Why This Solution Fits:\n${bestMatch.description}\n\n`;
+      
+      recommendation += `Key Capabilities:\n`;
+      bestMatch.capabilities.forEach(capability => {
+        recommendation += `• ${capability}\n`;
+      });
+      recommendation += `\n`;
       
       // Predictive questions
       const predictiveQuestions = generatePredictiveQuestions(context);
       if (predictiveQuestions.length > 0) {
-        recommendation += `**Next Steps:**\n`;
+        recommendation += `Next Steps:\n`;
         predictiveQuestions.forEach(q => recommendation += `• ${q}\n`);
         recommendation += `\n`;
       }
       
-      recommendation += `**Proforce Galaxies Limited Support:**\n• 24/7 technical support\n• Custom implementation guidance\n• Training and onboarding\n• Ongoing optimization\n\nWhat would you like to explore next?`;
+      recommendation += `Proforce Galaxies Limited Support:\n• 24/7 technical support\n• Custom implementation guidance\n• Training and onboarding\n• Ongoing optimization\n\nWhat would you like to explore next?`;
       
       return recommendation;
+    }
+
+    // Universal response generator - handles any question intelligently
+    function generateUniversalResponse(message, entities, context) {
+      const lowerMessage = message.toLowerCase();
+      
+      // Handle general questions about capabilities
+      if (lowerMessage.includes('what can you do') || lowerMessage.includes('what do you do') || lowerMessage.includes('capabilities')) {
+        return `🚀 PF-GEOINT AI Assistant Capabilities\n\nI'm your intelligent geospatial solutions assistant from Proforce Galaxies Limited. Here's what I can do:\n\n🎯 Solution Analysis:\n• Scan all 6 sectors (Agriculture, Defense, Urban, Environment, Transportation, Energy)\n• Analyze 12+ specialized solutions\n• Match solutions to your specific needs\n• Provide detailed capability assessments\n\n🧠 Intelligent Processing:\n• Understand natural language queries\n• Extract entities (industry, technology, problems, scale)\n• Detect emotional context and intent\n• Build user profiles and preferences\n• Provide confidence-scored recommendations\n\n💡 Smart Recommendations:\n• Multi-factor solution matching\n• Context-aware suggestions\n• Predictive follow-up questions\n• Industry-specific optimizations\n• Budget and timeline considerations\n\n🔍 Universal Understanding:\n• Process any question or request\n• Handle technical and non-technical queries\n• Provide comprehensive sector coverage\n• Offer detailed solution comparisons\n\nWhat would you like to explore? I can help with anything from crop monitoring to tactical operations!`;
+      }
+      
+      // Handle questions about sectors
+      if (lowerMessage.includes('sectors') || lowerMessage.includes('industries') || lowerMessage.includes('what sectors')) {
+        return `🌐 PF-GEOINT Sectors & Solutions\n\n🌱 Agriculture & Farming:\n• Crop Health Assessment (NDVI/NDWI analysis)\n• Precision Farming (zone-specific optimization)\n• Yield prediction and cost analysis\n\n🛡️ Defense & Security:\n• PF-GEOTRACE (tactical geolocation platform)\n• Tactical Surveillance systems\n• Intelligence gathering and analysis\n\n🏙️ Urban Planning & Infrastructure:\n• Smart City Development\n• Infrastructure Monitoring\n• Traffic optimization and planning\n\n🌍 Environmental & Conservation:\n• Climate Tracking and monitoring\n• Conservation and wildlife protection\n• Environmental impact assessment\n\n🚛 Transportation & Logistics:\n• Fleet Management and tracking\n• Traffic Optimization\n• Route planning and logistics\n\n⚡ Energy & Utilities:\n• Grid Monitoring and analysis\n• Renewable Energy Planning\n• Energy optimization and forecasting\n\nWhich sector interests you most? I can provide detailed information about any of these areas!`;
+      }
+      
+      // Handle technical questions
+      if (lowerMessage.includes('technical') || lowerMessage.includes('how does it work') || lowerMessage.includes('technology')) {
+        return `🔬 PF-GEOINT Technical Capabilities\n\n🛰️ Satellite Technology:\n• Real-time satellite imagery processing\n• Multi-spectral analysis (NDVI, NDWI, etc.)\n• High-resolution earth observation data\n• Orbital data integration\n\n🤖 AI & Machine Learning:\n• Advanced neural networks for pattern recognition\n• Predictive analytics and forecasting\n• Automated data processing and analysis\n• Intelligent decision support systems\n\n📍 GPS & Geolocation:\n• Real-time GPS precision tracking\n• Dynamic marker systems\n• Strategic buffer zone management\n• Coordinate transformation and analysis\n\n📊 Data Processing:\n• Big data analytics and processing\n• Real-time data streaming\n• Cloud-based data storage and access\n• API integration and customization\n\n🔧 Integration Capabilities:\n• RESTful API access\n• SDK for custom development\n• Third-party system integration\n• Custom dashboard development\n\nWhat specific technical aspect would you like to know more about?`;
+      }
+      
+      // Handle pricing questions
+      if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('budget') || lowerMessage.includes('expensive')) {
+        return `💰 PF-GEOINT Pricing & Investment\n\nInvestment Philosophy:\nWe believe in providing value-driven solutions that deliver measurable ROI. Our pricing is based on:\n• Solution complexity and scope\n• Implementation requirements\n• Support and maintenance needs\n• Customization requirements\n\nPricing Models:\n• Subscription-based: Monthly/annual plans for ongoing services\n• Project-based: One-time implementation and setup\n• Enterprise: Custom solutions for large organizations\n• Government: Specialized pricing for public sector\n\nValue Proposition:\n• 25-40% increase in operational efficiency\n• 30% reduction in resource costs\n• 50% faster decision-making processes\n• 24/7 technical support included\n\nBudget Considerations:\n• Flexible payment options available\n• Scalable solutions that grow with your needs\n• ROI typically achieved within 6-12 months\n• Free consultation and needs assessment\n\nTo provide accurate pricing, I need to understand:\n• Which solutions interest you?\n• What's your organization size?\n• What's your implementation timeline?\n• Do you need custom features?\n\nWould you like a personalized quote? I can connect you with our sales team for detailed pricing!`;
+      }
+      
+      // Handle implementation questions
+      if (lowerMessage.includes('implement') || lowerMessage.includes('setup') || lowerMessage.includes('deploy') || lowerMessage.includes('how long')) {
+        return `⚙️ PF-GEOINT Implementation Process\n\n🚀 Implementation Timeline:\n• Phase 1 (1-2 weeks): Needs assessment and planning\n• Phase 2 (2-4 weeks): System setup and configuration\n• Phase 3 (1-2 weeks): Data integration and testing\n• Phase 4 (1 week): Training and go-live\n• Total: 5-9 weeks depending on complexity\n\n📋 Implementation Steps:\n1. Discovery: Understanding your specific requirements\n2. Design: Customizing solution architecture\n3. Development: Building and configuring systems\n4. Testing: Comprehensive system validation\n5. Training: User training and documentation\n6. Launch: Go-live with full support\n7. Optimization: Continuous improvement and updates\n\n🛠️ Technical Requirements:\n• Internet connectivity (minimum 10 Mbps)\n• Compatible devices (web browsers, mobile apps)\n• Data access permissions and security clearance\n• Integration with existing systems (if needed)\n\n👥 Support During Implementation:\n• Dedicated project manager\n• Technical specialists assigned\n• Regular progress updates\n• 24/7 support during critical phases\n\nWhat's your timeline? I can help you plan the perfect implementation schedule!`;
+      }
+      
+      // Handle support questions
+      if (lowerMessage.includes('support') || lowerMessage.includes('help') || lowerMessage.includes('assistance') || lowerMessage.includes('troubleshoot')) {
+        return `🆘 PF-GEOINT Support & Assistance\n\n24/7 Support Channels:\n• Live Chat: Instant support through our platform\n• Email: support@proforcegalaxies.com\n• Phone: +234-XXX-XXXX-XXX (Nigeria)\n• Ticketing System: Priority-based issue tracking\n\nSupport Levels:\n• Level 1: Basic troubleshooting and user guidance\n• Level 2: Technical issues and system problems\n• Level 3: Advanced technical support and customization\n• Level 4: Engineering team for complex issues\n\nResponse Times:\n• Critical Issues: < 1 hour\n• High Priority: < 4 hours\n• Medium Priority: < 24 hours\n• Low Priority: < 72 hours\n\nSupport Services:\n• System troubleshooting and fixes\n• User training and onboarding\n• Performance optimization\n• Custom feature development\n• Data migration assistance\n• Integration support\n\nDocumentation & Resources:\n• User manuals and guides\n• Video tutorials and webinars\n• API documentation\n• Best practices and tips\n• Community forum access\n\nWhat specific support do you need? I'm here to help resolve any issues!`;
+      }
+      
+      // Handle general "what is" questions
+      if (lowerMessage.includes('what is') || lowerMessage.includes('explain') || lowerMessage.includes('tell me about')) {
+        const topic = message.replace(/what is|explain|tell me about/gi, '').trim();
+        
+        if (topic.includes('pf-geoint') || topic.includes('proforce')) {
+          return `🏢 About PF-GEOINT by Proforce Galaxies Limited\n\nCompany Overview:\nProforce Galaxies Limited is a leading geospatial intelligence company specializing in advanced satellite imagery analysis, AI-powered solutions, and custom geospatial applications.\n\nOur Mission:\nTo transform how organizations use geospatial data for decision-making through innovative technology and expert solutions.\n\nOur Expertise:\n• Over 10 years of experience in geospatial intelligence\n• Advanced AI and machine learning algorithms\n• Real-time satellite data processing capabilities\n• Custom solutions for unique requirements\n• 24/7 technical support and consultation\n\nLeadership:\n• CEO/GMD: Engr Ade Ogundeyin\n• Company: Proforce Galaxies Limited\n• Founded: 2013\n• Headquarters: Nigeria\n\nWhat specific aspect of PF-GEOINT would you like to know more about?`;
+        }
+      }
+      
+      return null; // No universal response found
     }
 
     function processChatbotMessage(message) {
@@ -1466,21 +1757,48 @@
         return "🌱 Excellent! Let me provide more detailed information about our Agriculture solutions:\n\n**Our Agriculture Package Includes:**\n• **Crop Health Assessment**: NDVI/NDWI analysis with 3D visualization\n• **Precision Farming**: Zone-specific recommendations for fertilizers, pesticides\n• **Weather Integration**: Real-time weather data for optimal farming decisions\n• **Yield Prediction**: AI-powered crop yield forecasting\n• **Cost Analysis**: ROI calculations and cost optimization\n\n**Implementation Process:**\n1. **Assessment**: We analyze your current farming setup\n2. **Data Collection**: Satellite imagery and ground truth data\n3. **Analysis**: AI-powered insights and recommendations\n4. **Implementation**: Step-by-step guidance for adoption\n5. **Monitoring**: Continuous support and optimization\n\n**Success Stories:**\nOur clients have seen:\n• 25-40% increase in crop yields\n• 30% reduction in water usage\n• 20% decrease in fertilizer costs\n• 50% reduction in crop losses\n\nWould you like to schedule a consultation with our agricultural specialists at Proforce Galaxies Limited?";
       }
       
-      // Peak Intelligence: Advanced solution recommendation
-      if (bestMatch && maxScore > 0) {
-        conversationContext.currentTopic = bestMatch.key;
+      // Universal Intelligence: Scan all solutions across all sectors
+      const allSolutions = scanAllSolutions(message, entities, conversationContext);
+      
+      if (allSolutions.length > 0) {
+        const bestMatch = allSolutions[0];
+        conversationContext.currentTopic = bestMatch.sector;
         conversationContext.userNeeds.push(bestMatch.key);
         
-        return generateAdvancedRecommendation(bestMatch, conversationContext, entities);
+        // If multiple solutions found, show top 3
+        if (allSolutions.length > 1) {
+          let response = `🎯 Multiple Solutions Found!\n\n`;
+          response += `I found ${allSolutions.length} relevant solutions across our sectors. Here are the top matches:\n\n`;
+          
+          // Show top 3 solutions
+          allSolutions.slice(0, 3).forEach((solution, index) => {
+            response += `${index + 1}. ${solution.name} (${solution.sector.toUpperCase()})\n`;
+            response += `Relevance Score: ${solution.relevanceScore}/10\n`;
+            response += `${solution.description}\n\n`;
+          });
+          
+          response += `Primary Recommendation:\n`;
+          response += generateAdvancedRecommendation(bestMatch, conversationContext, entities);
+          
+          return response;
+        } else {
+          return generateAdvancedRecommendation(bestMatch, conversationContext, entities);
+        }
+      }
+      
+      // Universal Intelligence: Handle any question with comprehensive analysis
+      const universalResponse = generateUniversalResponse(message, entities, conversationContext);
+      if (universalResponse) {
+        return universalResponse;
       }
       
       // Context-aware default response
       if (conversationContext.previousQuestions.length > 0) {
-        return `🤔 I want to make sure I understand your needs completely. ${conversationContext.currentTopic ? `I see we've been discussing ${conversationContext.currentTopic} solutions. ` : ''}Could you provide more specific details about:\n\n**Your Situation:**\n• What industry or sector are you in?\n• What specific challenges are you trying to solve?\n• What's the scale of your operation?\n• What's your current technology setup?\n\n**Your Goals:**\n• Are you looking for real-time monitoring, analysis, or planning tools?\n• What's your timeline for implementation?\n• What's your budget range?\n• Do you need training and support?\n\n**Proforce Galaxies Limited Solutions:**\n🌱 **Agriculture** - Crop health, precision farming, irrigation\n🛡️ **Defense & Security** - Tactical operations, surveillance, PF-GEOTRACE\n🏙️ **Urban Planning** - Smart city development, infrastructure\n🌍 **Environmental** - Climate tracking, conservation\n🚛 **Transportation** - Logistics optimization, fleet management\n⚡ **Energy & Utilities** - Grid monitoring, renewable energy\n\nThe more details you provide, the better I can assist you with the perfect solution!`;
+        return `🤔 I want to make sure I understand your needs completely. ${conversationContext.currentTopic ? `I see we've been discussing ${conversationContext.currentTopic} solutions. ` : ''}Could you provide more specific details about:\n\nYour Situation:\n• What industry or sector are you in?\n• What specific challenges are you trying to solve?\n• What's the scale of your operation?\n• What's your current technology setup?\n\nYour Goals:\n• Are you looking for real-time monitoring, analysis, or planning tools?\n• What's your timeline for implementation?\n• What's your budget range?\n• Do you need training and support?\n\nProforce Galaxies Limited Solutions:\n🌱 Agriculture - Crop health, precision farming, irrigation\n🛡️ Defense & Security - Tactical operations, surveillance, PF-GEOTRACE\n🏙️ Urban Planning - Smart city development, infrastructure\n🌍 Environmental - Climate tracking, conservation\n🚛 Transportation - Logistics optimization, fleet management\n⚡ Energy & Utilities - Grid monitoring, renewable energy\n\nThe more details you provide, the better I can assist you with the perfect solution!`;
       }
       
       // Enhanced default response with intelligent suggestions
-      return "🤔 I'd be happy to help you find the perfect solution! PF-GEOINT by Proforce Galaxies Limited offers advanced geospatial intelligence across multiple sectors:\n\n**🌱 Agriculture** - Crop health monitoring, precision farming, irrigation optimization\n**🛡️ Defense & Security** - Tactical operations, surveillance, threat detection, PF-GEOTRACE\n**🏙️ Urban Planning** - Smart city development, infrastructure monitoring\n**🌍 Environmental** - Climate tracking, conservation, sustainability\n**🚛 Transportation** - Logistics optimization, fleet management, road infrastructure\n**⚡ Energy & Utilities** - Grid monitoring, renewable energy planning\n\n**To give you the best recommendation, could you tell me:**\n• What industry or sector are you in?\n• What specific challenges are you trying to solve?\n• Are you looking for real-time monitoring, analysis, or planning tools?\n• What's the scale of your operation?\n\n**About Proforce Galaxies Limited:**\nWe're a leading geospatial intelligence company with over 10 years of experience in satellite imagery analysis, AI-powered solutions, and custom geospatial applications.\n\nThe more details you provide, the better I can assist you!";
+      return "🤔 I'd be happy to help you find the perfect solution! PF-GEOINT by Proforce Galaxies Limited offers advanced geospatial intelligence across multiple sectors:\n\n🌱 Agriculture - Crop health monitoring, precision farming, irrigation optimization\n🛡️ Defense & Security - Tactical operations, surveillance, threat detection, PF-GEOTRACE\n🏙️ Urban Planning - Smart city development, infrastructure monitoring\n🌍 Environmental - Climate tracking, conservation, sustainability\n🚛 Transportation - Logistics optimization, fleet management, road infrastructure\n⚡ Energy & Utilities - Grid monitoring, renewable energy planning\n\nTo give you the best recommendation, could you tell me:\n• What industry or sector are you in?\n• What specific challenges are you trying to solve?\n• Are you looking for real-time monitoring, analysis, or planning tools?\n• What's the scale of your operation?\n\nAbout Proforce Galaxies Limited:\nWe're a leading geospatial intelligence company with over 10 years of experience in satellite imagery analysis, AI-powered solutions, and custom geospatial applications.\n\nThe more details you provide, the better I can assist you!";
     }
 
     // Initialize chatbot on page load
