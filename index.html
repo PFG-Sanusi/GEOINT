@@ -9,7 +9,9 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #0d1b2a 100%);
+      background-size: 200% 200%;
+      animation: gradientShift 12s ease-in-out infinite;
       color: #e0e0e0;
       overflow-x: hidden;
     }
@@ -20,10 +22,12 @@
     }
     .header {
       text-align: center;
-      padding: 60px 0;
-      background: linear-gradient(180deg, #2a4d8e 0%, #1b263b 100%);
+      padding: 72px 0;
+      background: radial-gradient(1200px 400px at 50% -10%, rgba(0,212,255,0.15), transparent 70%),
+                  linear-gradient(180deg, #14233d 0%, #0f1b2e 100%);
       position: relative;
       overflow: hidden;
+      border-bottom: 1px solid rgba(0, 212, 255, 0.1);
     }
     .header h1 {
       margin: 0;
@@ -38,12 +42,24 @@
     .header::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-      opacity: 0.3;
+      top: -80px;
+      left: -80px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle at 30% 30%, rgba(0,212,255,0.35), transparent 60%);
+      filter: blur(12px);
+      animation: floatBlob 10s ease-in-out infinite alternate;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      right: -120px;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle at 70% 70%, rgba(123,0,255,0.25), transparent 60%);
+      filter: blur(14px);
+      animation: floatBlob 12s ease-in-out infinite alternate-reverse;
     }
     .intro {
       text-align: center;
@@ -67,31 +83,32 @@
       padding: 30px 0;
     }
     .product-card {
-      background: #1e2a44;
-      border-radius: 12px;
-      padding: 25px;
+      background: rgba(17, 30, 54, 0.55);
+      border-radius: 16px;
+      padding: 28px;
       text-align: center;
-      transition: all 0.3s ease;
+      transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      backdrop-filter: blur(8px);
     }
     .product-card:hover {
       transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+      box-shadow: 0 18px 40px rgba(0, 212, 255, 0.25);
+      border-color: rgba(0, 212, 255, 0.35);
     }
     .product-card::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, #00d4ff, #ff00ff);
-      transition: width 0.3s ease;
+      inset: 0;
+      background: radial-gradient(600px 200px at 50% -60%, rgba(0,212,255,0.12), transparent 60%);
+      opacity: 0;
+      transition: opacity 300ms ease;
     }
     .product-card:hover::before {
-      width: 100%;
+      opacity: 1;
     }
     .product-card h3 {
       margin: 0 0 15px;
@@ -106,40 +123,54 @@
       margin-bottom: 20px;
     }
     .product-card button {
+      position: relative;
       background: linear-gradient(90deg, #00d4ff, #7b00ff);
       color: white;
       border: none;
-      padding: 12px 24px;
-      border-radius: 25px;
+      padding: 12px 26px;
+      border-radius: 28px;
       cursor: pointer;
       font-size: 1em;
-      font-weight: 500;
+      font-weight: 600;
       text-transform: uppercase;
-      transition: all 0.3s ease;
+      transition: transform 200ms ease, box-shadow 200ms ease;
+      box-shadow: 0 6px 18px rgba(0, 212, 255, 0.25);
+      overflow: hidden;
     }
     .product-card button:hover {
-      background: linear-gradient(90deg, #7b00ff, #00d4ff);
-      box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
-      transform: scale(1.05);
+      box-shadow: 0 10px 26px rgba(0, 212, 255, 0.35);
+      transform: translateY(-2px);
+    }
+    .product-card button:active { transform: translateY(0); }
+    .product-card button .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 600ms linear;
+      background: rgba(255,255,255,0.7);
+      pointer-events: none;
     }
     .back-button {
+      position: relative;
       background: linear-gradient(90deg, #ff00ff, #00d4ff);
       color: white;
       border: none;
-      padding: 12px 24px;
-      border-radius: 25px;
+      padding: 12px 26px;
+      border-radius: 28px;
       cursor: pointer;
       font-size: 1em;
-      font-weight: 500;
+      font-weight: 600;
       text-transform: uppercase;
-      transition: all 0.3s ease;
+      transition: transform 200ms ease, box-shadow 200ms ease;
       margin-top: 20px;
+      box-shadow: 0 6px 18px rgba(255, 0, 255, 0.25);
+      overflow: hidden;
     }
     .back-button:hover {
-      background: linear-gradient(90deg, #00d4ff, #ff00ff);
-      box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
-      transform: scale(1.05);
+      box-shadow: 0 10px 26px rgba(255, 0, 255, 0.35);
+      transform: translateY(-2px);
     }
+    .back-button .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 600ms linear; background: rgba(255,255,255,0.7); pointer-events: none; }
     .image-container {
       display: flex;
       justify-content: space-around;
@@ -168,6 +199,100 @@
       color: #ff6666;
       margin-top: 10px;
     }
+    /* Before-After comparison */
+    .compare-card {
+      background: rgba(17, 30, 54, 0.55);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(8px);
+      width: 100%;
+      max-width: 1200px;
+      margin: 6px auto 16px;
+    }
+    .ba-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2);
+      background: #0f1b2e;
+    }
+    .ba-wrapper { position: relative; width: 100%; height: 100%; }
+    .ba-bottom, .ba-top img { display: block; width: 100%; height: auto; user-select: none; }
+    .ba-top { position: absolute; inset: 0; width: 50%; overflow: hidden; }
+    .ba-divider {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: rgba(0, 212, 255, 0.9);
+      box-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+      transform: translateX(-1px);
+      pointer-events: none;
+    }
+    .ba-handle {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00d4ff, #7b00ff);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+      border: 2px solid rgba(255,255,255,0.85);
+      pointer-events: none;
+    }
+    .ba-controls { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+    .ba-controls label { color: #bcd1e6; font-size: 0.95em; }
+    .ba-range { flex: 1; appearance: none; -webkit-appearance: none; height: 6px; border-radius: 999px; background: rgba(255,255,255,0.15); outline: none; }
+    .ba-range::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #00d4ff; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.35); cursor: pointer; }
+    .ba-range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #00d4ff; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.35); cursor: pointer; }
+    /* Interpretation/info card */
+    .info-card {
+      text-align: left;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 14px;
+    }
+    .info-card h4 {
+      margin: 0 0 8px 0;
+      color: #00d4ff;
+      font-size: 1.05em;
+      font-weight: 600;
+    }
+    .info-card ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+      color: #bcd1e6;
+      line-height: 1.5;
+      font-size: 0.95em;
+    }
+    .info-card li b { color: #e8f4ff; }
+    /* Summary/conclusion card */
+    .summary-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(0, 212, 255, 0.18);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin: 24px 0 8px 0;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+    }
+    .summary-card h3 {
+      margin: 0 0 10px 0;
+      color: #7adfff;
+      font-size: 1.25em;
+      letter-spacing: 0.3px;
+    }
+    .summary-card ul {
+      margin: 10px 0 0 18px;
+      padding: 0;
+      color: #c8d8ea;
+      line-height: 1.6;
+      font-size: 1em;
+    }
+    .summary-card p { color: #bcd1e6; margin: 12px 0 0 0; }
     /* Image modal (click-to-zoom) */
     .img-modal {
       display: none;
@@ -203,9 +328,29 @@
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     @keyframes slideIn {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes floatBlob {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, 30px) scale(1.08); }
+    }
+    @keyframes ripple {
+      to { transform: scale(4); opacity: 0; }
+    }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: translate(-50%, -50%) scale(0.92); }
+      to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     }
     @media (max-width: 600px) {
       .header h1 {
@@ -290,14 +435,71 @@
         <div class="image-card">
           <h3>NDVI Map</h3>
           <p>Normalized Difference Vegetation Index showing crop vigor.</p>
-          <img id="ndviImage" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDVI_NEW.png" alt="NDVI Map">
+          <div id="ndviContainer">
+            <img id="ndviImage" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDVI_NEW.png" alt="NDVI Map">
+            <div id="ndviControls" style="margin-top: 10px;">
+              <button onclick="toggleNDVIView()" style="background: linear-gradient(90deg, #00d4ff, #7b00ff); color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.9em; font-weight: 500;">Next: 3D View</button>
+            </div>
+          </div>
           <p class="note">Static NDVI image from repository.</p>
+          <div class="info-card">
+            <h4>NDVI Interpretation (Range: -0.099 to 0.423)</h4>
+            <ul>
+              <li><b>-0.099 to 0.126</b>: Non-vegetated or very sparse cover (bare soil/water/dead).</li>
+              <li><b>0.127 to 0.169</b>: Low-density vegetation; early growth or stressed plants.</li>
+              <li><b>0.170 to 0.200</b>: Moderate vegetation health; healthy grass or sparse crops.</li>
+              <li><b>0.201 to 0.236</b>: Denser vegetation; good photosynthetic activity.</li>
+              <li><b>0.237 to 0.423</b>: Highest density; mature crops/dense healthy vegetation.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="summary-card">
+          <h3>Crop Health Assessment – Summary</h3>
+          <ul>
+            <li><b>Healthy and well-watered crops (best fields)</b>: Green, well-hydrated areas with strong development; likely good yields if conditions persist.</li>
+            <li><b>Healthy but dry crops</b>: Green fields showing early water limitation; need timely rain or irrigation to maintain vigor.</li>
+            <li><b>Wet but weak crops</b>: Adequate moisture but poor growth—possible waterlogging, pests, or disease; inspect on ground.</li>
+            <li><b>Poor or bare areas</b>: Little/no vegetation—fallow, late-planted, or highly stressed; yields likely low.</li>
+          </ul>
+          <p><b>Overall</b>: Conditions are fair to good with pockets of water stress and localized weak growth despite water. Maintain strong fields, supplement water where possible, and investigate weak or flooded zones.</p>
         </div>
         <div class="image-card">
           <h3>NDWI Map</h3>
           <p>Normalized Difference Water Index indicating water stress.</p>
-          <img id="ndwiImage" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDWI._NEW1png.png" alt="NDWI Map">
+          <div id="ndwiContainer">
+            <img id="ndwiImage" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDWI._NEW1png.png" alt="NDWI Map">
+            <div id="ndwiControls" style="margin-top: 10px;">
+              <button onclick="toggleNDWIView()" style="background: linear-gradient(90deg, #00d4ff, #7b00ff); color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.9em; font-weight: 500;">Next: 3D View</button>
+            </div>
+          </div>
           <p class="note">Static NDWI image from repository.</p>
+          <div class="info-card">
+            <h4>NDWI Interpretation (Range: -0.656 to 0.260)</h4>
+            <ul>
+              <li><b>-0.656 to -0.071</b>: Non-water surfaces (urban, bare soil) or very dry vegetation.</li>
+              <li><b>-0.070 to -0.028</b>: Dry/sparse vegetation; limited water availability; mild–moderate stress.</li>
+              <li><b>-0.027 to 0.022</b>: Moderate vegetation water content; average soil moisture.</li>
+              <li><b>0.023 to 0.087</b>: Healthier vegetation with higher water content; adequate moisture.</li>
+              <li><b>0.088 to 0.260</b>: Highest water content; well-hydrated crops or local surface water.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="compare-card">
+        <h3 style="margin: 0 0 12px; color: #00d4ff;">Compare NDVI vs NDWI</h3>
+        <div id="ba1" class="ba-container">
+          <div class="ba-wrapper">
+            <img class="ba-bottom" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDWI._NEW1png.png" alt="NDWI Base">
+            <div class="ba-top" style="width: 50%;">
+              <img src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDVI_NEW.png" alt="NDVI Overlay">
+            </div>
+            <div class="ba-divider" style="left: 50%;"></div>
+            <div class="ba-handle" style="left: 50%;"></div>
+          </div>
+        </div>
+        <div class="ba-controls">
+          <label for="baRange">Slide to compare</label>
+          <input id="baRange" class="ba-range" type="range" min="0" max="100" value="50" oninput="updateBeforeAfter('ba1', this.value)">
         </div>
       </div>
       <div style="text-align: center;">
@@ -314,7 +516,9 @@
     function learnMore(sector) {
       if (sector === 'agriculture') {
         document.getElementById('main-products').style.display = 'none';
-        document.getElementById('agriculture-solutions').style.display = 'block';
+        const view = document.getElementById('agriculture-solutions');
+        view.style.display = 'block';
+        addEnterAnimation(view);
       } else {
         alert(`Explore PF-GEOINT solutions for ${sector}!`);
         // Replace with actual logic for other sectors
@@ -323,7 +527,9 @@
 
     function showCropHealth() {
       document.getElementById('agriculture-solutions').style.display = 'none';
-      document.getElementById('crop-health').style.display = 'block';
+      const view = document.getElementById('crop-health');
+      view.style.display = 'block';
+      addEnterAnimation(view);
       // enable click-to-zoom for images
       enableImageZoom('ndviImage');
       enableImageZoom('ndwiImage');
@@ -331,12 +537,16 @@
 
     function backToAgriculture() {
       document.getElementById('crop-health').style.display = 'none';
-      document.getElementById('agriculture-solutions').style.display = 'block';
+      const view = document.getElementById('agriculture-solutions');
+      view.style.display = 'block';
+      addEnterAnimation(view);
     }
 
     function backToMain() {
       document.getElementById('agriculture-solutions').style.display = 'none';
-      document.getElementById('main-products').style.display = 'grid';
+      const view = document.getElementById('main-products');
+      view.style.display = 'grid';
+      addEnterAnimation(view);
     }
 
     // No additional rendering required; both NDVI and NDWI use static images.
@@ -354,6 +564,9 @@
       const modalImg = document.getElementById('modalImg');
       modalImg.src = src;
       modal.style.display = 'block';
+      modalImg.style.animation = 'none';
+      void modalImg.offsetWidth;
+      modalImg.style.animation = '';
       document.addEventListener('keydown', onEscClose);
     }
 
@@ -369,6 +582,83 @@
 
     function onModalBackgroundClick(e) {
       if (e.target && e.target.id === 'imgModal') closeModal();
+    }
+    document.addEventListener('click', function(e) {
+      const isBack = e.target.classList.contains('back-button');
+      const isProductBtn = e.target.tagName === 'BUTTON' && e.target.closest('.product-card');
+      const btn = isBack || isProductBtn ? e.target : null;
+      if (!btn) return;
+      const rect = btn.getBoundingClientRect();
+      const circle = document.createElement('span');
+      const diameter = Math.max(rect.width, rect.height);
+      const radius = diameter / 2;
+      circle.style.width = circle.style.height = `${diameter}px`;
+      circle.style.left = `${e.clientX - rect.left - radius}px`;
+      circle.style.top = `${e.clientY - rect.top - radius}px`;
+      circle.classList.add('ripple');
+      const oldRipple = btn.querySelector('.ripple');
+      if (oldRipple) oldRipple.remove();
+      btn.appendChild(circle);
+    }, true);
+
+    function addEnterAnimation(el) {
+      el.style.animation = 'fadeInUp 380ms ease-out';
+      setTimeout(() => { el.style.animation = ''; }, 400);
+    }
+
+    // Before-After slider logic
+    function updateBeforeAfter(containerId, percent) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      const top = container.querySelector('.ba-top');
+      const divider = container.querySelector('.ba-divider');
+      const handle = container.querySelector('.ba-handle');
+      const p = Math.max(0, Math.min(100, Number(percent)));
+      top.style.width = p + '%';
+      divider.style.left = p + '%';
+      handle.style.left = p + '%';
+    }
+
+    // NDVI view toggle (2D <-> 3D)
+    let ndviView3D = false;
+    function toggleNDVIView() {
+      const img = document.getElementById('ndviImage');
+      const btn = document.querySelector('#ndviControls button');
+      
+      if (ndviView3D) {
+        // Switch to 2D
+        img.src = 'https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDVI_NEW.png';
+        img.alt = 'NDVI Map';
+        btn.textContent = 'Next: 3D View';
+        ndviView3D = false;
+      } else {
+        // Switch to 3D
+        img.src = 'https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDVI_1D3D.png';
+        img.alt = 'NDVI 3D Visualization';
+        btn.textContent = 'Back: 2D View';
+        ndviView3D = true;
+      }
+    }
+
+    // NDWI view toggle (2D <-> 3D)
+    let ndwiView3D = false;
+    function toggleNDWIView() {
+      const img = document.getElementById('ndwiImage');
+      const btn = document.querySelector('#ndwiControls button');
+      
+      if (ndwiView3D) {
+        // Switch to 2D
+        img.src = 'https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDWI._NEW1png.png';
+        img.alt = 'NDWI Map';
+        btn.textContent = 'Next: 3D View';
+        ndwiView3D = false;
+      } else {
+        // Switch to 3D
+        img.src = 'https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDWI_3DV.png';
+        img.alt = 'NDWI 3D Visualization';
+        btn.textContent = 'Back: 2D View';
+        ndwiView3D = true;
+      }
     }
   </script>
 </body>
