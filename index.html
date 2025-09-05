@@ -255,14 +255,14 @@
         <div class="image-card">
           <h3>NDVI Map</h3>
           <p>Normalized Difference Vegetation Index showing crop vigor.</p>
-          <img src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDVI.tif" alt="NDVI Map">
-          <p class="note">Note: TIFF files are not directly displayable in browsers. Please convert to PNG/JPEG for web viewing.</p>
+          <canvas id="ndviCanvas"></canvas>
+          <p class="note">Rendering NDVI GeoTIFF directly in browser.</p>
         </div>
         <div class="image-card">
           <h3>NDWI Map</h3>
           <p>Normalized Difference Water Index indicating water stress.</p>
-          <img src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDWI.tif" alt="NDWI Map">
-          <p class="note">Note: TIFF files are not directly displayable in browsers. Please convert to PNG/JPEG for web viewing.</p>
+          <canvas id="ndwiCanvas"></canvas>
+          <p class="note">Rendering NDWI GeoTIFF directly in browser.</p>
         </div>
       </div>
       <div style="text-align: center;">
@@ -270,6 +270,7 @@
       </div>
     </div>
   </div>
+  <script src="https://unpkg.com/geotiff/dist-browser/geotiff.min.js"></script>
   <script>
     function learnMore(sector) {
       if (sector === 'agriculture') {
@@ -284,6 +285,11 @@
     function showCropHealth() {
       document.getElementById('agriculture-solutions').style.display = 'none';
       document.getElementById('crop-health').style.display = 'block';
+      if (!window._tiffsRendered) {
+        window._tiffsRendered = true;
+        renderTiffToCanvas('https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDVI.tif', 'ndviCanvas', 'ndvi');
+        renderTiffToCanvas('https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDWI.tif', 'ndwiCanvas', 'ndwi');
+      }
     }
 
     function backToAgriculture() {
@@ -294,6 +300,103 @@
     function backToMain() {
       document.getElementById('agriculture-solutions').style.display = 'none';
       document.getElementById('main-products').style.display = 'grid';
+    }
+
+    async function renderTiffToCanvas(url, canvasId, type) {
+      try {
+        const tiff = await GeoTIFF.fromUrl(url);
+        const image = await tiff.getImage();
+        const width = image.getWidth();
+        const height = image.getHeight();
+        const raster = await image.readRasters({ interleave: true });
+
+        let min = Infinity;
+        let max = -Infinity;
+        for (let i = 0; i < raster.length; i++) {
+          const v = raster[i];
+          if (Number.isFinite(v)) {
+            if (v < min) min = v;
+            if (v > max) max = v;
+          }
+        }
+
+        // Reasonable defaults if data is flat or nodata
+        if (!Number.isFinite(min) || !Number.isFinite(max) || min === max) {
+          if (type === 'ndvi') { min = -1; max = 1; }
+          else { min = -1; max = 1; }
+        }
+
+        const canvas = document.getElementById(canvasId);
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        const imgData = ctx.createImageData(width, height);
+
+        const colorFunc = type === 'ndvi' ? ndviColor : ndwiColor;
+
+        for (let i = 0; i < raster.length; i++) {
+          const value = raster[i];
+          const normalized = Math.max(0, Math.min(1, (value - min) / (max - min)));
+          const [r, g, b] = colorFunc(normalized);
+          const j = i * 4;
+          imgData.data[j] = r;
+          imgData.data[j + 1] = g;
+          imgData.data[j + 2] = b;
+          imgData.data[j + 3] = 255;
+        }
+
+        ctx.putImageData(imgData, 0, 0);
+      } catch (err) {
+        const canvas = document.getElementById(canvasId);
+        const ctx = canvas.getContext('2d');
+        canvas.width = 600;
+        canvas.height = 40;
+        ctx.fillStyle = '#1e2a44';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#ff6666';
+        ctx.font = '16px Inter, sans-serif';
+        ctx.fillText('Failed to load GeoTIFF: ' + (err && err.message ? err.message : err), 10, 26);
+      }
+    }
+
+    function ndviColor(t) {
+      // Red (low) -> Yellow -> Green (high)
+      if (t < 0.5) {
+        const k = t / 0.5; // 0..1
+        return [
+          255,
+          Math.round(255 * k),
+          0
+        ];
+      } else {
+        const k = (t - 0.5) / 0.5; // 0..1
+        return [
+          Math.round(255 * (1 - k)),
+          255,
+          0
+        ];
+      }
+    }
+
+    function ndwiColor(t) {
+      // Brown (low) -> Cyan -> Deep Blue (high)
+      if (t < 0.5) {
+        const k = t / 0.5; // 0..1
+        // from brown(150, 100, 50) to cyan(0, 255, 255)
+        return [
+          Math.round(150 * (1 - k) + 0 * k),
+          Math.round(100 * (1 - k) + 255 * k),
+          Math.round(50 * (1 - k) + 255 * k)
+        ];
+      } else {
+        const k = (t - 0.5) / 0.5; // 0..1
+        // from cyan(0,255,255) to deep blue(0, 70, 170)
+        return [
+          0,
+          Math.round(255 * (1 - k) + 70 * k),
+          Math.round(255 * (1 - k) + 170 * k)
+        ];
+      }
     }
   </script>
 </body>
