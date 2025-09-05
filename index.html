@@ -562,6 +562,54 @@
       </div>
     </div>
 
+    <!-- Defense & Security Solutions Section -->
+    <div id="defense-solutions" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">Defense & Security Solutions</h2>
+      <div class="products">
+        <div class="product-card">
+          <h3>PF-GEOTRACE</h3>
+          <p>Cutting-edge geolocation platform redefining tactical dominance. Fuses real-time GPS precision, dynamic marker systems, and strategic buffer zones to transform coordinates into mission-critical intelligence.</p>
+          <button onclick="showGeoTrace()">View Details</button>
+        </div>
+        <!-- Add more defense solutions here as needed -->
+      </div>
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToMain()">Back to Sectors</button>
+      </div>
+    </div>
+
+    <!-- PF-GEOTRACE Section -->
+    <div id="geotrace" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">PF-GEOTRACE</h2>
+      <div class="image-container">
+        <div class="image-card" style="max-width: 100%;">
+          <h3>PF-GEOTRACE Platform</h3>
+          <p>Cutting-edge geolocation platform redefining tactical dominance</p>
+          <img id="geotraceImage" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/geotrace.jpeg" alt="PF-GEOTRACE Platform" style="width: 100%; max-height: 500px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
+          <p class="note">PF-GEOTRACE platform interface</p>
+          <div class="info-card">
+            <h4>Platform Features</h4>
+            <ul>
+              <li><b>Real-time GPS Precision</b>: Ultra-accurate location tracking and positioning</li>
+              <li><b>Dynamic Marker Systems</b>: Interactive markers for tactical operations</li>
+              <li><b>Strategic Buffer Zones</b>: Customizable security and operational boundaries</li>
+              <li><b>Satellite Imagery</b>: High-resolution satellite data integration</li>
+              <li><b>Versatile Map Layers</b>: Multiple mapping options for different scenarios</li>
+              <li><b>Rapid Data Export</b>: Quick export capabilities for mission-critical data</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="summary-card">
+        <h3>PF-GEOTRACE – Mission-Critical Intelligence</h3>
+        <p><b>PF-GEOTRACE</b> is a cutting-edge geolocation platform redefining tactical dominance. It fuses real-time GPS precision, dynamic marker systems, and strategic buffer zones to transform coordinates into mission-critical intelligence. With satellite imagery, versatile map layers, and rapid data export, it's engineered for unparalleled operational superiority.</p>
+        <p><b>Applications:</b> Military operations, border security, tactical surveillance, mission planning, emergency response, and critical infrastructure protection.</p>
+      </div>
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToDefense()">Back to Defense Solutions</button>
+      </div>
+    </div>
+
     <!-- Crop Health Assessment Section -->
     <div id="crop-health" style="display: none;">
       <h2 style="text-align: center; color: #00d4ff;">Crop Health Assessment</h2>
@@ -675,6 +723,11 @@
         const view = document.getElementById('agriculture-solutions');
         view.style.display = 'block';
         addEnterAnimation(view);
+      } else if (sector === 'defense') {
+        document.getElementById('main-products').style.display = 'none';
+        const view = document.getElementById('defense-solutions');
+        view.style.display = 'block';
+        addEnterAnimation(view);
       } else {
         alert(`Explore PF-GEOINT solutions for ${sector}!`);
         // Replace with actual logic for other sectors
@@ -693,6 +746,15 @@
       preload3DImages();
     }
 
+    function showGeoTrace() {
+      document.getElementById('defense-solutions').style.display = 'none';
+      const view = document.getElementById('geotrace');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      // enable click-to-zoom for image
+      enableImageZoom('geotraceImage');
+    }
+
     function backToAgriculture() {
       document.getElementById('crop-health').style.display = 'none';
       const view = document.getElementById('agriculture-solutions');
@@ -700,8 +762,16 @@
       addEnterAnimation(view);
     }
 
+    function backToDefense() {
+      document.getElementById('geotrace').style.display = 'none';
+      const view = document.getElementById('defense-solutions');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+    }
+
     function backToMain() {
       document.getElementById('agriculture-solutions').style.display = 'none';
+      document.getElementById('defense-solutions').style.display = 'none';
       const view = document.getElementById('main-products');
       view.style.display = 'grid';
       addEnterAnimation(view);
@@ -956,67 +1026,461 @@
       document.getElementById('chatbotTyping').style.display = 'none';
     }
 
+    // Company information
+    const companyInfo = {
+      boss: "Engr Tope Robert, Head of Proforce Galaxies Limited",
+      creator: "Proforce Galaxies Limited",
+      ceo: "Engr Ade Ogundeyin",
+      company: "Proforce Galaxies Limited"
+    };
+
+    // Advanced conversation context and memory
+    let conversationContext = {
+      currentTopic: null,
+      userIndustry: null,
+      userNeeds: [],
+      previousQuestions: [],
+      sessionStart: new Date(),
+      userProfile: {
+        name: null,
+        company: null,
+        role: null,
+        experience: null,
+        budget: null,
+        timeline: null,
+        preferences: []
+      },
+      conversationFlow: [],
+      emotionalState: 'neutral',
+      intent: null,
+      entities: [],
+      confidence: 0,
+      followUpNeeded: false
+    };
+
+    // Advanced NLP patterns and intent recognition
+    const intentPatterns = {
+      greeting: ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening'],
+      inquiry: ['what', 'how', 'when', 'where', 'why', 'can you', 'do you', 'is it possible'],
+      problem: ['problem', 'issue', 'challenge', 'struggling', 'difficulty', 'trouble', 'help'],
+      comparison: ['compare', 'difference', 'better', 'best', 'versus', 'vs', 'which'],
+      pricing: ['price', 'cost', 'budget', 'expensive', 'cheap', 'affordable', 'quote'],
+      timeline: ['when', 'how long', 'timeline', 'schedule', 'deadline', 'urgent'],
+      technical: ['technical', 'specs', 'specifications', 'features', 'capabilities', 'integration'],
+      contact: ['contact', 'speak', 'meeting', 'call', 'email', 'representative', 'sales']
+    };
+
+    // Emotional intelligence patterns
+    const emotionalPatterns = {
+      frustrated: ['frustrated', 'annoyed', 'angry', 'upset', 'disappointed', 'fed up'],
+      excited: ['excited', 'thrilled', 'amazing', 'fantastic', 'great', 'wonderful'],
+      confused: ['confused', 'unclear', 'don\'t understand', 'lost', 'unclear'],
+      urgent: ['urgent', 'asap', 'immediately', 'quickly', 'emergency', 'critical'],
+      skeptical: ['skeptical', 'doubt', 'not sure', 'hesitant', 'concerned', 'worried']
+    };
+
+    // Advanced entity extraction
+    function extractEntities(message) {
+      const entities = [];
+      const lowerMessage = message.toLowerCase();
+      
+      // Industry entities
+      const industries = ['agriculture', 'farming', 'defense', 'military', 'security', 'urban', 'city', 'environment', 'transportation', 'logistics', 'energy', 'utilities'];
+      industries.forEach(industry => {
+        if (lowerMessage.includes(industry)) entities.push({type: 'industry', value: industry});
+      });
+      
+      // Technology entities
+      const technologies = ['satellite', 'gps', 'ai', 'machine learning', 'ndvi', 'ndwi', 'geotrace', 'drone', 'sensor'];
+      technologies.forEach(tech => {
+        if (lowerMessage.includes(tech)) entities.push({type: 'technology', value: tech});
+      });
+      
+      // Scale entities
+      const scales = ['small', 'medium', 'large', 'enterprise', 'startup', 'corporation', 'government'];
+      scales.forEach(scale => {
+        if (lowerMessage.includes(scale)) entities.push({type: 'scale', value: scale});
+      });
+      
+      // Location entities (basic)
+      const locations = ['nigeria', 'africa', 'europe', 'america', 'asia', 'local', 'global', 'regional'];
+      locations.forEach(location => {
+        if (lowerMessage.includes(location)) entities.push({type: 'location', value: location});
+      });
+      
+      return entities;
+    }
+
+    // Intent recognition
+    function recognizeIntent(message) {
+      const lowerMessage = message.toLowerCase();
+      let maxScore = 0;
+      let detectedIntent = 'general';
+      
+      for (const [intent, patterns] of Object.entries(intentPatterns)) {
+        let score = 0;
+        patterns.forEach(pattern => {
+          if (lowerMessage.includes(pattern)) score++;
+        });
+        if (score > maxScore) {
+          maxScore = score;
+          detectedIntent = intent;
+        }
+      }
+      
+      return detectedIntent;
+    }
+
+    // Emotional state detection
+    function detectEmotionalState(message) {
+      const lowerMessage = message.toLowerCase();
+      
+      for (const [emotion, patterns] of Object.entries(emotionalPatterns)) {
+        if (patterns.some(pattern => lowerMessage.includes(pattern))) {
+          return emotion;
+        }
+      }
+      
+      return 'neutral';
+    }
+
+    // Advanced response generation
+    function generateContextualResponse(intent, emotion, entities, confidence) {
+      const responses = {
+        greeting: {
+          excited: "Hello! 🚀 I'm thrilled to meet you! I'm your advanced AI assistant from Proforce Galaxies Limited, and I'm excited to help you discover the perfect geospatial intelligence solutions. What amazing project are you working on?",
+          neutral: "Hello! 👋 I'm your PF-GEOINT AI assistant from Proforce Galaxies Limited. I specialize in geospatial intelligence solutions and can help you find the perfect technology for your specific needs. What challenges are you facing?",
+          frustrated: "Hello! I understand you might be feeling frustrated, and I'm here to help make this process as smooth as possible. I'm your PF-GEOINT AI assistant, and I'll do my best to provide clear, helpful solutions. What can I assist you with today?"
+        },
+        inquiry: {
+          excited: "Great question! 🎯 I love your curiosity! Let me provide you with comprehensive information about our solutions. Based on what I'm hearing, you're really engaged with finding the right technology.",
+          neutral: "Excellent question! Let me provide you with detailed information about our solutions and how they can address your specific needs.",
+          confused: "I understand this might be confusing, and I'm here to clarify everything for you. Let me break this down in simple terms and provide clear explanations."
+        }
+      };
+      
+      return responses[intent]?.[emotion] || responses[intent]?.neutral || "I'm here to help! Let me provide you with the information you need.";
+    }
+
+    // Calculate confidence score
+    function calculateConfidence(message, entities) {
+      let confidence = 0;
+      const lowerMessage = message.toLowerCase();
+      
+      // Base confidence from entities
+      confidence += entities.length * 0.2;
+      
+      // Confidence from keyword density
+      const totalWords = message.split(' ').length;
+      const relevantKeywords = ['agriculture', 'defense', 'security', 'urban', 'environment', 'transportation', 'energy', 'satellite', 'gps', 'ndvi', 'ndwi'];
+      const keywordCount = relevantKeywords.filter(keyword => lowerMessage.includes(keyword)).length;
+      confidence += (keywordCount / totalWords) * 0.5;
+      
+      // Confidence from question clarity
+      if (lowerMessage.includes('what') || lowerMessage.includes('how') || lowerMessage.includes('can you')) {
+        confidence += 0.2;
+      }
+      
+      return Math.min(confidence, 1.0);
+    }
+
+    // Extract user profile information
+    function extractUserProfile(message, entities) {
+      const lowerMessage = message.toLowerCase();
+      
+      // Extract company name
+      if (lowerMessage.includes('i work') || lowerMessage.includes('my company') || lowerMessage.includes('we are')) {
+        const companyMatch = message.match(/(?:i work (?:at|for)|my company|we are) ([^,.\n]+)/i);
+        if (companyMatch) {
+          conversationContext.userProfile.company = companyMatch[1].trim();
+        }
+      }
+      
+      // Extract role
+      const roles = ['manager', 'director', 'engineer', 'analyst', 'consultant', 'ceo', 'cto', 'farmer', 'planner'];
+      roles.forEach(role => {
+        if (lowerMessage.includes(`i am a ${role}`) || lowerMessage.includes(`i'm a ${role}`)) {
+          conversationContext.userProfile.role = role;
+        }
+      });
+      
+      // Extract experience level
+      if (lowerMessage.includes('beginner') || lowerMessage.includes('new to')) {
+        conversationContext.userProfile.experience = 'beginner';
+      } else if (lowerMessage.includes('experienced') || lowerMessage.includes('expert')) {
+        conversationContext.userProfile.experience = 'expert';
+      } else if (lowerMessage.includes('intermediate') || lowerMessage.includes('some experience')) {
+        conversationContext.userProfile.experience = 'intermediate';
+      }
+      
+      // Extract budget information
+      if (lowerMessage.includes('budget') || lowerMessage.includes('cost')) {
+        const budgetMatch = message.match(/(\d+)(?:k|thousand|million|m)/i);
+        if (budgetMatch) {
+          conversationContext.userProfile.budget = budgetMatch[0];
+        }
+      }
+      
+      // Extract timeline
+      if (lowerMessage.includes('urgent') || lowerMessage.includes('asap')) {
+        conversationContext.userProfile.timeline = 'urgent';
+      } else if (lowerMessage.includes('month') || lowerMessage.includes('quarter')) {
+        conversationContext.userProfile.timeline = 'short-term';
+      } else if (lowerMessage.includes('year') || lowerMessage.includes('long-term')) {
+        conversationContext.userProfile.timeline = 'long-term';
+      }
+      
+      // Update industry from entities
+      const industryEntity = entities.find(e => e.type === 'industry');
+      if (industryEntity) {
+        conversationContext.userProfile.preferences.push(industryEntity.value);
+      }
+    }
+
+    // Generate predictive follow-up questions
+    function generatePredictiveQuestions(context) {
+      const questions = [];
+      
+      if (context.userProfile.experience === 'beginner') {
+        questions.push("Would you like me to explain the technical aspects in simpler terms?");
+      }
+      
+      if (context.userProfile.timeline === 'urgent') {
+        questions.push("Since this is urgent, would you like me to connect you directly with our technical team?");
+      }
+      
+      if (context.userProfile.budget) {
+        questions.push(`Given your budget of ${context.userProfile.budget}, would you like me to recommend the most cost-effective solution?`);
+      }
+      
+      if (context.userProfile.company) {
+        questions.push(`How can we tailor our solutions specifically for ${context.userProfile.company}?`);
+      }
+      
+      return questions;
+    }
+
+    // Advanced solution recommendation with context
+    function generateAdvancedRecommendation(bestMatch, context, entities) {
+      let recommendation = `🎯 **Intelligent Analysis Complete**\n\n`;
+      
+      // Confidence level with explanation
+      const confidenceLevel = context.confidence > 0.8 ? 'extremely confident' : 
+                             context.confidence > 0.6 ? 'highly confident' : 
+                             context.confidence > 0.4 ? 'confident' : 'somewhat confident';
+      
+      recommendation += `I'm ${confidenceLevel} that our **${bestMatch.name}** solution is perfect for your needs.\n\n`;
+      
+      // Context-aware explanation
+      if (context.userProfile.experience === 'beginner') {
+        recommendation += `**Perfect for Beginners:** This solution is designed to be user-friendly while providing powerful capabilities.\n\n`;
+      } else if (context.userProfile.experience === 'expert') {
+        recommendation += `**Advanced Capabilities:** This solution offers the sophisticated features and customization options you need.\n\n`;
+      }
+      
+      // Industry-specific benefits
+      const industryEntity = entities.find(e => e.type === 'industry');
+      if (industryEntity) {
+        recommendation += `**${industryEntity.value.charAt(0).toUpperCase() + industryEntity.value.slice(1)} Focus:** This solution is specifically optimized for ${industryEntity.value} applications.\n\n`;
+      }
+      
+      // Timeline considerations
+      if (context.userProfile.timeline === 'urgent') {
+        recommendation += `**Rapid Deployment:** We can have this solution implemented quickly to meet your urgent timeline.\n\n`;
+      }
+      
+      // Budget considerations
+      if (context.userProfile.budget) {
+        recommendation += `**Budget Optimized:** This solution provides excellent value within your budget of ${context.userProfile.budget}.\n\n`;
+      }
+      
+      recommendation += `**Why This Solution Fits:**\n${bestMatch.description}\n\n`;
+      
+      // Predictive questions
+      const predictiveQuestions = generatePredictiveQuestions(context);
+      if (predictiveQuestions.length > 0) {
+        recommendation += `**Next Steps:**\n`;
+        predictiveQuestions.forEach(q => recommendation += `• ${q}\n`);
+        recommendation += `\n`;
+      }
+      
+      recommendation += `**Proforce Galaxies Limited Support:**\n• 24/7 technical support\n• Custom implementation guidance\n• Training and onboarding\n• Ongoing optimization\n\nWhat would you like to explore next?`;
+      
+      return recommendation;
+    }
+
     function processChatbotMessage(message) {
       const lowerMessage = message.toLowerCase();
       
-      // Greeting responses
-      if (lowerMessage.includes('hi') || lowerMessage.includes('hello') || lowerMessage.includes('hey')) {
-        return "Hello! 👋 I'm here to help you find the perfect PF-GEOINT solution for your needs. What challenges are you facing?";
+      // Advanced AI Processing Pipeline
+      const intent = recognizeIntent(message);
+      const emotion = detectEmotionalState(message);
+      const entities = extractEntities(message);
+      const confidence = calculateConfidence(message, entities);
+      
+      // Update conversation context
+      conversationContext.intent = intent;
+      conversationContext.emotionalState = emotion;
+      conversationContext.entities = entities;
+      conversationContext.confidence = confidence;
+      conversationContext.previousQuestions.push(message);
+      conversationContext.conversationFlow.push({
+        timestamp: new Date(),
+        message: message,
+        intent: intent,
+        emotion: emotion,
+        entities: entities
+      });
+      
+      // Extract user profile information
+      extractUserProfile(message, entities);
+      
+      // Company information queries with emotional intelligence
+      if (lowerMessage.includes('boss') || lowerMessage.includes('who is your boss')) {
+        const emotionalResponse = emotion === 'excited' ? "I'm excited to tell you!" : 
+                                 emotion === 'frustrated' ? "I'm happy to clarify this for you." : "";
+        return `${emotionalResponse} 👔 My boss is **${companyInfo.boss}**. He leads our team in developing cutting-edge geospatial intelligence solutions and has been instrumental in our company's growth.`;
       }
       
-      // Find best matching product
+      if (lowerMessage.includes('created') || lowerMessage.includes('who created you') || lowerMessage.includes('who made you')) {
+        return `🏢 I was created by **${companyInfo.creator}**, a leading company in geospatial intelligence and satellite technology solutions. Our team of expert engineers and data scientists developed me to provide intelligent assistance in geospatial solutions.`;
+      }
+      
+      if (lowerMessage.includes('ceo') || lowerMessage.includes('gmd') || lowerMessage.includes('md') || lowerMessage.includes('managing director')) {
+        return `👨‍💼 Our CEO/GMD/MD is **${companyInfo.ceo}**. He leads Proforce Galaxies Limited in delivering innovative geospatial solutions worldwide and has extensive experience in satellite technology and geospatial intelligence.`;
+      }
+      
+      if (lowerMessage.includes('proforce') || lowerMessage.includes('company') || lowerMessage.includes('about proforce')) {
+        const companyResponse = `🏢 **Proforce Galaxies Limited** is a leading geospatial intelligence company specializing in:\n\n• Advanced satellite imagery analysis\n• AI-powered geospatial solutions\n• Defense and security applications\n• Agricultural monitoring systems\n• Urban planning and infrastructure development\n\n**Our Expertise:**\n• Over 10 years of experience in geospatial intelligence\n• Advanced AI and machine learning algorithms\n• Real-time satellite data processing capabilities\n• Custom solutions for unique requirements\n• 24/7 technical support and consultation\n\nWe're committed to transforming how organizations use geospatial data for decision-making.`;
+        
+        if (conversationContext.userProfile.company) {
+          return `${companyResponse}\n\nI'd love to learn more about ${conversationContext.userProfile.company} and how we can help your organization!`;
+        }
+        return companyResponse;
+      }
+      
+      // Enhanced greeting responses with context awareness
+      if (lowerMessage.includes('hi') || lowerMessage.includes('hello') || lowerMessage.includes('hey')) {
+        conversationContext.currentTopic = 'greeting';
+        const greetings = [
+          "Hello! 👋 I'm your PF-GEOINT AI assistant from Proforce Galaxies Limited. I specialize in geospatial intelligence solutions and can help you find the perfect technology for your specific needs. What challenges are you facing?",
+          "Hi there! 🤖 I'm here to analyze your requirements and recommend the most suitable PF-GEOINT solutions. Tell me about your project or challenges.",
+          "Greetings! 🚀 I'm an advanced AI trained on geospatial intelligence by Proforce Galaxies Limited. I can help you navigate our solutions and find exactly what you need. What's your use case?"
+        ];
+        return greetings[Math.floor(Math.random() * greetings.length)];
+      }
+      
+      // Advanced keyword analysis with weighted scoring
+      const keywordWeights = {
+        'agriculture': {
+          'crop': 3, 'farm': 3, 'agriculture': 3, 'yield': 2, 'soil': 2, 'weather': 2, 
+          'irrigation': 3, 'vegetation': 2, 'ndvi': 4, 'ndwi': 4, 'dying': 3, 'stress': 2, 
+          'health': 2, 'disease': 2, 'pest': 2, 'fertilizer': 2, 'harvest': 2, 'field': 2,
+          'precision': 2, 'monitoring': 2, 'analysis': 2, 'water': 2, 'moisture': 2
+        },
+        'defense': {
+          'defense': 3, 'security': 3, 'surveillance': 3, 'threat': 3, 'mission': 2, 'military': 3,
+          'monitoring': 2, 'intelligence': 2, 'tactical': 3, 'geotrace': 4, 'gps': 2, 'tracking': 2,
+          'border': 2, 'protection': 2, 'operation': 2, 'strategic': 2, 'buffer': 2, 'zone': 2
+        },
+        'urban-planning': {
+          'urban': 3, 'city': 3, 'planning': 3, 'infrastructure': 3, 'population': 2, 'development': 2,
+          'mapping': 2, '3d': 2, 'smart': 2, 'municipal': 2, 'government': 2, 'construction': 2
+        },
+        'environment': {
+          'environment': 3, 'climate': 3, 'deforestation': 3, 'resources': 2, 'conservation': 2,
+          'monitoring': 2, 'change': 2, 'carbon': 2, 'emission': 2, 'sustainability': 2, 'green': 2
+        },
+        'transportation': {
+          'transportation': 3, 'logistics': 3, 'traffic': 3, 'routes': 2, 'shipping': 2, 'delivery': 2,
+          'optimization': 2, 'fleet': 2, 'supply': 2, 'chain': 2, 'distribution': 2, 'warehouse': 2,
+          'road': 4, 'highway': 3, 'street': 3, 'infrastructure': 3, 'pavement': 2, 'bridge': 2,
+          'tunnel': 2, 'intersection': 2, 'congestion': 3, 'maintenance': 2, 'construction': 2,
+          'asphalt': 2, 'pothole': 3, 'repair': 2, 'safety': 2, 'accident': 2, 'vehicle': 2
+        },
+        'energy': {
+          'energy': 3, 'utilities': 3, 'pipeline': 3, 'renewable': 2, 'grid': 2, 'power': 2,
+          'electricity': 2, 'oil': 2, 'gas': 2, 'solar': 2, 'wind': 2, 'infrastructure': 2
+        }
+      };
+      
+      // Calculate weighted scores for each product
       let bestMatch = null;
       let maxScore = 0;
       
-      for (const [key, product] of Object.entries(products)) {
+      for (const [key, weights] of Object.entries(keywordWeights)) {
         let score = 0;
-        for (const keyword of product.keywords) {
+        for (const [keyword, weight] of Object.entries(weights)) {
           if (lowerMessage.includes(keyword)) {
-            score += 1;
+            score += weight;
           }
         }
         if (score > maxScore) {
           maxScore = score;
-          bestMatch = product;
+          bestMatch = { key, ...products[key] };
         }
       }
       
-      // Specific responses for common queries
-      if (lowerMessage.includes('crop') && (lowerMessage.includes('dying') || lowerMessage.includes('problem') || lowerMessage.includes('issue'))) {
-        return "🌱 I understand you're having crop issues! Our Agriculture solution is perfect for you. It includes:\n\n• Crop Health Assessment with NDVI/NDWI analysis\n• Real-time monitoring of vegetation stress\n• Precision farming recommendations\n• Weather-based irrigation guidance\n\nThis will help identify why your crops are struggling and provide actionable solutions. Would you like to explore our Agriculture solutions?";
+      // Update conversation context
+      conversationContext.previousQuestions.push(message);
+      
+      // Context-aware responses with follow-up questions
+      if (lowerMessage.includes('crop') && (lowerMessage.includes('dying') || lowerMessage.includes('problem') || lowerMessage.includes('issue') || lowerMessage.includes('sick'))) {
+        conversationContext.currentTopic = 'agriculture';
+        conversationContext.userIndustry = 'agriculture';
+        conversationContext.userNeeds.push('crop_health');
+        
+        return "🌱 I understand you're experiencing crop health issues! This is exactly what our Agriculture solution excels at. Here's how we can help:\n\n**Immediate Analysis:**\n• NDVI (Normalized Difference Vegetation Index) to assess plant health\n• NDWI (Normalized Difference Water Index) to detect water stress\n• Real-time monitoring of vegetation stress patterns\n\n**Actionable Solutions:**\n• Precision farming recommendations based on data analysis\n• Weather-based irrigation guidance\n• Disease and pest detection algorithms\n• Soil health assessment\n\n**Questions to help me assist better:**\n• What type of crops are you growing?\n• Are you seeing specific symptoms (yellowing, wilting, spots)?\n• What's your current irrigation setup?\n• What's the size of your farming operation?\n\nWould you like me to dive deeper into any of these aspects? I can also connect you with our agricultural specialists at Proforce Galaxies Limited.";
       }
       
-      if (lowerMessage.includes('water') || lowerMessage.includes('irrigation') || lowerMessage.includes('moisture')) {
-        return "💧 For water management and irrigation optimization, our Agriculture solution offers:\n\n• NDWI (Normalized Difference Water Index) analysis\n• Soil moisture monitoring\n• Irrigation scheduling recommendations\n• Water stress detection\n\nThis helps optimize water usage and prevent over/under-watering. Check out our Agriculture solutions!";
+      if (lowerMessage.includes('water') || lowerMessage.includes('irrigation') || lowerMessage.includes('moisture') || lowerMessage.includes('drought')) {
+        return "💧 Water management is critical for agricultural success! Our Agriculture solution provides comprehensive water optimization:\n\n**Advanced Water Analysis:**\n• NDWI analysis for precise water stress detection\n• Soil moisture monitoring across your entire field\n• Evapotranspiration calculations\n• Water usage efficiency metrics\n\n**Smart Irrigation Features:**\n• Automated irrigation scheduling based on weather data\n• Zone-specific watering recommendations\n• Leak detection and water loss prevention\n• Integration with existing irrigation systems\n\n**ROI Benefits:**\n• Reduce water usage by 20-30%\n• Prevent over/under-watering damage\n• Optimize crop yields through precise water management\n\nAre you currently using any irrigation technology, or are you looking to implement a new system?";
       }
       
-      if (lowerMessage.includes('security') || lowerMessage.includes('surveillance') || lowerMessage.includes('threat')) {
-        return "🛡️ For security and surveillance needs, our Defense & Security solution provides:\n\n• Advanced threat detection\n• High-resolution surveillance\n• Mission planning capabilities\n• AI-powered intelligence analysis\n\nPerfect for military, border security, and critical infrastructure protection.";
+      if (lowerMessage.includes('security') || lowerMessage.includes('surveillance') || lowerMessage.includes('threat') || lowerMessage.includes('defense') || lowerMessage.includes('military')) {
+        return "🛡️ Security and defense operations require the most advanced geospatial intelligence! Our Defense & Security solutions provide:\n\n**PF-GEOTRACE Platform:**\n• Real-time GPS precision with sub-meter accuracy\n• Dynamic marker systems for tactical operations\n• Strategic buffer zones for security perimeters\n• Satellite imagery integration for comprehensive situational awareness\n\n**Advanced Capabilities:**\n• AI-powered threat detection and analysis\n• High-resolution surveillance with real-time updates\n• Mission planning with 3D terrain mapping\n• Rapid data export for intelligence reports\n• Multi-layer mapping for different operational scenarios\n\n**Applications:**\n• Military operations and tactical planning\n• Border security and surveillance\n• Critical infrastructure protection\n• Emergency response coordination\n• Counter-terrorism operations\n\nWhat type of security operations are you planning? Are you looking for real-time monitoring, threat assessment, or mission planning capabilities?";
       }
       
-      if (lowerMessage.includes('city') || lowerMessage.includes('urban') || lowerMessage.includes('planning')) {
-        return "🏙️ For urban development and city planning, our Urban Planning solution offers:\n\n• 3D city mapping\n• Infrastructure monitoring\n• Population analytics\n• Smart city development tools\n\nIdeal for city planners, developers, and municipal governments.";
+      if (lowerMessage.includes('city') || lowerMessage.includes('urban') || lowerMessage.includes('planning') || lowerMessage.includes('infrastructure')) {
+        return "🏙️ Urban planning requires sophisticated geospatial analysis! Our Urban Planning solution offers:\n\n**Comprehensive City Mapping:**\n• High-resolution 3D city models\n• Infrastructure monitoring and assessment\n• Population density and growth analytics\n• Traffic flow and transportation optimization\n\n**Smart City Development:**\n• Real-time infrastructure health monitoring\n• Predictive maintenance for city assets\n• Environmental impact assessment\n• Zoning and land use optimization\n\n**Data-Driven Insights:**\n• Demographic analysis and population trends\n• Economic development planning\n• Public service optimization\n• Emergency response planning\n\nAre you working on a specific urban development project? What's the scale - neighborhood, district, or city-wide planning?";
       }
       
-      if (lowerMessage.includes('climate') || lowerMessage.includes('environment') || lowerMessage.includes('deforestation')) {
-        return "🌍 For environmental monitoring and climate tracking, our Environmental Monitoring solution includes:\n\n• Climate change tracking\n• Deforestation monitoring\n• Resource management\n• Conservation analytics\n\nEssential for environmental agencies, researchers, and conservation organizations.";
+      if (lowerMessage.includes('climate') || lowerMessage.includes('environment') || lowerMessage.includes('deforestation') || lowerMessage.includes('conservation')) {
+        return "🌍 Environmental monitoring is crucial for our planet's future! Our Environmental Monitoring solution provides:\n\n**Climate Change Tracking:**\n• Carbon footprint monitoring and analysis\n• Deforestation detection and tracking\n• Temperature and precipitation pattern analysis\n• Sea level rise and coastal erosion monitoring\n\n**Conservation Management:**\n• Wildlife habitat mapping and protection\n• Biodiversity assessment and monitoring\n• Natural resource management\n• Environmental impact assessment\n\n**Sustainability Analytics:**\n• Renewable energy site assessment\n• Water resource management\n• Air quality monitoring\n• Ecosystem health indicators\n\nWhat environmental challenges are you addressing? Are you focused on climate monitoring, conservation efforts, or sustainability initiatives?";
       }
       
-      if (lowerMessage.includes('transport') || lowerMessage.includes('logistics') || lowerMessage.includes('traffic')) {
-        return "🚛 For transportation and logistics optimization, our Transportation & Logistics solution provides:\n\n• Route optimization\n• Real-time traffic analysis\n• Supply chain monitoring\n• Fleet management\n\nPerfect for shipping companies, logistics providers, and transportation agencies.";
+      if (lowerMessage.includes('road') || lowerMessage.includes('highway') || lowerMessage.includes('street') || lowerMessage.includes('pothole') || lowerMessage.includes('congestion') || lowerMessage.includes('traffic')) {
+        return "🛣️ Road infrastructure issues are exactly what our Transportation & Logistics solution addresses! Here's how we can help:\n\n**Road Infrastructure Monitoring:**\n• Real-time road condition assessment using satellite imagery\n• Pothole detection and severity analysis\n• Traffic congestion pattern analysis\n• Bridge and tunnel structural monitoring\n\n**Smart Traffic Management:**\n• AI-powered traffic flow optimization\n• Accident hotspot identification and prevention\n• Dynamic route planning to reduce congestion\n• Real-time traffic incident detection\n\n**Infrastructure Planning:**\n• Road maintenance scheduling based on usage patterns\n• Construction impact assessment\n• Alternative route planning during maintenance\n• Safety analysis and risk assessment\n\n**What specific road issues are you facing?**\n• Are you dealing with potholes, congestion, or safety concerns?\n• Is this for city roads, highways, or rural infrastructure?\n• Are you looking for monitoring, planning, or maintenance solutions?\n\nI can provide more targeted recommendations based on your specific needs!";
       }
       
-      if (lowerMessage.includes('energy') || lowerMessage.includes('power') || lowerMessage.includes('utility')) {
-        return "⚡ For energy and utility management, our Energy & Utilities solution offers:\n\n• Pipeline monitoring\n• Renewable energy site management\n• Grid performance analysis\n• Infrastructure inspection\n\nIdeal for energy companies, utilities, and infrastructure managers.";
+      if (lowerMessage.includes('transport') || lowerMessage.includes('logistics') || lowerMessage.includes('shipping')) {
+        return "🚛 Transportation and logistics optimization can significantly improve efficiency! Our Transportation & Logistics solution provides:\n\n**Route Optimization:**\n• AI-powered route planning with real-time traffic data\n• Multi-modal transportation analysis\n• Fuel efficiency optimization\n• Delivery time prediction and optimization\n\n**Supply Chain Intelligence:**\n• End-to-end supply chain monitoring\n• Warehouse location optimization\n• Inventory management with geospatial insights\n• Risk assessment for transportation routes\n\n**Fleet Management:**\n• Real-time vehicle tracking and monitoring\n• Maintenance scheduling based on usage patterns\n• Driver behavior analysis\n• Cost optimization across operations\n\nWhat's your transportation challenge? Are you optimizing delivery routes, managing a fleet, or planning supply chain logistics?";
       }
       
-      // Generic response if no specific match
+      if (lowerMessage.includes('energy') || lowerMessage.includes('power') || lowerMessage.includes('utility') || lowerMessage.includes('grid')) {
+        return "⚡ Energy infrastructure requires precise monitoring and management! Our Energy & Utilities solution offers:\n\n**Infrastructure Monitoring:**\n• Pipeline integrity monitoring and leak detection\n• Power grid performance analysis\n• Substation and transmission line monitoring\n• Renewable energy site assessment\n\n**Smart Grid Management:**\n• Real-time power distribution optimization\n• Demand forecasting and load balancing\n• Outage prediction and prevention\n• Energy efficiency optimization\n\n**Renewable Energy:**\n• Solar and wind farm site selection\n• Energy production forecasting\n• Grid integration planning\n• Environmental impact assessment\n\nAre you managing traditional energy infrastructure, renewable energy projects, or smart grid implementation?";
+      }
+      
+      // Context-aware follow-up responses
+      if (conversationContext.currentTopic === 'agriculture' && (lowerMessage.includes('yes') || lowerMessage.includes('sure') || lowerMessage.includes('tell me more'))) {
+        return "🌱 Excellent! Let me provide more detailed information about our Agriculture solutions:\n\n**Our Agriculture Package Includes:**\n• **Crop Health Assessment**: NDVI/NDWI analysis with 3D visualization\n• **Precision Farming**: Zone-specific recommendations for fertilizers, pesticides\n• **Weather Integration**: Real-time weather data for optimal farming decisions\n• **Yield Prediction**: AI-powered crop yield forecasting\n• **Cost Analysis**: ROI calculations and cost optimization\n\n**Implementation Process:**\n1. **Assessment**: We analyze your current farming setup\n2. **Data Collection**: Satellite imagery and ground truth data\n3. **Analysis**: AI-powered insights and recommendations\n4. **Implementation**: Step-by-step guidance for adoption\n5. **Monitoring**: Continuous support and optimization\n\n**Success Stories:**\nOur clients have seen:\n• 25-40% increase in crop yields\n• 30% reduction in water usage\n• 20% decrease in fertilizer costs\n• 50% reduction in crop losses\n\nWould you like to schedule a consultation with our agricultural specialists at Proforce Galaxies Limited?";
+      }
+      
+      // Peak Intelligence: Advanced solution recommendation
       if (bestMatch && maxScore > 0) {
-        return `🎯 Based on your query, I recommend our **${bestMatch.name}** solution:\n\n${bestMatch.description}\n\nThis solution is specifically designed to address challenges like yours. Would you like to learn more about this solution or explore other options?`;
+        conversationContext.currentTopic = bestMatch.key;
+        conversationContext.userNeeds.push(bestMatch.key);
+        
+        return generateAdvancedRecommendation(bestMatch, conversationContext, entities);
       }
       
-      // Default response
-      return "🤔 I'd be happy to help! PF-GEOINT offers solutions across multiple sectors:\n\n• 🌱 Agriculture - Crop health, precision farming\n• 🛡️ Defense & Security - Surveillance, threat detection\n• 🏙️ Urban Planning - City development, infrastructure\n• 🌍 Environmental - Climate monitoring, conservation\n• 🚛 Transportation - Logistics, route optimization\n• ⚡ Energy & Utilities - Pipeline monitoring, grid management\n\nWhat specific challenge are you trying to solve?";
+      // Context-aware default response
+      if (conversationContext.previousQuestions.length > 0) {
+        return `🤔 I want to make sure I understand your needs completely. ${conversationContext.currentTopic ? `I see we've been discussing ${conversationContext.currentTopic} solutions. ` : ''}Could you provide more specific details about:\n\n**Your Situation:**\n• What industry or sector are you in?\n• What specific challenges are you trying to solve?\n• What's the scale of your operation?\n• What's your current technology setup?\n\n**Your Goals:**\n• Are you looking for real-time monitoring, analysis, or planning tools?\n• What's your timeline for implementation?\n• What's your budget range?\n• Do you need training and support?\n\n**Proforce Galaxies Limited Solutions:**\n🌱 **Agriculture** - Crop health, precision farming, irrigation\n🛡️ **Defense & Security** - Tactical operations, surveillance, PF-GEOTRACE\n🏙️ **Urban Planning** - Smart city development, infrastructure\n🌍 **Environmental** - Climate tracking, conservation\n🚛 **Transportation** - Logistics optimization, fleet management\n⚡ **Energy & Utilities** - Grid monitoring, renewable energy\n\nThe more details you provide, the better I can assist you with the perfect solution!`;
+      }
+      
+      // Enhanced default response with intelligent suggestions
+      return "🤔 I'd be happy to help you find the perfect solution! PF-GEOINT by Proforce Galaxies Limited offers advanced geospatial intelligence across multiple sectors:\n\n**🌱 Agriculture** - Crop health monitoring, precision farming, irrigation optimization\n**🛡️ Defense & Security** - Tactical operations, surveillance, threat detection, PF-GEOTRACE\n**🏙️ Urban Planning** - Smart city development, infrastructure monitoring\n**🌍 Environmental** - Climate tracking, conservation, sustainability\n**🚛 Transportation** - Logistics optimization, fleet management, road infrastructure\n**⚡ Energy & Utilities** - Grid monitoring, renewable energy planning\n\n**To give you the best recommendation, could you tell me:**\n• What industry or sector are you in?\n• What specific challenges are you trying to solve?\n• Are you looking for real-time monitoring, analysis, or planning tools?\n• What's the scale of your operation?\n\n**About Proforce Galaxies Limited:**\nWe're a leading geospatial intelligence company with over 10 years of experience in satellite imagery analysis, AI-powered solutions, and custom geospatial applications.\n\nThe more details you provide, the better I can assist you!";
     }
 
     // Initialize chatbot on page load
