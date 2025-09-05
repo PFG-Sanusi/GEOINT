@@ -171,6 +171,140 @@
       transform: translateY(-2px);
     }
     .back-button .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 600ms linear; background: rgba(255,255,255,0.7); pointer-events: none; }
+    
+    /* AI Chatbot Styles */
+    .chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      width: 350px;
+      max-height: 500px;
+      background: rgba(17, 30, 54, 0.95);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    .chatbot-container.open {
+      transform: translateY(0);
+    }
+    .chatbot-header {
+      background: linear-gradient(90deg, #00d4ff, #7b00ff);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 16px 16px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .chatbot-header h3 {
+      margin: 0;
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+    .chatbot-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2em;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .chatbot-messages {
+      height: 300px;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .chatbot-message {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.9em;
+      line-height: 1.4;
+    }
+    .chatbot-message.user {
+      background: rgba(0, 212, 255, 0.2);
+      color: #e0e0e0;
+      align-self: flex-end;
+      border: 1px solid rgba(0, 212, 255, 0.3);
+    }
+    .chatbot-message.bot {
+      background: rgba(255, 255, 255, 0.1);
+      color: #bcd1e6;
+      align-self: flex-start;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .chatbot-input-container {
+      padding: 12px 16px;
+      border-top: 1px solid rgba(0, 212, 255, 0.2);
+      display: flex;
+      gap: 8px;
+    }
+    .chatbot-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 20px;
+      padding: 8px 14px;
+      color: #e0e0e0;
+      font-size: 0.9em;
+      outline: none;
+    }
+    .chatbot-input::placeholder {
+      color: #a0b0c0;
+    }
+    .chatbot-send {
+      background: linear-gradient(90deg, #00d4ff, #7b00ff);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1em;
+      transition: transform 0.2s ease;
+    }
+    .chatbot-send:hover {
+      transform: scale(1.05);
+    }
+    .chatbot-send:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .chatbot-typing {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      max-width: 80px;
+      align-self: flex-start;
+    }
+    .chatbot-typing span {
+      width: 6px;
+      height: 6px;
+      background: #00d4ff;
+      border-radius: 50%;
+      animation: typing 1.4s infinite ease-in-out;
+    }
+    .chatbot-typing span:nth-child(2) { animation-delay: 0.2s; }
+    .chatbot-typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-10px); }
+    }
     .image-container {
       display: flex;
       justify-content: space-around;
@@ -512,6 +646,28 @@
     <span class="close" onclick="closeModal()">×</span>
     <img id="modalImg" src="" alt="Expanded view" />
   </div>
+
+  <!-- AI Chatbot -->
+  <div id="chatbot" class="chatbot-container">
+    <div class="chatbot-header" onclick="toggleChatbot()">
+      <h3>🤖 PF-GEOINT Assistant</h3>
+      <button class="chatbot-toggle" id="chatbotToggle">−</button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages">
+      <div class="chatbot-message bot">
+        👋 Hello! I'm your PF-GEOINT assistant. I can help you find the right geospatial solutions for your needs. What can I help you with today?
+      </div>
+    </div>
+    <div class="chatbot-typing" id="chatbotTyping">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="chatbot-input-container">
+      <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Ask about our solutions..." onkeypress="handleChatbotKeypress(event)">
+      <button class="chatbot-send" id="chatbotSend" onclick="sendChatbotMessage()">→</button>
+    </div>
+  </div>
   <script>
     function learnMore(sector) {
       if (sector === 'agriculture') {
@@ -710,6 +866,168 @@
         ndwiView3D = true;
       }
     }
+
+    // AI Chatbot functionality
+    let chatbotOpen = false;
+    const products = {
+      'agriculture': {
+        name: 'Agriculture',
+        description: 'Boost yields with precision farming, soil analysis, and real-time weather monitoring for smarter agriculture.',
+        keywords: ['crop', 'farm', 'agriculture', 'yield', 'soil', 'weather', 'irrigation', 'vegetation', 'ndvi', 'ndwi', 'dying', 'stress', 'health']
+      },
+      'defense': {
+        name: 'Defense & Security',
+        description: 'Advanced surveillance, threat detection, and mission planning with high-resolution imagery and AI-powered insights.',
+        keywords: ['defense', 'security', 'surveillance', 'threat', 'mission', 'military', 'monitoring', 'intelligence']
+      },
+      'urban-planning': {
+        name: 'Urban Planning',
+        description: 'Design future-ready cities with 3D mapping, infrastructure monitoring, and population analytics.',
+        keywords: ['urban', 'city', 'planning', 'infrastructure', 'population', 'development', 'mapping', '3d']
+      },
+      'environment': {
+        name: 'Environmental Monitoring',
+        description: 'Track climate change, deforestation, and resources with cutting-edge GEOINT analytics.',
+        keywords: ['environment', 'climate', 'deforestation', 'resources', 'conservation', 'monitoring', 'change']
+      },
+      'transportation': {
+        name: 'Transportation & Logistics',
+        description: 'Optimize routes and enhance logistics with real-time traffic analysis and geospatial data.',
+        keywords: ['transportation', 'logistics', 'traffic', 'routes', 'shipping', 'delivery', 'optimization']
+      },
+      'energy': {
+        name: 'Energy & Utilities',
+        description: 'Monitor pipelines, renewable energy sites, and grid performance with precision geospatial tools.',
+        keywords: ['energy', 'utilities', 'pipeline', 'renewable', 'grid', 'power', 'electricity', 'oil', 'gas']
+      }
+    };
+
+    function toggleChatbot() {
+      const chatbot = document.getElementById('chatbot');
+      const toggle = document.getElementById('chatbotToggle');
+      
+      chatbotOpen = !chatbotOpen;
+      chatbot.classList.toggle('open', chatbotOpen);
+      toggle.textContent = chatbotOpen ? '−' : '+';
+    }
+
+    function handleChatbotKeypress(event) {
+      if (event.key === 'Enter') {
+        sendChatbotMessage();
+      }
+    }
+
+    function sendChatbotMessage() {
+      const input = document.getElementById('chatbotInput');
+      const message = input.value.trim();
+      
+      if (!message) return;
+      
+      // Add user message
+      addChatbotMessage(message, 'user');
+      input.value = '';
+      
+      // Show typing indicator
+      showTypingIndicator();
+      
+      // Process message after short delay
+      setTimeout(() => {
+        hideTypingIndicator();
+        const response = processChatbotMessage(message);
+        addChatbotMessage(response, 'bot');
+      }, 800 + Math.random() * 400); // Random delay for natural feel
+    }
+
+    function addChatbotMessage(text, sender) {
+      const messagesContainer = document.getElementById('chatbotMessages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `chatbot-message ${sender}`;
+      messageDiv.textContent = text;
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+      document.getElementById('chatbotTyping').style.display = 'flex';
+      document.getElementById('chatbotMessages').scrollTop = document.getElementById('chatbotMessages').scrollHeight;
+    }
+
+    function hideTypingIndicator() {
+      document.getElementById('chatbotTyping').style.display = 'none';
+    }
+
+    function processChatbotMessage(message) {
+      const lowerMessage = message.toLowerCase();
+      
+      // Greeting responses
+      if (lowerMessage.includes('hi') || lowerMessage.includes('hello') || lowerMessage.includes('hey')) {
+        return "Hello! 👋 I'm here to help you find the perfect PF-GEOINT solution for your needs. What challenges are you facing?";
+      }
+      
+      // Find best matching product
+      let bestMatch = null;
+      let maxScore = 0;
+      
+      for (const [key, product] of Object.entries(products)) {
+        let score = 0;
+        for (const keyword of product.keywords) {
+          if (lowerMessage.includes(keyword)) {
+            score += 1;
+          }
+        }
+        if (score > maxScore) {
+          maxScore = score;
+          bestMatch = product;
+        }
+      }
+      
+      // Specific responses for common queries
+      if (lowerMessage.includes('crop') && (lowerMessage.includes('dying') || lowerMessage.includes('problem') || lowerMessage.includes('issue'))) {
+        return "🌱 I understand you're having crop issues! Our Agriculture solution is perfect for you. It includes:\n\n• Crop Health Assessment with NDVI/NDWI analysis\n• Real-time monitoring of vegetation stress\n• Precision farming recommendations\n• Weather-based irrigation guidance\n\nThis will help identify why your crops are struggling and provide actionable solutions. Would you like to explore our Agriculture solutions?";
+      }
+      
+      if (lowerMessage.includes('water') || lowerMessage.includes('irrigation') || lowerMessage.includes('moisture')) {
+        return "💧 For water management and irrigation optimization, our Agriculture solution offers:\n\n• NDWI (Normalized Difference Water Index) analysis\n• Soil moisture monitoring\n• Irrigation scheduling recommendations\n• Water stress detection\n\nThis helps optimize water usage and prevent over/under-watering. Check out our Agriculture solutions!";
+      }
+      
+      if (lowerMessage.includes('security') || lowerMessage.includes('surveillance') || lowerMessage.includes('threat')) {
+        return "🛡️ For security and surveillance needs, our Defense & Security solution provides:\n\n• Advanced threat detection\n• High-resolution surveillance\n• Mission planning capabilities\n• AI-powered intelligence analysis\n\nPerfect for military, border security, and critical infrastructure protection.";
+      }
+      
+      if (lowerMessage.includes('city') || lowerMessage.includes('urban') || lowerMessage.includes('planning')) {
+        return "🏙️ For urban development and city planning, our Urban Planning solution offers:\n\n• 3D city mapping\n• Infrastructure monitoring\n• Population analytics\n• Smart city development tools\n\nIdeal for city planners, developers, and municipal governments.";
+      }
+      
+      if (lowerMessage.includes('climate') || lowerMessage.includes('environment') || lowerMessage.includes('deforestation')) {
+        return "🌍 For environmental monitoring and climate tracking, our Environmental Monitoring solution includes:\n\n• Climate change tracking\n• Deforestation monitoring\n• Resource management\n• Conservation analytics\n\nEssential for environmental agencies, researchers, and conservation organizations.";
+      }
+      
+      if (lowerMessage.includes('transport') || lowerMessage.includes('logistics') || lowerMessage.includes('traffic')) {
+        return "🚛 For transportation and logistics optimization, our Transportation & Logistics solution provides:\n\n• Route optimization\n• Real-time traffic analysis\n• Supply chain monitoring\n• Fleet management\n\nPerfect for shipping companies, logistics providers, and transportation agencies.";
+      }
+      
+      if (lowerMessage.includes('energy') || lowerMessage.includes('power') || lowerMessage.includes('utility')) {
+        return "⚡ For energy and utility management, our Energy & Utilities solution offers:\n\n• Pipeline monitoring\n• Renewable energy site management\n• Grid performance analysis\n• Infrastructure inspection\n\nIdeal for energy companies, utilities, and infrastructure managers.";
+      }
+      
+      // Generic response if no specific match
+      if (bestMatch && maxScore > 0) {
+        return `🎯 Based on your query, I recommend our **${bestMatch.name}** solution:\n\n${bestMatch.description}\n\nThis solution is specifically designed to address challenges like yours. Would you like to learn more about this solution or explore other options?`;
+      }
+      
+      // Default response
+      return "🤔 I'd be happy to help! PF-GEOINT offers solutions across multiple sectors:\n\n• 🌱 Agriculture - Crop health, precision farming\n• 🛡️ Defense & Security - Surveillance, threat detection\n• 🏙️ Urban Planning - City development, infrastructure\n• 🌍 Environmental - Climate monitoring, conservation\n• 🚛 Transportation - Logistics, route optimization\n• ⚡ Energy & Utilities - Pipeline monitoring, grid management\n\nWhat specific challenge are you trying to solve?";
+    }
+
+    // Initialize chatbot on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Auto-open chatbot after 3 seconds
+      setTimeout(() => {
+        if (!chatbotOpen) {
+          toggleChatbot();
+        }
+      }, 3000);
+    });
   </script>
 </body>
 </html>
