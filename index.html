@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PF-GEOINT Solutions</title>
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+      color: #e0e0e0;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    .header {
+      text-align: center;
+      padding: 60px 0;
+      background: linear-gradient(180deg, #2a4d8e 0%, #1b263b 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 3.5em;
+      font-weight: 800;
+      color: #00d4ff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+      animation: fadeIn 1s ease-in-out;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      opacity: 0.3;
+    }
+    .intro {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      margin: 20px 0;
+      animation: slideIn 0.8s ease-out;
+    }
+    .intro p {
+      font-size: 1.3em;
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.6;
+      color: #b0c4de;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+      padding: 30px 0;
+    }
+    .product-card {
+      background: #1e2a44;
+      border-radius: 12px;
+      padding: 25px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+    .product-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+    }
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #00d4ff, #ff00ff);
+      transition: width 0.3s ease;
+    }
+    .product-card:hover::before {
+      width: 100%;
+    }
+    .product-card h3 {
+      margin: 0 0 15px;
+      font-size: 1.6em;
+      color: #00d4ff;
+      font-weight: 600;
+    }
+    .product-card p {
+      font-size: 0.95em;
+      color: #a0b0c0;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .product-card button {
+      background: linear-gradient(90deg, #00d4ff, #7b00ff);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 500;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+    .product-card button:hover {
+      background: linear-gradient(90deg, #7b00ff, #00d4ff);
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+      transform: scale(1.05);
+    }
+    .back-button {
+      background: linear-gradient(90deg, #ff00ff, #00d4ff);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 500;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+    .back-button:hover {
+      background: linear-gradient(90deg, #00d4ff, #ff00ff);
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+      transform: scale(1.05);
+    }
+    .image-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .image-card {
+      background: #1e2a44;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      max-width: 45%;
+    }
+    .image-card img {
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2);
+    }
+    .image-card p.note {
+      font-size: 0.9em;
+      color: #ff6666;
+      margin-top: 10px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 2.2em;
+      }
+      .intro p {
+        font-size: 1.1em;
+      }
+      .products {
+        grid-template-columns: 1fr;
+      }
+      .product-card {
+        padding: 20px;
+      }
+      .image-card {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>PF-GEOINT Solutions</h1>
+  </div>
+  <div class="container">
+    <div class="intro">
+      <p>Discover PF-GEOINT, our state-of-the-art Geospatial Intelligence platform. Powered by advanced satellite imagery, AI-driven analytics, and real-time data, our solutions transform decision-making across industries.</p>
+    </div>
+    <div id="main-products" class="products">
+      <div class="product-card">
+        <h3>Defense & Security</h3>
+        <p>Advanced surveillance, threat detection, and mission planning with high-resolution imagery and AI-powered insights.</p>
+        <button onclick="learnMore('defense')">Explore Now</button>
+      </div>
+      <div class="product-card">
+        <h3>Agriculture</h3>
+        <p>Boost yields with precision farming, soil analysis, and real-time weather monitoring for smarter agriculture.</p>
+        <button onclick="learnMore('agriculture')">Explore Now</button>
+      </div>
+      <div class="product-card">
+        <h3>Urban Planning</h3>
+        <p>Design future-ready cities with 3D mapping, infrastructure monitoring, and population analytics.</p>
+        <button onclick="learnMore('urban-planning')">Explore Now</button>
+      </div>
+      <div class="product-card">
+        <h3>Environmental Monitoring</h3>
+        <p>Track climate change, deforestation, and resources with cutting-edge GEOINT analytics.</p>
+        <button onclick="learnMore('environment')">Explore Now</button>
+      </div>
+      <div class="product-card">
+        <h3>Transportation & Logistics</h3>
+        <p>Optimize routes and enhance logistics with real-time traffic analysis and geospatial data.</p>
+        <button onclick="learnMore('transportation')">Explore Now</button>
+      </div>
+      <div class="product-card">
+        <h3>Energy & Utilities</h3>
+        <p>Monitor pipelines, renewable energy sites, and grid performance with precision geospatial tools.</p>
+        <button onclick="learnMore('energy')">Explore Now</button>
+      </div>
+    </div>
+
+    <!-- Agriculture Solutions Section -->
+    <div id="agriculture-solutions" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">Agriculture Solutions</h2>
+      <div class="products">
+        <div class="product-card">
+          <h3>Crop Health Assessment</h3>
+          <p>Evaluate crop vitality and water stress using advanced indices like NDVI and NDWI for your area of interest.</p>
+          <button onclick="showCropHealth()">View Details</button>
+        </div>
+        <!-- Add more agriculture solutions here as needed -->
+      </div>
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToMain()">Back to Sectors</button>
+      </div>
+    </div>
+
+    <!-- Crop Health Assessment Section -->
+    <div id="crop-health" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">Crop Health Assessment</h2>
+      <div class="image-container">
+        <div class="image-card">
+          <h3>NDVI Map</h3>
+          <p>Normalized Difference Vegetation Index showing crop vigor.</p>
+          <img src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDVI.tif" alt="NDVI Map">
+          <p class="note">Note: TIFF files are not directly displayable in browsers. Please convert to PNG/JPEG for web viewing.</p>
+        </div>
+        <div class="image-card">
+          <h3>NDWI Map</h3>
+          <p>Normalized Difference Water Index indicating water stress.</p>
+          <img src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/NDWI.tif" alt="NDWI Map">
+          <p class="note">Note: TIFF files are not directly displayable in browsers. Please convert to PNG/JPEG for web viewing.</p>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToAgriculture()">Back to Agriculture Solutions</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    function learnMore(sector) {
+      if (sector === 'agriculture') {
+        document.getElementById('main-products').style.display = 'none';
+        document.getElementById('agriculture-solutions').style.display = 'block';
+      } else {
+        alert(`Explore PF-GEOINT solutions for ${sector}!`);
+        // Replace with actual logic for other sectors
+      }
+    }
+
+    function showCropHealth() {
+      document.getElementById('agriculture-solutions').style.display = 'none';
+      document.getElementById('crop-health').style.display = 'block';
+    }
+
+    function backToAgriculture() {
+      document.getElementById('crop-health').style.display = 'none';
+      document.getElementById('agriculture-solutions').style.display = 'block';
+    }
+
+    function backToMain() {
+      document.getElementById('agriculture-solutions').style.display = 'none';
+      document.getElementById('main-products').style.display = 'grid';
+    }
+  </script>
+</body>
+</html>
