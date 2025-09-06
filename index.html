@@ -3,41 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PF-GEOINT Solutions</title>
+  <title>PF-GEOINT</title>
   <style>
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700;800&display=swap');
+    
+    * {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #0d1b2a 100%);
-      background-size: 200% 200%;
-      animation: gradientShift 12s ease-in-out infinite;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Exo 2', -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(123, 0, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(0, 255, 150, 0.05) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%);
+      background-size: 400% 400%, 300% 300%, 200% 200%, 100% 100%;
+      animation: 
+        gradientShift 15s ease-in-out infinite,
+        floatingOrbs 20s ease-in-out infinite;
       color: #e0e0e0;
       overflow-x: hidden;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 212, 255, 0.03) 2px,
+          rgba(0, 212, 255, 0.03) 4px
+        );
+      pointer-events: none;
+      z-index: 1;
     }
     .container {
       max-width: 1500px;
       margin: 0 auto;
       padding: 30px;
+      position: relative;
+      z-index: 2;
     }
+    
     .header {
       text-align: center;
-      padding: 72px 0;
-      background: radial-gradient(1200px 400px at 50% -10%, rgba(0,212,255,0.15), transparent 70%),
-                  linear-gradient(180deg, #14233d 0%, #0f1b2e 100%);
+      padding: 100px 0;
+      background: 
+        radial-gradient(ellipse 1200px 600px at 50% -20%, rgba(0,212,255,0.2), transparent 60%),
+        radial-gradient(ellipse 800px 400px at 50% 120%, rgba(123,0,255,0.15), transparent 70%),
+        linear-gradient(180deg, rgba(20,35,61,0.9) 0%, rgba(15,27,46,0.95) 50%, rgba(10,10,10,0.98) 100%);
       position: relative;
       overflow: hidden;
-      border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+      border-bottom: 2px solid transparent;
+      border-image: linear-gradient(90deg, transparent, rgba(0,212,255,0.5), transparent) 1;
+      backdrop-filter: blur(10px);
     }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 20px,
+          rgba(0,212,255,0.05) 20px,
+          rgba(0,212,255,0.05) 40px
+        );
+      animation: scanLines 3s linear infinite;
+    }
+    
     .header h1 {
       margin: 0;
-      font-size: 3.5em;
-      font-weight: 800;
-      color: #00d4ff;
+      font-family: 'Orbitron', monospace;
+      font-size: 4.2em;
+      font-weight: 900;
+      background: linear-gradient(45deg, #00d4ff, #7b00ff, #00ff96, #ff6b35);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-      animation: fadeIn 1s ease-in-out;
+      letter-spacing: 4px;
+      text-shadow: 
+        0 0 20px rgba(0, 212, 255, 0.8),
+        0 0 40px rgba(123, 0, 255, 0.6),
+        0 0 60px rgba(0, 255, 150, 0.4);
+      animation: 
+        fadeIn 1.5s ease-in-out,
+        gradientShift 4s ease-in-out infinite,
+        textGlow 2s ease-in-out infinite alternate;
+      position: relative;
+      z-index: 3;
+    }
+    
+    .header h1::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent, rgba(0,212,255,0.1), transparent);
+      animation: shimmer 2s ease-in-out infinite;
+      z-index: -1;
     }
     .header::before {
       content: '';
@@ -83,63 +168,143 @@
       padding: 30px 0;
     }
     .product-card {
-      background: rgba(17, 30, 54, 0.55);
-      border-radius: 16px;
-      padding: 28px;
+      background: 
+        linear-gradient(135deg, rgba(17, 30, 54, 0.8) 0%, rgba(25, 45, 75, 0.6) 50%, rgba(15, 25, 45, 0.9) 100%);
+      border-radius: 20px;
+      padding: 32px;
       text-align: center;
-      transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
+      transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(0, 212, 255, 0.15);
-      backdrop-filter: blur(8px);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      border: 2px solid transparent;
+      backdrop-filter: blur(20px);
+      cursor: pointer;
     }
-    .product-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 18px 40px rgba(0, 212, 255, 0.25);
-      border-color: rgba(0, 212, 255, 0.35);
-    }
+    
     .product-card::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: radial-gradient(600px 200px at 50% -60%, rgba(0,212,255,0.12), transparent 60%);
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(135deg, rgba(0,212,255,0.1) 0%, transparent 50%, rgba(123,0,255,0.1) 100%);
       opacity: 0;
-      transition: opacity 300ms ease;
+      transition: opacity 400ms ease;
+      z-index: 1;
     }
+    
+    .product-card::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #00d4ff, #7b00ff, #00ff96, #ff6b35);
+      border-radius: 22px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 400ms ease;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 
+        0 15px 40px rgba(0, 212, 255, 0.15),
+        0 0 20px rgba(123, 0, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+    
     .product-card:hover::before {
-      opacity: 1;
+      opacity: 0.6;
+    }
+    
+    .product-card:hover::after {
+      opacity: 0.3;
+    }
+    
+    .product-card:hover .product-card h3 {
+      color: #00d4ff;
+      text-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
     }
     .product-card h3 {
-      margin: 0 0 15px;
-      font-size: 1.6em;
-      color: #00d4ff;
-      font-weight: 600;
+      margin: 0 0 20px;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.8em;
+      font-weight: 700;
+      background: linear-gradient(45deg, #00d4ff, #7b00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+      transition: all 400ms ease;
+      position: relative;
+      z-index: 2;
     }
+    
     .product-card p {
-      font-size: 0.95em;
-      color: #a0b0c0;
-      line-height: 1.5;
-      margin-bottom: 20px;
+      font-size: 1em;
+      color: #b8c5d1;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      font-weight: 400;
+      position: relative;
+      z-index: 2;
     }
+    
     .product-card button {
       position: relative;
-      background: linear-gradient(90deg, #00d4ff, #7b00ff);
+      background: linear-gradient(135deg, #00d4ff 0%, #7b00ff 50%, #00ff96 100%);
+      background-size: 200% 200%;
       color: white;
       border: none;
-      padding: 12px 26px;
-      border-radius: 28px;
+      padding: 14px 32px;
+      border-radius: 35px;
       cursor: pointer;
-      font-size: 1em;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.1em;
       font-weight: 600;
       text-transform: uppercase;
-      transition: transform 200ms ease, box-shadow 200ms ease;
-      box-shadow: 0 6px 18px rgba(0, 212, 255, 0.25);
+      letter-spacing: 1px;
+      transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 
+        0 8px 25px rgba(0, 212, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
       overflow: hidden;
+      z-index: 2;
     }
+    
+    .product-card button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 600ms ease;
+    }
+    
     .product-card button:hover {
-      box-shadow: 0 10px 26px rgba(0, 212, 255, 0.35);
-      transform: translateY(-2px);
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 
+        0 10px 25px rgba(0, 212, 255, 0.2),
+        0 0 15px rgba(123, 0, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      background-position: 100% 0;
+    }
+    
+    .product-card button:hover::before {
+      left: 100%;
+    }
+    
+    .product-card button:active {
+      transform: translateY(-1px) scale(1.02);
     }
     .product-card button:active { transform: translateY(0); }
     .product-card button .ripple {
@@ -178,132 +343,298 @@
       bottom: 20px;
       right: 20px;
       z-index: 1000;
-      width: 350px;
-      max-height: 500px;
-      background: rgba(17, 30, 54, 0.95);
-      border: 1px solid rgba(0, 212, 255, 0.3);
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      width: 380px;
+      max-height: 600px;
+      background: 
+        linear-gradient(135deg, rgba(17, 30, 54, 0.95) 0%, rgba(25, 45, 75, 0.9) 50%, rgba(15, 25, 45, 0.98) 100%);
+      border: 2px solid transparent;
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      box-shadow: 
+        0 15px 40px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(0, 212, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
       transform: translateY(100%);
-      transition: transform 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
     }
+    
+    .chatbot-container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #00d4ff, #7b00ff, #00ff96, #ff6b35);
+      border-radius: 22px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    
+    .chatbot-container:hover::before {
+      opacity: 1;
+    }
+    
     .chatbot-container.open {
       transform: translateY(0);
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(0, 212, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
+    
     .chatbot-header {
-      background: linear-gradient(90deg, #00d4ff, #7b00ff);
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.8) 0%, rgba(123, 0, 255, 0.6) 50%, rgba(0, 255, 150, 0.4) 100%);
+      background-size: 200% 200%;
       color: white;
-      padding: 12px 16px;
-      border-radius: 16px 16px 0 0;
+      padding: 16px 20px;
+      border-radius: 18px 18px 0 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      animation: gradientShift 6s ease-in-out infinite;
+    }
+    
+    .chatbot-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: shimmer 4s ease-in-out infinite;
     }
     .chatbot-header h3 {
       margin: 0;
-      font-size: 1.1em;
-      font-weight: 600;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.2em;
+      font-weight: 700;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+      position: relative;
+      z-index: 2;
     }
+    
     .chatbot-toggle {
-      background: none;
+      background: rgba(255, 255, 255, 0.15);
       border: none;
       color: white;
-      font-size: 1.2em;
+      font-size: 1.3em;
       cursor: pointer;
-      padding: 4px;
-    }
-    .chatbot-messages {
-      height: 300px;
-      overflow-y: auto;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .chatbot-message {
-      max-width: 80%;
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-size: 0.9em;
-      line-height: 1.4;
-    }
-    .chatbot-message.user {
-      background: rgba(0, 212, 255, 0.2);
-      color: #e0e0e0;
-      align-self: flex-end;
-      border: 1px solid rgba(0, 212, 255, 0.3);
-    }
-    .chatbot-message.bot {
-      background: rgba(255, 255, 255, 0.1);
-      color: #bcd1e6;
-      align-self: flex-start;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .chatbot-input-container {
-      padding: 12px 16px;
-      border-top: 1px solid rgba(0, 212, 255, 0.2);
-      display: flex;
-      gap: 8px;
-    }
-    .chatbot-input {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(0, 212, 255, 0.3);
-      border-radius: 20px;
-      padding: 8px 14px;
-      color: #e0e0e0;
-      font-size: 0.9em;
-      outline: none;
-    }
-    .chatbot-input::placeholder {
-      color: #a0b0c0;
-    }
-    .chatbot-send {
-      background: linear-gradient(90deg, #00d4ff, #7b00ff);
-      border: none;
+      padding: 8px;
       border-radius: 50%;
       width: 36px;
       height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .chatbot-toggle:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: scale(1.05);
+    }
+    
+    .chatbot-messages {
+      height: 350px;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: 
+        radial-gradient(circle at 50% 0%, rgba(0, 212, 255, 0.02) 0%, transparent 50%);
+    }
+    
+    .chatbot-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .chatbot-messages::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+    
+    .chatbot-messages::-webkit-scrollbar-thumb {
+      background: linear-gradient(45deg, rgba(0, 212, 255, 0.6), rgba(123, 0, 255, 0.4));
+      border-radius: 3px;
+    }
+    
+    .chatbot-message {
+      max-width: 85%;
+      padding: 14px 18px;
+      border-radius: 18px;
+      font-size: 0.95em;
+      line-height: 1.5;
+      position: relative;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    
+    .chatbot-message.user {
+      background: 
+        linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(123, 0, 255, 0.1) 100%);
+      color: #e0e0e0;
+      align-self: flex-end;
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2);
+    }
+    
+    .chatbot-message.bot {
+      background: 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 212, 255, 0.05) 100%);
+      color: #bcd1e6;
+      align-self: flex-start;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .chatbot-message:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(0, 212, 255, 0.15);
+    }
+    .chatbot-input-container {
+      padding: 16px 20px;
+      border-top: 2px solid transparent;
+      border-image: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.15), transparent) 1;
+      display: flex;
+      gap: 12px;
+      background: 
+        radial-gradient(circle at 50% 100%, rgba(0, 212, 255, 0.02) 0%, transparent 70%);
+    }
+    
+    .chatbot-input {
+      flex: 1;
+      background: 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 212, 255, 0.05) 100%);
+      border: 2px solid rgba(0, 212, 255, 0.3);
+      border-radius: 25px;
+      padding: 12px 18px;
+      color: #e0e0e0;
+      font-size: 0.95em;
+      font-family: 'Exo 2', sans-serif;
+      outline: none;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    
+    .chatbot-input:focus {
+      border-color: rgba(0, 212, 255, 0.4);
+      box-shadow: 
+        0 0 10px rgba(0, 212, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      transform: translateY(-1px);
+    }
+    
+    .chatbot-input::placeholder {
+      color: #a0b0c0;
+      font-style: italic;
+    }
+    
+    .chatbot-send {
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.8) 0%, rgba(123, 0, 255, 0.6) 50%, rgba(0, 255, 150, 0.4) 100%);
+      background-size: 200% 200%;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
       color: white;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1em;
-      transition: transform 0.2s ease;
+      font-size: 1.2em;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 
+        0 3px 10px rgba(0, 212, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      position: relative;
+      overflow: hidden;
     }
+    
+    .chatbot-send::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+    
     .chatbot-send:hover {
-      transform: scale(1.05);
+      transform: scale(1.03) translateY(-1px);
+      box-shadow: 
+        0 4px 15px rgba(0, 212, 255, 0.2),
+        0 0 10px rgba(123, 0, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      background-position: 100% 0;
     }
+    
+    .chatbot-send:hover::before {
+      left: 100%;
+    }
+    
+    .chatbot-send:active {
+      transform: scale(1.05) translateY(-1px);
+    }
+    
     .chatbot-send:disabled {
       opacity: 0.5;
       cursor: not-allowed;
       transform: none;
+      background: rgba(128, 128, 128, 0.3);
     }
     .chatbot-typing {
       display: none;
       align-items: center;
-      gap: 4px;
-      padding: 10px 14px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      max-width: 80px;
+      gap: 6px;
+      padding: 12px 18px;
+      background: 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 212, 255, 0.05) 100%);
+      border-radius: 18px;
+      max-width: 100px;
       align-self: flex-start;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
     }
+    
     .chatbot-typing span {
-      width: 6px;
-      height: 6px;
-      background: #00d4ff;
+      width: 8px;
+      height: 8px;
+      background: linear-gradient(45deg, rgba(0, 212, 255, 0.8), rgba(123, 0, 255, 0.6));
       border-radius: 50%;
       animation: typing 1.4s infinite ease-in-out;
+      box-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
     }
-    .chatbot-typing span:nth-child(2) { animation-delay: 0.2s; }
-    .chatbot-typing span:nth-child(3) { animation-delay: 0.4s; }
+    
+    .chatbot-typing span:nth-child(2) { 
+      animation-delay: 0.2s; 
+    }
+    
+    .chatbot-typing span:nth-child(3) { 
+      animation-delay: 0.4s; 
+    }
+    
     @keyframes typing {
-      0%, 60%, 100% { transform: translateY(0); }
-      30% { transform: translateY(-10px); }
+      0%, 60%, 100% { 
+        transform: translateY(0) scale(1); 
+        opacity: 0.7;
+      }
+      30% { 
+        transform: translateY(-12px) scale(1.2); 
+        opacity: 1;
+      }
     }
     .image-container {
       display: flex;
@@ -471,20 +802,132 @@
       to { opacity: 1; transform: translateY(0); }
     }
     @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0%, 100% { 
+        background-position: 0% 50%, 0% 0%, 0% 0%, 0% 0%; 
+      }
+      25% { 
+        background-position: 100% 50%, 50% 0%, 25% 0%, 0% 0%; 
+      }
+      50% { 
+        background-position: 50% 100%, 100% 50%, 50% 25%, 0% 0%; 
+      }
+      75% { 
+        background-position: 0% 50%, 50% 100%, 75% 50%, 0% 0%; 
+      }
     }
+    
+    @keyframes floatingOrbs {
+      0%, 100% { 
+        background-position: 0% 0%, 100% 100%, 50% 50%, 0% 0%; 
+      }
+      25% { 
+        background-position: 100% 0%, 0% 100%, 25% 75%, 0% 0%; 
+      }
+      50% { 
+        background-position: 100% 100%, 0% 0%, 75% 25%, 0% 0%; 
+      }
+      75% { 
+        background-position: 0% 100%, 100% 0%, 25% 75%, 0% 0%; 
+      }
+    }
+    
+    @keyframes textGlow {
+      0% { 
+        text-shadow: 
+          0 0 20px rgba(0, 212, 255, 0.8),
+          0 0 40px rgba(123, 0, 255, 0.6),
+          0 0 60px rgba(0, 255, 150, 0.4);
+      }
+      100% { 
+        text-shadow: 
+          0 0 30px rgba(0, 212, 255, 1),
+          0 0 60px rgba(123, 0, 255, 0.8),
+          0 0 90px rgba(0, 255, 150, 0.6);
+      }
+    }
+    
+    @keyframes shimmer {
+      0% { 
+        transform: translateX(-100%) skewX(-15deg); 
+      }
+      100% { 
+        transform: translateX(200%) skewX(-15deg); 
+      }
+    }
+    
+    @keyframes scanLines {
+      0% { 
+        transform: translateY(-100%); 
+      }
+      100% { 
+        transform: translateY(100vh); 
+      }
+    }
+    
     @keyframes floatBlob {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(40px, 30px) scale(1.08); }
+      0%, 100% { 
+        transform: translate(0, 0) rotate(0deg) scale(1); 
+      }
+      25% { 
+        transform: translate(40px, -40px) rotate(90deg) scale(1.1); 
+      }
+      50% { 
+        transform: translate(-30px, 30px) rotate(180deg) scale(0.9); 
+      }
+      75% { 
+        transform: translate(20px, -20px) rotate(270deg) scale(1.05); 
+      }
     }
+    
     @keyframes ripple {
-      to { transform: scale(4); opacity: 0; }
+      0% { 
+        transform: scale(0); 
+        opacity: 1; 
+      }
+      100% { 
+        transform: scale(4); 
+        opacity: 0; 
+      }
     }
+    
     @keyframes zoomIn {
-      from { opacity: 0; transform: translate(-50%, -50%) scale(0.92); }
-      to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      from { 
+        opacity: 0; 
+        transform: translate(-50%, -50%) scale(0.92); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translate(-50%, -50%) scale(1); 
+      }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { 
+        transform: scale(1); 
+        opacity: 1; 
+      }
+      50% { 
+        transform: scale(1.05); 
+        opacity: 0.8; 
+      }
+    }
+    
+    @keyframes rotate {
+      from { 
+        transform: rotate(0deg); 
+      }
+      to { 
+        transform: rotate(360deg); 
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% { 
+        transform: translateY(0px); 
+      }
+      50% { 
+        transform: translateY(-20px); 
+      }
     }
     @media (max-width: 600px) {
       .header h1 {
@@ -507,7 +950,7 @@
 </head>
 <body>
   <div class="header">
-    <h1>PF-GEOINT Solutions</h1>
+    <h1>PF-GEOINT</h1>
   </div>
   <div class="container">
     <div class="intro">
@@ -588,6 +1031,32 @@
           <button onclick="showDigitalTwin()">View Details</button>
         </div>
         <!-- Add more urban planning solutions here as needed -->
+      </div>
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToMain()">Back to Sectors</button>
+      </div>
+    </div>
+
+    <!-- Energy & Utilities Solutions Section -->
+    <div id="energy-solutions" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">Energy & Utilities Solutions</h2>
+      <div class="products">
+        <div class="product-card">
+          <h3>Electrical Utility Network</h3>
+          <p>Advanced monitoring and analysis of electrical utility networks using satellite imagery and AI-powered analytics for optimal grid performance.</p>
+          <img src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/electricity.png" alt="Electrical Utility Network" style="width: 100%; max-height: 300px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; margin-bottom: 15px;">
+          <button onclick="showElectricalUtility()">View Details</button>
+        </div>
+        <div class="product-card">
+          <h3>Pipeline Monitoring</h3>
+          <p>Real-time pipeline integrity monitoring with leak detection and maintenance optimization using geospatial intelligence.</p>
+          <button onclick="showPipelineMonitoring()">View Details</button>
+        </div>
+        <div class="product-card">
+          <h3>Renewable Energy Planning</h3>
+          <p>Site assessment and optimization for solar, wind, and other renewable energy installations using advanced geospatial analysis.</p>
+          <button onclick="showRenewableEnergy()">View Details</button>
+        </div>
       </div>
       <div style="text-align: center;">
         <button class="back-button" onclick="backToMain()">Back to Sectors</button>
@@ -812,6 +1281,11 @@
         const view = document.getElementById('urban-planning-solutions');
         view.style.display = 'block';
         addEnterAnimation(view);
+      } else if (sector === 'energy') {
+        document.getElementById('main-products').style.display = 'none';
+        const view = document.getElementById('energy-solutions');
+        view.style.display = 'block';
+        addEnterAnimation(view);
       } else {
         alert(`Explore PF-GEOINT solutions for ${sector}!`);
         // Replace with actual logic for other sectors
@@ -872,10 +1346,41 @@
       addEnterAnimation(view);
     }
 
+    function showElectricalUtility() {
+      document.getElementById('energy-solutions').style.display = 'none';
+      const view = document.getElementById('electrical-utility');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+    }
+
+    function showPipelineMonitoring() {
+      document.getElementById('energy-solutions').style.display = 'none';
+      const view = document.getElementById('pipeline-monitoring');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+    }
+
+    function showRenewableEnergy() {
+      document.getElementById('energy-solutions').style.display = 'none';
+      const view = document.getElementById('renewable-energy');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+    }
+
+    function backToEnergy() {
+      document.getElementById('electrical-utility').style.display = 'none';
+      document.getElementById('pipeline-monitoring').style.display = 'none';
+      document.getElementById('renewable-energy').style.display = 'none';
+      const view = document.getElementById('energy-solutions');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+    }
+
     function backToMain() {
       document.getElementById('agriculture-solutions').style.display = 'none';
       document.getElementById('defense-solutions').style.display = 'none';
       document.getElementById('urban-planning-solutions').style.display = 'none';
+      document.getElementById('energy-solutions').style.display = 'none';
       const view = document.getElementById('main-products');
       view.style.display = 'grid';
       addEnterAnimation(view);
@@ -1045,34 +1550,142 @@
     let chatbotOpen = false;
     const products = {
       'agriculture': {
-        name: 'Agriculture',
-        description: 'Boost yields with precision farming, soil analysis, and real-time weather monitoring for smarter agriculture.',
-        keywords: ['crop', 'farm', 'agriculture', 'yield', 'soil', 'weather', 'irrigation', 'vegetation', 'ndvi', 'ndwi', 'dying', 'stress', 'health']
+        name: 'Agriculture Solutions',
+        description: 'Advanced precision farming with NDVI/NDWI analysis, crop health monitoring, and yield optimization.',
+        keywords: ['crop', 'farm', 'agriculture', 'yield', 'soil', 'weather', 'irrigation', 'vegetation', 'ndvi', 'ndwi', 'dying', 'stress', 'health', 'disease', 'pest', 'fertilizer', 'harvest', 'field', 'precision', 'monitoring', 'analysis', 'water', 'moisture', 'drought', 'flood', 'planting', 'seeding', 'growth', 'maturity', 'biomass', 'chlorophyll', 'canopy', 'leaf', 'root', 'photosynthesis'],
+        features: [
+          'Real-time crop health assessment using NDVI and NDWI indices',
+          'Disease and pest detection through AI-powered image analysis',
+          'Precision irrigation recommendations based on soil moisture data',
+          'Weather-based farming guidance and alerts',
+          'Yield prediction and optimization algorithms',
+          'Soil health monitoring and nutrient analysis',
+          'Field boundary mapping and management zones',
+          'Historical data analysis for trend identification'
+        ],
+        applications: [
+          'Crop monitoring and health assessment',
+          'Precision agriculture and smart farming',
+          'Disease and pest management',
+          'Water resource optimization',
+          'Yield prediction and planning',
+          'Soil analysis and fertility management'
+        ]
       },
       'defense': {
-        name: 'Defense & Security',
-        description: 'Advanced surveillance, threat detection, and mission planning with high-resolution imagery and AI-powered insights.',
-        keywords: ['defense', 'security', 'surveillance', 'threat', 'mission', 'military', 'monitoring', 'intelligence']
+        name: 'Defense & Security Solutions',
+        description: 'Advanced surveillance, threat detection, and mission planning with PF-GEOTRACE platform.',
+        keywords: ['defense', 'security', 'surveillance', 'threat', 'mission', 'military', 'monitoring', 'intelligence', 'tactical', 'geotrace', 'gps', 'tracking', 'border', 'protection', 'operation', 'strategic', 'buffer', 'zone', 'target', 'reconnaissance', 'intelligence', 'analysis', 'threat', 'assessment', 'situational', 'awareness'],
+        features: [
+          'PF-GEOTRACE: Advanced geolocation and tracking platform',
+          'Real-time GPS precision with dynamic marker systems',
+          'Strategic buffer zones for tactical operations',
+          'High-resolution satellite imagery analysis',
+          'AI-powered threat detection and assessment',
+          'Mission planning and execution support',
+          'Border surveillance and monitoring',
+          'Intelligence gathering and analysis'
+        ],
+        applications: [
+          'Military operations and mission planning',
+          'Border security and surveillance',
+          'Threat detection and assessment',
+          'Intelligence gathering and analysis',
+          'Tactical operations support',
+          'Strategic planning and decision making'
+        ]
       },
       'urban-planning': {
-        name: 'Urban Planning',
-        description: 'Design future-ready cities with 3D mapping, infrastructure monitoring, and population analytics.',
-        keywords: ['urban', 'city', 'planning', 'infrastructure', 'population', 'development', 'mapping', '3d']
+        name: 'Urban Planning & Smart Cities',
+        description: 'PF-DIGITAL TWIN technology for comprehensive 3D city modeling and smart city development.',
+        keywords: ['urban', 'city', 'planning', 'infrastructure', 'population', 'development', 'mapping', '3d', 'digital', 'twin', 'smart', 'municipal', 'government', 'construction', 'building', 'residential', 'commercial', 'industrial', 'zoning', 'land', 'use', 'transportation', 'utilities', 'services'],
+        features: [
+          'PF-DIGITAL TWIN: Comprehensive 3D city modeling',
+          'Real-time infrastructure monitoring and analysis',
+          'Population density and demographic analysis',
+          'Urban development planning and simulation',
+          'Traffic flow optimization and management',
+          'Utility network monitoring and maintenance',
+          'Environmental impact assessment',
+          'Smart city integration and IoT connectivity'
+        ],
+        applications: [
+          'City planning and urban development',
+          'Infrastructure monitoring and maintenance',
+          'Traffic management and optimization',
+          'Population and demographic analysis',
+          'Environmental planning and sustainability',
+          'Smart city implementation and management'
+        ]
       },
       'environment': {
         name: 'Environmental Monitoring',
-        description: 'Track climate change, deforestation, and resources with cutting-edge GEOINT analytics.',
-        keywords: ['environment', 'climate', 'deforestation', 'resources', 'conservation', 'monitoring', 'change']
+        description: 'Comprehensive environmental tracking with climate change monitoring and resource management.',
+        keywords: ['environment', 'climate', 'deforestation', 'resources', 'conservation', 'monitoring', 'change', 'carbon', 'emission', 'sustainability', 'green', 'forest', 'wildlife', 'biodiversity', 'pollution', 'air', 'water', 'quality', 'ecosystem', 'habitat', 'protection', 'renewable', 'energy', 'solar', 'wind', 'hydro'],
+        features: [
+          'Climate change monitoring and analysis',
+          'Deforestation tracking and forest health assessment',
+          'Carbon footprint and emission monitoring',
+          'Biodiversity and ecosystem analysis',
+          'Air and water quality monitoring',
+          'Renewable energy site assessment',
+          'Environmental impact evaluation',
+          'Sustainability metrics and reporting'
+        ],
+        applications: [
+          'Climate change research and monitoring',
+          'Forest conservation and management',
+          'Environmental impact assessment',
+          'Renewable energy planning',
+          'Biodiversity protection and monitoring',
+          'Sustainability planning and reporting'
+        ]
       },
       'transportation': {
         name: 'Transportation & Logistics',
-        description: 'Optimize routes and enhance logistics with real-time traffic analysis and geospatial data.',
-        keywords: ['transportation', 'logistics', 'traffic', 'routes', 'shipping', 'delivery', 'optimization']
+        description: 'Advanced route optimization and logistics management with real-time traffic analysis.',
+        keywords: ['transportation', 'logistics', 'traffic', 'routes', 'shipping', 'delivery', 'optimization', 'fleet', 'supply', 'chain', 'distribution', 'warehouse', 'road', 'highway', 'street', 'infrastructure', 'pavement', 'bridge', 'tunnel', 'intersection', 'congestion', 'maintenance', 'construction', 'asphalt', 'pothole', 'repair', 'safety', 'accident', 'vehicle', 'truck', 'bus', 'train', 'airport', 'port', 'railway'],
+        features: [
+          'Real-time traffic analysis and optimization',
+          'Route planning and navigation optimization',
+          'Fleet management and tracking',
+          'Supply chain optimization',
+          'Infrastructure monitoring and maintenance',
+          'Accident analysis and safety assessment',
+          'Congestion prediction and management',
+          'Multi-modal transportation planning'
+        ],
+        applications: [
+          'Route optimization and navigation',
+          'Fleet management and tracking',
+          'Supply chain optimization',
+          'Traffic management and control',
+          'Infrastructure maintenance planning',
+          'Transportation safety analysis'
+        ]
       },
       'energy': {
         name: 'Energy & Utilities',
-        description: 'Monitor pipelines, renewable energy sites, and grid performance with precision geospatial tools.',
-        keywords: ['energy', 'utilities', 'pipeline', 'renewable', 'grid', 'power', 'electricity', 'oil', 'gas']
+        description: 'Comprehensive energy infrastructure monitoring with pipeline and grid performance analysis.',
+        keywords: ['energy', 'utilities', 'pipeline', 'renewable', 'grid', 'power', 'electricity', 'oil', 'gas', 'solar', 'wind', 'hydro', 'nuclear', 'coal', 'transmission', 'distribution', 'substation', 'turbine', 'panel', 'farm', 'plant', 'facility', 'infrastructure', 'maintenance', 'monitoring', 'efficiency', 'capacity', 'generation'],
+        features: [
+          'Pipeline monitoring and leak detection',
+          'Power grid performance analysis',
+          'Renewable energy site assessment',
+          'Energy infrastructure monitoring',
+          'Power generation optimization',
+          'Transmission line analysis',
+          'Substation monitoring and maintenance',
+          'Energy efficiency assessment'
+        ],
+        applications: [
+          'Pipeline monitoring and maintenance',
+          'Power grid management and optimization',
+          'Renewable energy site planning',
+          'Energy infrastructure monitoring',
+          'Power generation optimization',
+          'Utility network management'
+        ]
       }
     };
 
@@ -1707,202 +2320,77 @@
     function processChatbotMessage(message) {
       const lowerMessage = message.toLowerCase();
       
-      // Advanced AI Processing Pipeline
-      const intent = recognizeIntent(message);
-      const emotion = detectEmotionalState(message);
-      const entities = extractEntities(message);
-      const confidence = calculateConfidence(message, entities);
-      
-      // Update conversation context
-      conversationContext.intent = intent;
-      conversationContext.emotionalState = emotion;
-      conversationContext.entities = entities;
-      conversationContext.confidence = confidence;
-      conversationContext.previousQuestions.push(message);
-      conversationContext.conversationFlow.push({
-        timestamp: new Date(),
-        message: message,
-        intent: intent,
-        emotion: emotion,
-        entities: entities
-      });
-      
-      // Extract user profile information
-      extractUserProfile(message, entities);
-      
-      // Company information queries with emotional intelligence
+      // Company information queries
       if (lowerMessage.includes('boss') || lowerMessage.includes('who is your boss')) {
-        const emotionalResponse = emotion === 'excited' ? "I'm excited to tell you!" : 
-                                 emotion === 'frustrated' ? "I'm happy to clarify this for you." : "";
-        return `${emotionalResponse} 👔 My boss is **${companyInfo.boss}**. He leads our team in developing cutting-edge geospatial intelligence solutions and has been instrumental in our company's growth.`;
+        return `👔 My boss is **${companyInfo.boss}**. He leads our team in developing cutting-edge geospatial intelligence solutions.`;
       }
       
       if (lowerMessage.includes('created') || lowerMessage.includes('who created you') || lowerMessage.includes('who made you')) {
-        return `🏢 I was created by **${companyInfo.creator}**, a leading company in geospatial intelligence and satellite technology solutions. Our team of expert engineers and data scientists developed me to provide intelligent assistance in geospatial solutions.`;
+        return `🏢 I was created by **${companyInfo.creator}**, a leading company in geospatial intelligence and satellite technology solutions.`;
       }
       
       if (lowerMessage.includes('ceo') || lowerMessage.includes('gmd') || lowerMessage.includes('md') || lowerMessage.includes('managing director')) {
-        return `👨‍💼 Our CEO/GMD/MD is **${companyInfo.ceo}**. He leads Proforce Galaxies Limited in delivering innovative geospatial solutions worldwide and has extensive experience in satellite technology and geospatial intelligence.`;
+        return `👨‍💼 Our CEO/GMD/MD is **${companyInfo.ceo}**. He leads Proforce Galaxies Limited in delivering innovative geospatial solutions worldwide.`;
       }
       
       if (lowerMessage.includes('proforce') || lowerMessage.includes('company') || lowerMessage.includes('about proforce')) {
-        const companyResponse = `🏢 **Proforce Galaxies Limited** is a leading geospatial intelligence company specializing in:\n\n• Advanced satellite imagery analysis\n• AI-powered geospatial solutions\n• Defense and security applications\n• Agricultural monitoring systems\n• Urban planning and infrastructure development\n\n**Our Expertise:**\n• Over 10 years of experience in geospatial intelligence\n• Advanced AI and machine learning algorithms\n• Real-time satellite data processing capabilities\n• Custom solutions for unique requirements\n• 24/7 technical support and consultation\n\nWe're committed to transforming how organizations use geospatial data for decision-making.`;
-        
-        if (conversationContext.userProfile.company) {
-          return `${companyResponse}\n\nI'd love to learn more about ${conversationContext.userProfile.company} and how we can help your organization!`;
-        }
-        return companyResponse;
+        return `🏢 **Proforce Galaxies Limited** is a leading geospatial intelligence company specializing in:\n\n• Advanced satellite imagery analysis\n• AI-powered geospatial solutions\n• Defense and security applications\n• Agricultural monitoring systems\n• Urban planning and infrastructure development\n\nWe're committed to transforming how organizations use geospatial data for decision-making.`;
       }
       
-      // Enhanced greeting responses with context awareness
+      // Enhanced greeting responses
       if (lowerMessage.includes('hi') || lowerMessage.includes('hello') || lowerMessage.includes('hey')) {
-        conversationContext.currentTopic = 'greeting';
         const greetings = [
-          "Hello! 👋 I'm your PF-GEOINT AI assistant from Proforce Galaxies Limited. I specialize in geospatial intelligence solutions and can help you find the perfect technology for your specific needs. What challenges are you facing?",
-          "Hi there! 🤖 I'm here to analyze your requirements and recommend the most suitable PF-GEOINT solutions. Tell me about your project or challenges.",
-          "Greetings! 🚀 I'm an advanced AI trained on geospatial intelligence by Proforce Galaxies Limited. I can help you navigate our solutions and find exactly what you need. What's your use case?"
+          "Hello! 👋 I'm your PF-GEOINT AI assistant. I can help you find the perfect geospatial intelligence solution for your needs. What challenges are you facing?",
+          "Hi there! 🤖 I'm here to analyze your requirements and recommend the most suitable PF-GEOINT solutions. Tell me about your project.",
+          "Greetings! 🚀 I'm an advanced AI trained on geospatial intelligence. I can help you navigate our solutions and find exactly what you need."
         ];
         return greetings[Math.floor(Math.random() * greetings.length)];
       }
       
-      // Advanced keyword analysis with weighted scoring
-      const keywordWeights = {
-        'agriculture': {
-          'crop': 3, 'farm': 3, 'agriculture': 3, 'yield': 2, 'soil': 2, 'weather': 2, 
-          'irrigation': 3, 'vegetation': 2, 'ndvi': 4, 'ndwi': 4, 'dying': 3, 'stress': 2, 
-          'health': 2, 'disease': 2, 'pest': 2, 'fertilizer': 2, 'harvest': 2, 'field': 2,
-          'precision': 2, 'monitoring': 2, 'analysis': 2, 'water': 2, 'moisture': 2
-        },
-        'defense': {
-          'defense': 3, 'security': 3, 'surveillance': 3, 'threat': 3, 'mission': 2, 'military': 3,
-          'monitoring': 2, 'intelligence': 2, 'tactical': 3, 'geotrace': 4, 'gps': 2, 'tracking': 2,
-          'border': 2, 'protection': 2, 'operation': 2, 'strategic': 2, 'buffer': 2, 'zone': 2
-        },
-        'urban-planning': {
-          'urban': 3, 'city': 3, 'planning': 3, 'infrastructure': 3, 'population': 2, 'development': 2,
-          'mapping': 2, '3d': 2, 'smart': 2, 'municipal': 2, 'government': 2, 'construction': 2
-        },
-        'environment': {
-          'environment': 3, 'climate': 3, 'deforestation': 3, 'resources': 2, 'conservation': 2,
-          'monitoring': 2, 'change': 2, 'carbon': 2, 'emission': 2, 'sustainability': 2, 'green': 2
-        },
-        'transportation': {
-          'transportation': 3, 'logistics': 3, 'traffic': 3, 'routes': 2, 'shipping': 2, 'delivery': 2,
-          'optimization': 2, 'fleet': 2, 'supply': 2, 'chain': 2, 'distribution': 2, 'warehouse': 2,
-          'road': 4, 'highway': 3, 'street': 3, 'infrastructure': 3, 'pavement': 2, 'bridge': 2,
-          'tunnel': 2, 'intersection': 2, 'congestion': 3, 'maintenance': 2, 'construction': 2,
-          'asphalt': 2, 'pothole': 3, 'repair': 2, 'safety': 2, 'accident': 2, 'vehicle': 2
-        },
-        'energy': {
-          'energy': 3, 'utilities': 3, 'pipeline': 3, 'renewable': 2, 'grid': 2, 'power': 2,
-          'electricity': 2, 'oil': 2, 'gas': 2, 'solar': 2, 'wind': 2, 'infrastructure': 2
-        }
-      };
+      // Advanced product matching with comprehensive keyword analysis
+      const productScores = {};
       
-      // Calculate weighted scores for each product
-      let bestMatch = null;
-      let maxScore = 0;
-      
-      for (const [key, weights] of Object.entries(keywordWeights)) {
+      // Calculate scores for each product based on keywords
+      for (const [key, product] of Object.entries(products)) {
         let score = 0;
-        for (const [keyword, weight] of Object.entries(weights)) {
+        for (const keyword of product.keywords) {
           if (lowerMessage.includes(keyword)) {
-            score += weight;
+            score += 1;
           }
         }
-        if (score > maxScore) {
-          maxScore = score;
-          bestMatch = { key, ...products[key] };
-        }
+        productScores[key] = score;
       }
       
-      // Update conversation context
-      conversationContext.previousQuestions.push(message);
+      // Find the best matching product
+      const bestMatch = Object.entries(productScores).reduce((a, b) => productScores[a[0]] > productScores[b[0]] ? a : b);
+      const bestProduct = products[bestMatch[0]];
+      const maxScore = bestMatch[1];
       
-      // Context-aware responses with follow-up questions
-      if (lowerMessage.includes('crop') && (lowerMessage.includes('dying') || lowerMessage.includes('problem') || lowerMessage.includes('issue') || lowerMessage.includes('sick'))) {
-        conversationContext.currentTopic = 'agriculture';
-        conversationContext.userIndustry = 'agriculture';
-        conversationContext.userNeeds.push('crop_health');
-        
-        return "🌱 I understand you're experiencing crop health issues! This is exactly what our Agriculture solution excels at. Here's how we can help:\n\n**Immediate Analysis:**\n• NDVI (Normalized Difference Vegetation Index) to assess plant health\n• NDWI (Normalized Difference Water Index) to detect water stress\n• Real-time monitoring of vegetation stress patterns\n\n**Actionable Solutions:**\n• Precision farming recommendations based on data analysis\n• Weather-based irrigation guidance\n• Disease and pest detection algorithms\n• Soil health assessment\n\n**Questions to help me assist better:**\n• What type of crops are you growing?\n• Are you seeing specific symptoms (yellowing, wilting, spots)?\n• What's your current irrigation setup?\n• What's the size of your farming operation?\n\nWould you like me to dive deeper into any of these aspects? I can also connect you with our agricultural specialists at Proforce Galaxies Limited.";
+      // Specific product queries
+      if (lowerMessage.includes('geotrace') || lowerMessage.includes('pf-geotrace')) {
+        return `🎯 **PF-GEOTRACE** is our flagship geolocation platform!\n\n**Core Capabilities:**\n• Real-time GPS precision with sub-meter accuracy\n• Dynamic marker systems for tactical operations\n• Strategic buffer zones for mission planning\n• High-resolution satellite imagery integration\n• AI-powered threat detection and assessment\n\n**Applications:**\n• Military operations and mission planning\n• Border security and surveillance\n• Intelligence gathering and analysis\n• Tactical operations support\n\nWhat specific aspect of PF-GEOTRACE interests you?`;
       }
       
-      if (lowerMessage.includes('water') || lowerMessage.includes('irrigation') || lowerMessage.includes('moisture') || lowerMessage.includes('drought')) {
-        return "💧 Water management is critical for agricultural success! Our Agriculture solution provides comprehensive water optimization:\n\n**Advanced Water Analysis:**\n• NDWI analysis for precise water stress detection\n• Soil moisture monitoring across your entire field\n• Evapotranspiration calculations\n• Water usage efficiency metrics\n\n**Smart Irrigation Features:**\n• Automated irrigation scheduling based on weather data\n• Zone-specific watering recommendations\n• Leak detection and water loss prevention\n• Integration with existing irrigation systems\n\n**ROI Benefits:**\n• Reduce water usage by 20-30%\n• Prevent over/under-watering damage\n• Optimize crop yields through precise water management\n\nAre you currently using any irrigation technology, or are you looking to implement a new system?";
+      if (lowerMessage.includes('digital twin') || lowerMessage.includes('pf-digital twin')) {
+        return `🏙️ **PF-DIGITAL TWIN** revolutionizes urban planning!\n\n**3D City Modeling:**\n• Complete 3D models of cities and infrastructure\n• Real-time data integration and monitoring\n• Population density and demographic analysis\n• Urban development planning and simulation\n\n**Smart City Features:**\n• Traffic flow optimization and management\n• Utility network monitoring and maintenance\n• Environmental impact assessment\n• IoT connectivity and integration\n\n**Applications:**\n• City planning and urban development\n• Infrastructure monitoring and maintenance\n• Smart city implementation\n\nWhat specific urban planning challenges can I help you with?`;
       }
       
-      if (lowerMessage.includes('security') || lowerMessage.includes('surveillance') || lowerMessage.includes('threat') || lowerMessage.includes('defense') || lowerMessage.includes('military')) {
-        return "🛡️ Security and defense operations require the most advanced geospatial intelligence! Our Defense & Security solutions provide:\n\n**PF-GEOTRACE Platform:**\n• Real-time GPS precision with sub-meter accuracy\n• Dynamic marker systems for tactical operations\n• Strategic buffer zones for security perimeters\n• Satellite imagery integration for comprehensive situational awareness\n\n**Advanced Capabilities:**\n• AI-powered threat detection and analysis\n• High-resolution surveillance with real-time updates\n• Mission planning with 3D terrain mapping\n• Rapid data export for intelligence reports\n• Multi-layer mapping for different operational scenarios\n\n**Applications:**\n• Military operations and tactical planning\n• Border security and surveillance\n• Critical infrastructure protection\n• Emergency response coordination\n• Counter-terrorism operations\n\nWhat type of security operations are you planning? Are you looking for real-time monitoring, threat assessment, or mission planning capabilities?";
+      if (lowerMessage.includes('agriculture') || lowerMessage.includes('crop') || lowerMessage.includes('farm')) {
+        return `🌱 **Agriculture Solutions** for precision farming!\n\n**Key Features:**\n• Real-time crop health assessment using NDVI and NDWI indices\n• Disease and pest detection through AI-powered analysis\n• Precision irrigation recommendations based on soil moisture data\n• Weather-based farming guidance and alerts\n• Yield prediction and optimization algorithms\n\n**Applications:**\n• Crop monitoring and health assessment\n• Precision agriculture and smart farming\n• Disease and pest management\n• Water resource optimization\n\nWhat specific agricultural challenges are you facing?`;
       }
       
-      if (lowerMessage.includes('city') || lowerMessage.includes('urban') || lowerMessage.includes('planning') || lowerMessage.includes('infrastructure')) {
-        return "🏙️ Urban planning requires sophisticated geospatial analysis! Our Urban Planning solution offers:\n\n**Comprehensive City Mapping:**\n• High-resolution 3D city models\n• Infrastructure monitoring and assessment\n• Population density and growth analytics\n• Traffic flow and transportation optimization\n\n**Smart City Development:**\n• Real-time infrastructure health monitoring\n• Predictive maintenance for city assets\n• Environmental impact assessment\n• Zoning and land use optimization\n\n**Data-Driven Insights:**\n• Demographic analysis and population trends\n• Economic development planning\n• Public service optimization\n• Emergency response planning\n\nAre you working on a specific urban development project? What's the scale - neighborhood, district, or city-wide planning?";
+      // Product recommendation based on best match
+      if (maxScore > 0) {
+        return `🎯 Based on your query, I recommend our **${bestProduct.name}** solution!\n\n**${bestProduct.description}**\n\n**Key Features:**\n${bestProduct.features.map(feature => `• ${feature}`).join('\n')}\n\n**Applications:**\n${bestProduct.applications.map(app => `• ${app}`).join('\n')}\n\nWhat specific aspect of ${bestProduct.name} would you like to know more about?`;
       }
       
-      if (lowerMessage.includes('climate') || lowerMessage.includes('environment') || lowerMessage.includes('deforestation') || lowerMessage.includes('conservation')) {
-        return "🌍 Environmental monitoring is crucial for our planet's future! Our Environmental Monitoring solution provides:\n\n**Climate Change Tracking:**\n• Carbon footprint monitoring and analysis\n• Deforestation detection and tracking\n• Temperature and precipitation pattern analysis\n• Sea level rise and coastal erosion monitoring\n\n**Conservation Management:**\n• Wildlife habitat mapping and protection\n• Biodiversity assessment and monitoring\n• Natural resource management\n• Environmental impact assessment\n\n**Sustainability Analytics:**\n• Renewable energy site assessment\n• Water resource management\n• Air quality monitoring\n• Ecosystem health indicators\n\nWhat environmental challenges are you addressing? Are you focused on climate monitoring, conservation efforts, or sustainability initiatives?";
+      // General help and guidance
+      if (lowerMessage.includes('help') || lowerMessage.includes('what can you do') || lowerMessage.includes('capabilities')) {
+        return "🤖 I'm your PF-GEOINT AI assistant! Here's how I can help you:\n\n**Our Solutions:**\n• 🌱 **Agriculture**: Precision farming, crop health, NDVI/NDWI analysis\n• 🎯 **Defense & Security**: PF-GEOTRACE platform, surveillance, threat detection\n• 🏙️ **Urban Planning**: PF-DIGITAL TWIN, 3D city modeling, smart cities\n• 🌍 **Environmental**: Climate monitoring, deforestation tracking, sustainability\n• 🚗 **Transportation**: Traffic optimization, route planning, infrastructure monitoring\n• ⚡ **Energy**: Pipeline monitoring, power grid analysis, renewable energy\n\n**What I can do:**\n• Analyze your specific requirements\n• Recommend the best solutions for your needs\n• Provide detailed technical information\n• Answer questions about our products\n\n**Just ask me:**\n• \"I need help with crop monitoring\"\n• \"Tell me about PF-GEOTRACE\"\n• \"How can I optimize traffic flow?\"\n• \"What's your agriculture solution?\"\n\nWhat challenges are you facing? I'm here to help!";
       }
       
-      if (lowerMessage.includes('road') || lowerMessage.includes('highway') || lowerMessage.includes('street') || lowerMessage.includes('pothole') || lowerMessage.includes('congestion') || lowerMessage.includes('traffic')) {
-        return "🛣️ Road infrastructure issues are exactly what our Transportation & Logistics solution addresses! Here's how we can help:\n\n**Road Infrastructure Monitoring:**\n• Real-time road condition assessment using satellite imagery\n• Pothole detection and severity analysis\n• Traffic congestion pattern analysis\n• Bridge and tunnel structural monitoring\n\n**Smart Traffic Management:**\n• AI-powered traffic flow optimization\n• Accident hotspot identification and prevention\n• Dynamic route planning to reduce congestion\n• Real-time traffic incident detection\n\n**Infrastructure Planning:**\n• Road maintenance scheduling based on usage patterns\n• Construction impact assessment\n• Alternative route planning during maintenance\n• Safety analysis and risk assessment\n\n**What specific road issues are you facing?**\n• Are you dealing with potholes, congestion, or safety concerns?\n• Is this for city roads, highways, or rural infrastructure?\n• Are you looking for monitoring, planning, or maintenance solutions?\n\nI can provide more targeted recommendations based on your specific needs!";
-      }
-      
-      if (lowerMessage.includes('transport') || lowerMessage.includes('logistics') || lowerMessage.includes('shipping')) {
-        return "🚛 Transportation and logistics optimization can significantly improve efficiency! Our Transportation & Logistics solution provides:\n\n**Route Optimization:**\n• AI-powered route planning with real-time traffic data\n• Multi-modal transportation analysis\n• Fuel efficiency optimization\n• Delivery time prediction and optimization\n\n**Supply Chain Intelligence:**\n• End-to-end supply chain monitoring\n• Warehouse location optimization\n• Inventory management with geospatial insights\n• Risk assessment for transportation routes\n\n**Fleet Management:**\n• Real-time vehicle tracking and monitoring\n• Maintenance scheduling based on usage patterns\n• Driver behavior analysis\n• Cost optimization across operations\n\nWhat's your transportation challenge? Are you optimizing delivery routes, managing a fleet, or planning supply chain logistics?";
-      }
-      
-      if (lowerMessage.includes('energy') || lowerMessage.includes('power') || lowerMessage.includes('utility') || lowerMessage.includes('grid')) {
-        return "⚡ Energy infrastructure requires precise monitoring and management! Our Energy & Utilities solution offers:\n\n**Infrastructure Monitoring:**\n• Pipeline integrity monitoring and leak detection\n• Power grid performance analysis\n• Substation and transmission line monitoring\n• Renewable energy site assessment\n\n**Smart Grid Management:**\n• Real-time power distribution optimization\n• Demand forecasting and load balancing\n• Outage prediction and prevention\n• Energy efficiency optimization\n\n**Renewable Energy:**\n• Solar and wind farm site selection\n• Energy production forecasting\n• Grid integration planning\n• Environmental impact assessment\n\nAre you managing traditional energy infrastructure, renewable energy projects, or smart grid implementation?";
-      }
-      
-      // Context-aware follow-up responses
-      if (conversationContext.currentTopic === 'agriculture' && (lowerMessage.includes('yes') || lowerMessage.includes('sure') || lowerMessage.includes('tell me more'))) {
-        return "🌱 Excellent! Let me provide more detailed information about our Agriculture solutions:\n\n**Our Agriculture Package Includes:**\n• **Crop Health Assessment**: NDVI/NDWI analysis with 3D visualization\n• **Precision Farming**: Zone-specific recommendations for fertilizers, pesticides\n• **Weather Integration**: Real-time weather data for optimal farming decisions\n• **Yield Prediction**: AI-powered crop yield forecasting\n• **Cost Analysis**: ROI calculations and cost optimization\n\n**Implementation Process:**\n1. **Assessment**: We analyze your current farming setup\n2. **Data Collection**: Satellite imagery and ground truth data\n3. **Analysis**: AI-powered insights and recommendations\n4. **Implementation**: Step-by-step guidance for adoption\n5. **Monitoring**: Continuous support and optimization\n\n**Success Stories:**\nOur clients have seen:\n• 25-40% increase in crop yields\n• 30% reduction in water usage\n• 20% decrease in fertilizer costs\n• 50% reduction in crop losses\n\nWould you like to schedule a consultation with our agricultural specialists at Proforce Galaxies Limited?";
-      }
-      
-      // Universal Intelligence: Scan all solutions across all sectors
-      const allSolutions = scanAllSolutions(message, entities, conversationContext);
-      
-      if (allSolutions.length > 0) {
-        const bestMatch = allSolutions[0];
-        conversationContext.currentTopic = bestMatch.sector;
-        conversationContext.userNeeds.push(bestMatch.key);
-        
-        // If multiple solutions found, show top 3
-        if (allSolutions.length > 1) {
-          let response = `🎯 Multiple Solutions Found!\n\n`;
-          response += `I found ${allSolutions.length} relevant solutions across our sectors. Here are the top matches:\n\n`;
-          
-          // Show top 3 solutions
-          allSolutions.slice(0, 3).forEach((solution, index) => {
-            response += `${index + 1}. ${solution.name} (${solution.sector.toUpperCase()})\n`;
-            response += `Relevance Score: ${solution.relevanceScore}/10\n`;
-            response += `${solution.description}\n\n`;
-          });
-          
-          response += `Primary Recommendation:\n`;
-          response += generateAdvancedRecommendation(bestMatch, conversationContext, entities);
-          
-          return response;
-        } else {
-          return generateAdvancedRecommendation(bestMatch, conversationContext, entities);
-        }
-      }
-      
-      // Universal Intelligence: Handle any question with comprehensive analysis
-      const universalResponse = generateUniversalResponse(message, entities, conversationContext);
-      if (universalResponse) {
-        return universalResponse;
-      }
-      
-      // Context-aware default response
-      if (conversationContext.previousQuestions.length > 0) {
-        return `🤔 I want to make sure I understand your needs completely. ${conversationContext.currentTopic ? `I see we've been discussing ${conversationContext.currentTopic} solutions. ` : ''}Could you provide more specific details about:\n\nYour Situation:\n• What industry or sector are you in?\n• What specific challenges are you trying to solve?\n• What's the scale of your operation?\n• What's your current technology setup?\n\nYour Goals:\n• Are you looking for real-time monitoring, analysis, or planning tools?\n• What's your timeline for implementation?\n• What's your budget range?\n• Do you need training and support?\n\nProforce Galaxies Limited Solutions:\n🌱 Agriculture - Crop health, precision farming, irrigation\n🛡️ Defense & Security - Tactical operations, surveillance, PF-GEOTRACE\n🏙️ Urban Planning - Smart city development, infrastructure\n🌍 Environmental - Climate tracking, conservation\n🚛 Transportation - Logistics optimization, fleet management\n⚡ Energy & Utilities - Grid monitoring, renewable energy\n\nThe more details you provide, the better I can assist you with the perfect solution!`;
-      }
-      
-      // Enhanced default response with intelligent suggestions
-      return "🤔 I'd be happy to help you find the perfect solution! PF-GEOINT by Proforce Galaxies Limited offers advanced geospatial intelligence across multiple sectors:\n\n🌱 Agriculture - Crop health monitoring, precision farming, irrigation optimization\n🛡️ Defense & Security - Tactical operations, surveillance, threat detection, PF-GEOTRACE\n🏙️ Urban Planning - Smart city development, infrastructure monitoring\n🌍 Environmental - Climate tracking, conservation, sustainability\n🚛 Transportation - Logistics optimization, fleet management, road infrastructure\n⚡ Energy & Utilities - Grid monitoring, renewable energy planning\n\nTo give you the best recommendation, could you tell me:\n• What industry or sector are you in?\n• What specific challenges are you trying to solve?\n• Are you looking for real-time monitoring, analysis, or planning tools?\n• What's the scale of your operation?\n\nAbout Proforce Galaxies Limited:\nWe're a leading geospatial intelligence company with over 10 years of experience in satellite imagery analysis, AI-powered solutions, and custom geospatial applications.\n\nThe more details you provide, the better I can assist you!";
+      // Default response with product overview
+      return "I'm here to help you find the perfect PF-GEOINT solution! We offer comprehensive geospatial intelligence solutions across multiple industries:\n\n**Our Solutions:**\n• 🌱 **Agriculture**: Precision farming and crop monitoring\n• 🎯 **Defense & Security**: Advanced surveillance and mission planning\n• 🏙️ **Urban Planning**: 3D city modeling and smart cities\n• 🌍 **Environmental**: Climate monitoring and sustainability\n• 🚗 **Transportation**: Traffic optimization and logistics\n• ⚡ **Energy**: Infrastructure monitoring and renewable energy\n\n**Tell me:**\n• What industry are you in?\n• What challenges are you facing?\n• What specific solutions do you need?\n\nI'll analyze your requirements and recommend the best approach for your needs!";
     }
 
     // Initialize chatbot on page load
