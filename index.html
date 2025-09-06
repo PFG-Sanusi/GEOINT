@@ -578,6 +578,22 @@
       </div>
     </div>
 
+    <!-- Urban Planning Solutions Section -->
+    <div id="urban-planning-solutions" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">Urban Planning Solutions</h2>
+      <div class="products">
+        <div class="product-card">
+          <h3>PF-DIGITAL TWIN</h3>
+          <p>Revolutionary digital twin technology for smart cities. Create comprehensive 3D city models with real-time data integration, infrastructure monitoring, and predictive analytics for urban development.</p>
+          <button onclick="showDigitalTwin()">View Details</button>
+        </div>
+        <!-- Add more urban planning solutions here as needed -->
+      </div>
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToMain()">Back to Sectors</button>
+      </div>
+    </div>
+
     <!-- PF-GEOTRACE Section -->
     <div id="geotrace" style="display: none;">
       <h2 style="text-align: center; color: #00d4ff;">PF-GEOTRACE</h2>
@@ -607,6 +623,69 @@
       </div>
       <div style="text-align: center;">
         <button class="back-button" onclick="backToDefense()">Back to Defense Solutions</button>
+      </div>
+    </div>
+
+    <!-- PF-DIGITAL TWIN Section -->
+    <div id="digital-twin" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">PF-DIGITAL TWIN</h2>
+      <div class="image-container">
+        <div class="image-card">
+          <h3>Lagos Digital Twin</h3>
+          <p>Comprehensive 3D model of Lagos, Nigeria showing urban infrastructure and development patterns.</p>
+          <img id="lagosImage" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/lagos.png" alt="Lagos Digital Twin" style="width: 100%; max-height: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
+          <p class="note">Lagos city digital twin model</p>
+        </div>
+        <div class="image-card">
+          <h3>Burj Khalifa Digital Twin</h3>
+          <p>High-resolution 3D model of Burj Khalifa and surrounding Dubai infrastructure.</p>
+          <img id="burjImage" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/burj%20khal.png" alt="Burj Khalifa Digital Twin" style="width: 100%; max-height: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
+          <p class="note">Burj Khalifa and Dubai digital twin</p>
+        </div>
+        <div class="image-card">
+          <h3>Hong Kong Digital Twin</h3>
+          <p>Detailed 3D representation of Hong Kong's skyline and urban density patterns.</p>
+          <img id="hongkongImage" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/hongkong.png" alt="Hong Kong Digital Twin" style="width: 100%; max-height: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
+          <p class="note">Hong Kong city digital twin model</p>
+        </div>
+        <div class="image-card">
+          <h3>Madrid Digital Twin</h3>
+          <p>Complete 3D model of Madrid showing historical and modern urban development.</p>
+          <img id="madridImage" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/madrid.png" alt="Madrid Digital Twin" style="width: 100%; max-height: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
+          <p class="note">Madrid city digital twin model</p>
+        </div>
+      </div>
+      
+      <div class="info-card">
+        <h4>PF-DIGITAL TWIN Capabilities</h4>
+        <ul>
+          <li><b>3D City Modeling</b>: High-resolution digital replicas of urban environments</li>
+          <li><b>Real-time Data Integration</b>: Live data feeds from sensors, traffic, and utilities</li>
+          <li><b>Infrastructure Monitoring</b>: Track the health and performance of city assets</li>
+          <li><b>Predictive Analytics</b>: Forecast urban growth, traffic patterns, and resource needs</li>
+          <li><b>Simulation & Planning</b>: Test urban development scenarios before implementation</li>
+          <li><b>Multi-scale Analysis</b>: From individual buildings to entire metropolitan areas</li>
+          <li><b>Interactive Visualization</b>: Immersive 3D exploration and data exploration</li>
+          <li><b>API Integration</b>: Connect with existing city management systems</li>
+        </ul>
+      </div>
+      
+      <div class="summary-card">
+        <h3>PF-DIGITAL TWIN – Smart City Intelligence</h3>
+        <p><b>PF-DIGITAL TWIN</b> revolutionizes urban planning and city management through advanced digital twin technology. Our platform creates comprehensive 3D models of cities, integrating real-time data from multiple sources to provide unprecedented insights into urban dynamics.</p>
+        <p><b>Key Features:</b></p>
+        <ul>
+          <li><b>Comprehensive City Modeling</b>: Create detailed 3D replicas of entire cities with sub-meter accuracy</li>
+          <li><b>Real-time Monitoring</b>: Track traffic flows, energy usage, air quality, and infrastructure health</li>
+          <li><b>Predictive Planning</b>: Simulate urban development scenarios and their impacts</li>
+          <li><b>Smart Infrastructure</b>: Monitor and optimize utilities, transportation, and public services</li>
+          <li><b>Citizen Engagement</b>: Interactive platforms for public participation in urban planning</li>
+        </ul>
+        <p><b>Applications:</b> Smart city development, urban planning, infrastructure management, disaster response, environmental monitoring, traffic optimization, and sustainable development planning.</p>
+      </div>
+      
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToUrbanPlanning()">Back to Urban Planning Solutions</button>
       </div>
     </div>
 
@@ -728,6 +807,11 @@
         const view = document.getElementById('defense-solutions');
         view.style.display = 'block';
         addEnterAnimation(view);
+      } else if (sector === 'urban-planning') {
+        document.getElementById('main-products').style.display = 'none';
+        const view = document.getElementById('urban-planning-solutions');
+        view.style.display = 'block';
+        addEnterAnimation(view);
       } else {
         alert(`Explore PF-GEOINT solutions for ${sector}!`);
         // Replace with actual logic for other sectors
@@ -755,6 +839,18 @@
       enableImageZoom('geotraceImage');
     }
 
+    function showDigitalTwin() {
+      document.getElementById('urban-planning-solutions').style.display = 'none';
+      const view = document.getElementById('digital-twin');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      // enable click-to-zoom for all digital twin images
+      enableImageZoom('lagosImage');
+      enableImageZoom('burjImage');
+      enableImageZoom('hongkongImage');
+      enableImageZoom('madridImage');
+    }
+
     function backToAgriculture() {
       document.getElementById('crop-health').style.display = 'none';
       const view = document.getElementById('agriculture-solutions');
@@ -769,9 +865,17 @@
       addEnterAnimation(view);
     }
 
+    function backToUrbanPlanning() {
+      document.getElementById('digital-twin').style.display = 'none';
+      const view = document.getElementById('urban-planning-solutions');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+    }
+
     function backToMain() {
       document.getElementById('agriculture-solutions').style.display = 'none';
       document.getElementById('defense-solutions').style.display = 'none';
+      document.getElementById('urban-planning-solutions').style.display = 'none';
       const view = document.getElementById('main-products');
       view.style.display = 'grid';
       addEnterAnimation(view);
@@ -1813,3 +1917,4 @@
   </script>
 </body>
 </html>
+
