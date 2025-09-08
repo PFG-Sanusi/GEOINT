@@ -390,7 +390,7 @@
       left: -2px;
       right: -2px;
       bottom: -2px;
-      background: linear-gradient(45deg, #00d4ff, #7b00ff, #00ff96, #ff6b35);
+      background: linear-gradient(45deg, rgba(0, 212, 255, 0.35), rgba(123, 0, 255, 0.25));
       border-radius: 22px;
       z-index: -1;
       opacity: 0;
@@ -398,7 +398,21 @@
     }
     
     .chatbot-container:hover::before {
-      opacity: 1;
+      opacity: 0.35;
+    }
+
+    /* Subtle badge for product cards */
+    .product-badge {
+      display: inline-block;
+      background: linear-gradient(90deg, rgba(0, 212, 255, 0.15), rgba(123, 0, 255, 0.15));
+      color: #bfeaff;
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.8em;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      margin-bottom: 8px;
     }
     
     .chatbot-container.open {
@@ -1022,6 +1036,33 @@
       </div>
     </div>
 
+    <!-- Electrical Utility Detail Section -->
+    <div id="electrical-utility" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">Electrical Utility Network</h2>
+      <div class="image-container">
+        <div class="image-card" style="max-width: 100%;">
+          <h3>Grid Monitoring & Analysis</h3>
+          <p>High-resolution geospatial intelligence for transmission lines, substations, and distribution networks. Detect vegetation encroachment, assess outage impact, and prioritize maintenance with AI-driven insights.</p>
+          <img id="electricalImage" loading="lazy" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/electricity.png" alt="Electrical Utility Network" style="width: 100%; max-height: 500px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;" onerror="this.onerror=null; this.src='https://github.com/PFG-Sanusi/GEOINT/raw/main/electricity.png';">
+          <p class="note">Electrical utility network overview</p>
+          <div class="info-card">
+            <h4>Key Capabilities</h4>
+            <ul>
+              <li>Medium-voltage primary feeders with network tracing (E-MV-PI-### labels)</li>
+              <li>Transformer/pole locations with connected service drops</li>
+              <li>Customer/service connection points mapped to buildings</li>
+              <li>Incident/outage cluster visualization for rapid impact assessment</li>
+              <li>Unknown/unnamed segment flagging to prioritize data cleanup</li>
+              <li>Street context and landmarks to guide field crew navigation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToEnergy()">Back to Energy & Utilities</button>
+      </div>
+    </div>
+
     <!-- Defense & Security Solutions Section -->
     <div id="defense-solutions" style="display: none;">
       <h2 style="text-align: center; color: #00d4ff;">Defense & Security Solutions</h2>
@@ -1047,7 +1088,12 @@
           <p>Revolutionary digital twin technology for smart cities. Create comprehensive 3D city models with real-time data integration, infrastructure monitoring, and predictive analytics for urban development.</p>
           <button onclick="showDigitalTwin()">View Details</button>
         </div>
-        <!-- Add more urban planning solutions here as needed -->
+        <div class="product-card">
+          <span class="product-badge">New</span>
+          <h3>PF ASSETWATCH</h3>
+          <p><b>Asset health & change detection.</b> Monitor critical assets and streamline maintenance workflows.</p>
+          <button onclick="showAssetWatch()">View Details</button>
+        </div>
       </div>
       <div style="text-align: center;">
         <button class="back-button" onclick="backToMain()">Back to Sectors</button>
@@ -1061,7 +1107,7 @@
         <div class="product-card">
           <h3>Electrical Utility Network</h3>
           <p>Advanced monitoring and analysis of electrical utility networks using satellite imagery and AI-powered analytics for optimal grid performance.</p>
-          <img src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/electricity.png" alt="Electrical Utility Network" style="width: 100%; max-height: 300px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; margin-bottom: 15px;">
+          <img id="electricityImage" loading="lazy" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/electricity.png" alt="Electrical Utility Network" style="width: 100%; max-height: 300px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; margin-bottom: 15px;" onerror="this.onerror=null; this.src='https://github.com/PFG-Sanusi/GEOINT/raw/main/electricity.png';">
           <button onclick="showElectricalUtility()">View Details</button>
         </div>
         <div class="product-card">
@@ -1087,7 +1133,7 @@
         <div class="image-card" style="max-width: 100%;">
           <h3>PF-GEOTRACE Platform</h3>
           <p>Cutting-edge geolocation platform redefining tactical dominance</p>
-          <img id="geotraceImage" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/geotrace.jpeg" alt="PF-GEOTRACE Platform" style="width: 100%; max-height: 500px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
+          <img id="geotraceImage" loading="lazy" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/geotrace.jpeg" alt="PF-GEOTRACE Platform" style="width: 100%; max-height: 500px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
           <p class="note">PF-GEOTRACE platform interface</p>
           <div class="info-card">
             <h4>Platform Features</h4>
@@ -1119,25 +1165,25 @@
         <div class="image-card">
           <h3>Lagos Digital Twin</h3>
           <p>Comprehensive 3D model of Lagos, Nigeria showing urban infrastructure and development patterns.</p>
-          <img id="lagosImage" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/lagos.png" alt="Lagos Digital Twin" style="width: 100%; max-height: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
+          <img id="lagosImage" loading="lazy" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/lagos.png" alt="Lagos Digital Twin" style="width: 100%; max-height: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
           <p class="note">Lagos city digital twin model</p>
         </div>
         <div class="image-card">
           <h3>Burj Khalifa Digital Twin</h3>
           <p>High-resolution 3D model of Burj Khalifa and surrounding Dubai infrastructure.</p>
-          <img id="burjImage" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/burj%20khal.png" alt="Burj Khalifa Digital Twin" style="width: 100%; max-height: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
+          <img id="burjImage" loading="lazy" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/burj%20khal.png" alt="Burj Khalifa Digital Twin" style="width: 100%; max-height: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
           <p class="note">Burj Khalifa and Dubai digital twin</p>
         </div>
         <div class="image-card">
           <h3>Hong Kong Digital Twin</h3>
           <p>Detailed 3D representation of Hong Kong's skyline and urban density patterns.</p>
-          <img id="hongkongImage" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/hongkong.png" alt="Hong Kong Digital Twin" style="width: 100%; max-height: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
+          <img id="hongkongImage" loading="lazy" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/hongkong.png" alt="Hong Kong Digital Twin" style="width: 100%; max-height: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
           <p class="note">Hong Kong city digital twin model</p>
         </div>
         <div class="image-card">
           <h3>Madrid Digital Twin</h3>
           <p>Complete 3D model of Madrid showing historical and modern urban development.</p>
-          <img id="madridImage" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/madrid.png" alt="Madrid Digital Twin" style="width: 100%; max-height: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
+          <img id="madridImage" loading="lazy" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/madrid.png" alt="Madrid Digital Twin" style="width: 100%; max-height: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;">
           <p class="note">Madrid city digital twin model</p>
         </div>
       </div>
@@ -1170,6 +1216,32 @@
         <p><b>Applications:</b> Smart city development, urban planning, infrastructure management, disaster response, environmental monitoring, traffic optimization, and sustainable development planning.</p>
       </div>
       
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToUrbanPlanning()">Back to Urban Planning Solutions</button>
+      </div>
+    </div>
+
+    <!-- PF ASSETWATCH Section -->
+    <div id="asset-watch" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">PF ASSETWATCH</h2>
+      <div class="image-container">
+        <div class="image-card" style="max-width: 100%;">
+          <h3>Urban Asset Monitoring</h3>
+          <p>Detect change, monitor condition, and prioritize maintenance for critical urban assets like bridges, roads, facilities, and utilities.</p>
+          <img id="assetwatchImage" loading="lazy" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/PF-ASSET%20WATCH.png" alt="PF ASSETWATCH" style="width: 100%; max-height: 500px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; cursor: zoom-in;" onerror="this.onerror=null; this.src='https://github.com/PFG-Sanusi/GEOINT/raw/main/PF-ASSET%20WATCH.png';">
+          <p class="note">Citywide asset visibility with AI-assisted insights</p>
+          <div class="info-card">
+            <h4>Key Capabilities</h4>
+            <ul>
+              <li>Change detection for asset degradation and encroachment</li>
+              <li>Condition scoring and maintenance prioritization</li>
+              <li>Geotagged incidents with trend analytics</li>
+              <li>Work order integration and SLA tracking</li>
+              <li>Map-first dashboards for planners and field crews</li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <div style="text-align: center;">
         <button class="back-button" onclick="backToUrbanPlanning()">Back to Urban Planning Solutions</button>
       </div>
@@ -1282,6 +1354,32 @@
     </div>
   </div>
   <script>
+    // Auto-hide logic for product badges (e.g., "New")
+    (function initProductBadges() {
+      try {
+        const BADGE_KEY = 'assetwatch_new_badge_until';
+        const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
+        const now = Date.now();
+        let expiry = parseInt(localStorage.getItem(BADGE_KEY) || '0', 10);
+        if (!expiry) {
+          expiry = now + THIRTY_DAYS_MS;
+          localStorage.setItem(BADGE_KEY, String(expiry));
+        }
+
+        const assetWatchCard = document.querySelector('#urban-planning-solutions .product-card:nth-child(2)');
+        if (assetWatchCard) {
+          const badge = assetWatchCard.querySelector('.product-badge');
+          const hideBadge = () => { if (badge) badge.style.display = 'none'; };
+          if (badge) {
+            if (now > expiry) hideBadge();
+            assetWatchCard.addEventListener('click', () => {
+              hideBadge();
+              localStorage.setItem(BADGE_KEY, String(now));
+            }, { once: true });
+          }
+        }
+      } catch (e) { /* fail silently */ }
+    })();
     function learnMore(sector) {
       if (sector === 'agriculture') {
         document.getElementById('main-products').style.display = 'none';
@@ -1328,6 +1426,7 @@
       addEnterAnimation(view);
       // enable click-to-zoom for image
       enableImageZoom('geotraceImage');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function showDigitalTwin() {
@@ -1340,6 +1439,15 @@
       enableImageZoom('burjImage');
       enableImageZoom('hongkongImage');
       enableImageZoom('madridImage');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showAssetWatch() {
+      document.getElementById('urban-planning-solutions').style.display = 'none';
+      const view = document.getElementById('asset-watch');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      enableImageZoom('assetwatchImage');
     }
 
     function backToAgriculture() {
@@ -1347,6 +1455,7 @@
       const view = document.getElementById('agriculture-solutions');
       view.style.display = 'block';
       addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function backToDefense() {
@@ -1354,13 +1463,18 @@
       const view = document.getElementById('defense-solutions');
       view.style.display = 'block';
       addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function backToUrbanPlanning() {
-      document.getElementById('digital-twin').style.display = 'none';
+      const dt = document.getElementById('digital-twin');
+      if (dt) dt.style.display = 'none';
+      const aw = document.getElementById('asset-watch');
+      if (aw) aw.style.display = 'none';
       const view = document.getElementById('urban-planning-solutions');
       view.style.display = 'block';
       addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function showElectricalUtility() {
@@ -1368,6 +1482,8 @@
       const view = document.getElementById('electrical-utility');
       view.style.display = 'block';
       addEnterAnimation(view);
+      enableImageZoom('electricalImage');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function showPipelineMonitoring() {
@@ -1375,6 +1491,7 @@
       const view = document.getElementById('pipeline-monitoring');
       view.style.display = 'block';
       addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function showRenewableEnergy() {
@@ -1382,15 +1499,20 @@
       const view = document.getElementById('renewable-energy');
       view.style.display = 'block';
       addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function backToEnergy() {
-      document.getElementById('electrical-utility').style.display = 'none';
-      document.getElementById('pipeline-monitoring').style.display = 'none';
-      document.getElementById('renewable-energy').style.display = 'none';
+      const electrical = document.getElementById('electrical-utility');
+      if (electrical) electrical.style.display = 'none';
+      const pipeline = document.getElementById('pipeline-monitoring');
+      if (pipeline) pipeline.style.display = 'none';
+      const renewable = document.getElementById('renewable-energy');
+      if (renewable) renewable.style.display = 'none';
       const view = document.getElementById('energy-solutions');
       view.style.display = 'block';
       addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function backToMain() {
@@ -1401,6 +1523,15 @@
       const view = document.getElementById('main-products');
       view.style.display = 'grid';
       addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showAssetWatch() {
+      document.getElementById('urban-planning-solutions').style.display = 'none';
+      const view = document.getElementById('asset-watch');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      enableImageZoom('assetwatchImage');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // No additional rendering required; both NDVI and NDWI use static images.
