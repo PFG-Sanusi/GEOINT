@@ -1019,6 +1019,11 @@
         <p>Monitor pipelines, renewable energy sites, and grid performance with precision geospatial tools.</p>
         <button onclick="learnMore('energy')">Explore Now</button>
       </div>
+      <div class="product-card">
+        <h3>Weather Intelligence</h3>
+        <p>Real-time global and local weather insights with interactive mapping and alerts.</p>
+        <button onclick="learnMore('weather')">Explore Now</button>
+      </div>
     </div>
 
     <!-- Agriculture Solutions Section -->
@@ -1074,6 +1079,21 @@
           <button onclick="showGeoTrace()">View Details</button>
         </div>
         <!-- Add more defense solutions here as needed -->
+      </div>
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToMain()">Back to Sectors</button>
+      </div>
+    </div>
+
+    <!-- Weather Intelligence Solutions Section -->
+    <div id="weather-solutions" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">Weather Intelligence Solutions</h2>
+      <div class="products">
+        <div class="product-card">
+          <h3>PF-CAELUS</h3>
+          <p>Interactive, real-time weather intelligence platform for monitoring, forecasts, and alerts.</p>
+          <button onclick="showCaelus()">View Details</button>
+        </div>
       </div>
       <div style="text-align: center;">
         <button class="back-button" onclick="backToMain()">Back to Sectors</button>
@@ -1225,6 +1245,39 @@
       
       <div style="text-align: center;">
         <button class="back-button" onclick="backToUrbanPlanning()">Back to Urban Planning Solutions</button>
+      </div>
+    </div>
+
+    <!-- PF-CAELUS Section -->
+    <div id="caelus" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">PF-CAELUS</h2>
+      <div class="summary-card">
+        <h3>PF-CAELUS – Weather Intelligence Platform</h3>
+        <p><b>Caelus</b> is an interactive, real-time weather intelligence platform designed to make global and local weather data accessible, visual, and actionable. It provides a live Earth map powered by satellite imagery and weather APIs, enabling users to track clouds, storms, wind, precipitation, and temperature patterns in real time. Caelus also offers city-level forecasts, storm tracking, historical climate views, and severe weather alerts—making it a versatile tool for both everyday users and professionals.</p>
+        <p><b>Key features:</b></p>
+        <ul>
+          <li>Live interactive weather map with toggleable layers (clouds, radar, wind, temperature, storms)</li>
+          <li>Location-based insights with forecasts and alerts</li>
+          <li>Storm tracking for hurricanes, cyclones, and tropical storms</li>
+          <li>Climate and historical data for trend analysis and event playback</li>
+          <li>User-friendly design with dark/light mode, mobile responsiveness, and saved favorites</li>
+        </ul>
+      </div>
+      <div class="products">
+        <div class="product-card" onclick="window.open('http://192.168.1.169:8080/', '_blank')" style="cursor: pointer;">
+          <h3>Free Trial</h3>
+          <p>Start your PF-CAELUS free trial in a new tab.</p>
+        </div>
+      </div>
+      <div class="image-card" style="max-width: 100%; margin-top: 16px;">
+        <h3>Live Preview</h3>
+        <div style="position: relative; padding-top: 56.25%; width: 100%; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2);">
+          <iframe src="http://192.168.1.169:8080/" title="PF-CAELUS" style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;" loading="lazy" referrerpolicy="no-referrer" allowfullscreen></iframe>
+        </div>
+        <p class="note">Embedded PF-CAELUS live interface</p>
+      </div>
+      <div style="text-align: center; margin-top: 16px;">
+        <button class="back-button" onclick="backToWeather()">Back to Weather Solutions</button>
       </div>
     </div>
 
@@ -1408,6 +1461,11 @@
         const view = document.getElementById('energy-solutions');
         view.style.display = 'block';
         addEnterAnimation(view);
+      } else if (sector === 'weather') {
+        document.getElementById('main-products').style.display = 'none';
+        const view = document.getElementById('weather-solutions');
+        view.style.display = 'block';
+        addEnterAnimation(view);
       } else {
         alert(`Explore PF-GEOINT solutions for ${sector}!`);
         // Replace with actual logic for other sectors
@@ -1449,6 +1507,14 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    function showCaelus() {
+      document.getElementById('weather-solutions').style.display = 'none';
+      const view = document.getElementById('caelus');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     function showAssetWatch() {
       document.getElementById('urban-planning-solutions').style.display = 'none';
       const view = document.getElementById('asset-watch');
@@ -1479,6 +1545,15 @@
       const aw = document.getElementById('asset-watch');
       if (aw) aw.style.display = 'none';
       const view = document.getElementById('urban-planning-solutions');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function backToWeather() {
+      const c = document.getElementById('caelus');
+      if (c) c.style.display = 'none';
+      const view = document.getElementById('weather-solutions');
       view.style.display = 'block';
       addEnterAnimation(view);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1771,6 +1846,23 @@
           'Population and demographic analysis',
           'Environmental planning and sustainability',
           'Smart city implementation and management'
+        ]
+      },
+      'weather': {
+        name: 'Weather Intelligence',
+        description: 'Real-time global and local weather intelligence with interactive mapping, forecasts, and alerts.',
+        keywords: ['weather', 'forecast', 'storm', 'hurricane', 'cyclone', 'wind', 'rain', 'temperature', 'radar', 'clouds', 'alerts', 'climate', 'historical', 'satellite'],
+        features: [
+          'Live interactive weather map with toggleable layers',
+          'Location-based forecasts and severe weather alerts',
+          'Storm tracking for hurricanes and tropical systems',
+          'Historical climate views and event playback',
+          'Responsive UI with dark/light mode and favorites'
+        ],
+        applications: [
+          'Public weather awareness and safety',
+          'Operational planning for logistics and events',
+          'Climate trend analysis and reporting'
         ]
       },
       'environment': {
