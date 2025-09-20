@@ -1023,6 +1023,11 @@
         <p>Real-time global and local weather insights with interactive mapping and alerts.</p>
         <button onclick="learnMore('weather')">Explore Now</button>
       </div>
+      <div class="product-card">
+        <h3>PF - DIGITAL TWIN</h3>
+        <p>Revolutionary digital twin technology for smart cities. Create comprehensive 3D city models with real-time data integration, infrastructure monitoring, and predictive analytics for urban development.</p>
+        <button onclick="learnMore('digital-twin')">Explore Now</button>
+      </div>
     </div>
 
     <!-- Agriculture Solutions Section -->
@@ -1030,7 +1035,7 @@
       <h2 style="text-align: center; color: #00d4ff;">Agriculture Solutions</h2>
       <div class="products">
         <div class="product-card">
-          <h3>Crop Health Assessment</h3>
+          <h3>PF - C.H.A (Crop Health Assessment)</h3>
           <p>Evaluate crop vitality and water stress using advanced indices like NDVI and NDWI for your area of interest.</p>
           <button onclick="showCropHealth()">View Details</button>
         </div>
@@ -1099,14 +1104,29 @@
       </div>
     </div>
 
-    <!-- Urban Planning Solutions Section -->
-    <div id="urban-planning-solutions" style="display: none;">
-      <h2 style="text-align: center; color: #00d4ff;">Urban Planning Solutions</h2>
+    <!-- PF-DIGITAL TWIN Solutions Section -->
+    <div id="digital-twin-solutions" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">PF-DIGITAL TWIN Solutions</h2>
       <div class="products">
         <div class="product-card">
           <h3>PF-DIGITAL TWIN</h3>
           <p>Revolutionary digital twin technology for smart cities. Create comprehensive 3D city models with real-time data integration, infrastructure monitoring, and predictive analytics for urban development.</p>
           <button onclick="showDigitalTwin()">View Details</button>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToMain()">Back to Sectors</button>
+      </div>
+    </div>
+
+    <!-- Urban Planning Solutions Section -->
+    <div id="urban-planning-solutions" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">Urban Planning Solutions</h2>
+      <div class="products">
+        <div class="product-card">
+          <h3>PF - Urban Scope</h3>
+          <p>Comprehensive urban planning and development solutions. Advanced analytics for city planning, infrastructure monitoring, and urban development optimization.</p>
+          <button onclick="showUrbanScope()">View Details</button>
         </div>
         <div class="product-card">
           <span class="product-badge">New</span>
@@ -1120,25 +1140,54 @@
       </div>
     </div>
 
+    <!-- Environmental Monitoring Solutions Section -->
+    <div id="environment-solutions" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">Environmental Monitoring Solutions</h2>
+      <div class="products">
+        <div class="product-card">
+          <h3>PF - F.R.A (Flood Risk Assessment)</h3>
+          <p>Advanced flood risk assessment and monitoring system. Real-time flood prediction, risk mapping, and early warning systems for disaster preparedness.</p>
+          <button onclick="showFloodRisk()">View Details</button>
+        </div>
+        <div class="product-card">
+          <h3>PF - GEOSHIFT</h3>
+          <p>Environmental change detection and monitoring platform. Track deforestation, land use changes, and environmental impacts with precision geospatial analysis.</p>
+          <button onclick="showGeoShift()">View Details</button>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToMain()">Back to Sectors</button>
+      </div>
+    </div>
+
+    <!-- Transportation & Logistics Solutions Section -->
+    <div id="transportation-solutions" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">Transportation & Logistics Solutions</h2>
+      <div class="products">
+        <div class="product-card">
+          <h3>PF - LogiTrack</h3>
+          <p>Comprehensive logistics and delivery management app. Real-time tracking, route optimization, and fleet management for efficient supply chain operations.</p>
+          <button onclick="showLogiTrack()">View Details</button>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToMain()">Back to Sectors</button>
+      </div>
+    </div>
+
     <!-- Energy & Utilities Solutions Section -->
     <div id="energy-solutions" style="display: none;">
       <h2 style="text-align: center; color: #00d4ff;">Energy & Utilities Solutions</h2>
       <div class="products">
         <div class="product-card">
-          <h3>Electrical Utility Network</h3>
-          <p>Advanced monitoring and analysis of electrical utility networks using satellite imagery and AI-powered analytics for optimal grid performance.</p>
-          <img id="electricityImage" loading="lazy" src="https://raw.githubusercontent.com/PFG-Sanusi/GEOINT/main/electricity.png" alt="Electrical Utility Network" style="width: 100%; max-height: 300px; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 212, 255, 0.2); object-fit: contain; margin-bottom: 15px;" onerror="this.onerror=null; this.src='https://github.com/PFG-Sanusi/GEOINT/raw/main/electricity.png';">
-          <button onclick="showElectricalUtility()">View Details</button>
+          <h3>PF - FLOWSAFE</h3>
+          <p>Pipeline Monitoring: Real Time Pipeline Integrity with Leak Detection. Advanced monitoring system for pipeline safety and maintenance optimization using geospatial intelligence.</p>
+          <button onclick="showFlowSafe()">View Details</button>
         </div>
         <div class="product-card">
-          <h3>Pipeline Monitoring</h3>
-          <p>Real-time pipeline integrity monitoring with leak detection and maintenance optimization using geospatial intelligence.</p>
-          <button onclick="showPipelineMonitoring()">View Details</button>
-        </div>
-        <div class="product-card">
-          <h3>Renewable Energy Planning</h3>
-          <p>Site assessment and optimization for solar, wind, and other renewable energy installations using advanced geospatial analysis.</p>
-          <button onclick="showRenewableEnergy()">View Details</button>
+          <h3>PF - Ecosphere</h3>
+          <p>Renewable Energy Planning: Optimized Site Selection for Solar Farms. Comprehensive site assessment and optimization for renewable energy installations using advanced geospatial analysis.</p>
+          <button onclick="showEcosphere()">View Details</button>
         </div>
       </div>
       <div style="text-align: center;">
@@ -1181,6 +1230,143 @@
       </div>
       <div style="text-align: center;">
         <button class="back-button" onclick="backToDefense()">Back to Defense Solutions</button>
+      </div>
+    </div>
+
+    <!-- Urban Scope Section -->
+    <div id="urban-scope" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">PF - Urban Scope</h2>
+      <div class="summary-card">
+        <h3>PF - Urban Scope – Urban Planning Solutions</h3>
+        <p><b>PF - Urban Scope</b> provides comprehensive urban planning and development solutions with advanced analytics for city planning, infrastructure monitoring, and urban development optimization.</p>
+        <p><b>Key Features:</b></p>
+        <ul>
+          <li><b>Urban Development Planning</b>: Advanced analytics for city planning and development</li>
+          <li><b>Infrastructure Monitoring</b>: Real-time monitoring of urban infrastructure</li>
+          <li><b>Population Analytics</b>: Demographic analysis and population density mapping</li>
+          <li><b>Traffic Optimization</b>: Smart traffic management and flow optimization</li>
+          <li><b>Environmental Planning</b>: Sustainable urban development solutions</li>
+          <li><b>Smart City Integration</b>: IoT connectivity and smart city implementation</li>
+        </ul>
+      </div>
+      
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToUrbanPlanning()">Back to Urban Planning Solutions</button>
+      </div>
+    </div>
+
+    <!-- PF - F.R.A (Flood Risk Assessment) Section -->
+    <div id="flood-risk" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">PF - F.R.A (Flood Risk Assessment)</h2>
+      <div class="summary-card">
+        <h3>PF - F.R.A – Flood Risk Assessment & Monitoring</h3>
+        <p><b>PF - F.R.A</b> is an advanced flood risk assessment and monitoring system that provides real-time flood prediction, risk mapping, and early warning systems for disaster preparedness and response.</p>
+        <p><b>Key Features:</b></p>
+        <ul>
+          <li><b>Real-time Flood Prediction</b>: AI-powered flood forecasting using weather data and terrain analysis</li>
+          <li><b>Risk Mapping</b>: Comprehensive flood risk assessment and vulnerability mapping</li>
+          <li><b>Early Warning Systems</b>: Automated alerts and notifications for flood threats</li>
+          <li><b>Historical Analysis</b>: Past flood event analysis and pattern recognition</li>
+          <li><b>Infrastructure Impact Assessment</b>: Evaluate potential damage to critical infrastructure</li>
+          <li><b>Emergency Response Planning</b>: Support for evacuation routes and emergency management</li>
+        </ul>
+        <p><b>Applications:</b> Disaster preparedness, emergency response planning, infrastructure protection, insurance risk assessment, and community safety planning.</p>
+      </div>
+      
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToEnvironment()">Back to Environmental Monitoring Solutions</button>
+      </div>
+    </div>
+
+    <!-- PF - GEOSHIFT Section -->
+    <div id="geoshift" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">PF - GEOSHIFT</h2>
+      <div class="summary-card">
+        <h3>PF - GEOSHIFT – Environmental Change Detection</h3>
+        <p><b>PF - GEOSHIFT</b> is a comprehensive environmental change detection and monitoring platform that tracks deforestation, land use changes, and environmental impacts with precision geospatial analysis.</p>
+        <p><b>Key Features:</b></p>
+        <ul>
+          <li><b>Deforestation Monitoring</b>: Real-time tracking of forest cover changes and illegal logging</li>
+          <li><b>Land Use Change Detection</b>: Monitor urban expansion, agricultural development, and land conversion</li>
+          <li><b>Environmental Impact Assessment</b>: Evaluate the environmental effects of development projects</li>
+          <li><b>Carbon Footprint Tracking</b>: Monitor carbon sequestration and emission changes</li>
+          <li><b>Biodiversity Monitoring</b>: Track habitat changes and wildlife corridor impacts</li>
+          <li><b>Compliance Reporting</b>: Generate reports for environmental regulations and sustainability goals</li>
+        </ul>
+        <p><b>Applications:</b> Environmental monitoring, conservation planning, sustainability reporting, regulatory compliance, and climate change research.</p>
+      </div>
+      
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToEnvironment()">Back to Environmental Monitoring Solutions</button>
+      </div>
+    </div>
+
+    <!-- PF - LogiTrack Section -->
+    <div id="logitrack" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">PF - LogiTrack</h2>
+      <div class="summary-card">
+        <h3>PF - LogiTrack – Logistics & Delivery Management</h3>
+        <p><b>PF - LogiTrack</b> is a comprehensive logistics and delivery management app that provides real-time tracking, route optimization, and fleet management for efficient supply chain operations.</p>
+        <p><b>Key Features:</b></p>
+        <ul>
+          <li><b>Real-time Tracking</b>: Live GPS tracking of vehicles, packages, and shipments</li>
+          <li><b>Route Optimization</b>: AI-powered route planning for maximum efficiency and fuel savings</li>
+          <li><b>Fleet Management</b>: Comprehensive vehicle monitoring, maintenance scheduling, and driver management</li>
+          <li><b>Delivery Management</b>: Package tracking, delivery confirmation, and customer notifications</li>
+          <li><b>Supply Chain Analytics</b>: Performance metrics, cost analysis, and operational insights</li>
+          <li><b>Mobile Integration</b>: Driver and customer mobile apps for seamless operations</li>
+        </ul>
+        <p><b>Applications:</b> Last-mile delivery, fleet management, supply chain optimization, e-commerce logistics, and transportation operations.</p>
+      </div>
+      
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToTransportation()">Back to Transportation & Logistics Solutions</button>
+      </div>
+    </div>
+
+    <!-- PF - FLOWSAFE Section -->
+    <div id="flowsafe" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">PF - FLOWSAFE</h2>
+      <div class="summary-card">
+        <h3>PF - FLOWSAFE – Pipeline Monitoring & Leak Detection</h3>
+        <p><b>PF - FLOWSAFE</b> is an advanced pipeline monitoring system that provides real-time pipeline integrity monitoring with leak detection and maintenance optimization using geospatial intelligence.</p>
+        <p><b>Key Features:</b></p>
+        <ul>
+          <li><b>Real-time Leak Detection</b>: Advanced sensor technology for immediate leak identification</li>
+          <li><b>Pipeline Integrity Monitoring</b>: Continuous assessment of pipeline condition and structural integrity</li>
+          <li><b>Predictive Maintenance</b>: AI-powered maintenance scheduling to prevent failures</li>
+          <li><b>Geospatial Analysis</b>: Location-based risk assessment and environmental impact monitoring</li>
+          <li><b>Emergency Response</b>: Automated alerts and emergency shutdown procedures</li>
+          <li><b>Compliance Reporting</b>: Regulatory compliance monitoring and reporting</li>
+        </ul>
+        <p><b>Applications:</b> Oil and gas pipeline monitoring, water distribution systems, chemical transport pipelines, and infrastructure safety management.</p>
+      </div>
+      
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToEnergy()">Back to Energy & Utilities Solutions</button>
+      </div>
+    </div>
+
+    <!-- PF - Ecosphere Section -->
+    <div id="ecosphere" style="display: none;">
+      <h2 style="text-align: center; color: #00d4ff;">PF - Ecosphere</h2>
+      <div class="summary-card">
+        <h3>PF - Ecosphere – Renewable Energy Planning & Site Selection</h3>
+        <p><b>PF - Ecosphere</b> is a comprehensive renewable energy planning platform that provides optimized site selection for solar farms and other renewable energy installations using advanced geospatial analysis.</p>
+        <p><b>Key Features:</b></p>
+        <ul>
+          <li><b>Solar Farm Site Selection</b>: Optimal location identification based on solar irradiance, terrain, and environmental factors</li>
+          <li><b>Wind Energy Assessment</b>: Wind resource evaluation and turbine placement optimization</li>
+          <li><b>Environmental Impact Analysis</b>: Comprehensive environmental assessment for sustainable development</li>
+          <li><b>Grid Integration Planning</b>: Electrical grid connectivity and transmission line analysis</li>
+          <li><b>Financial Modeling</b>: ROI analysis, cost-benefit assessment, and investment planning</li>
+          <li><b>Regulatory Compliance</b>: Permitting support and regulatory requirement analysis</li>
+        </ul>
+        <p><b>Applications:</b> Solar farm development, wind energy projects, renewable energy portfolio planning, and sustainable energy infrastructure development.</p>
+      </div>
+      
+      <div style="text-align: center;">
+        <button class="back-button" onclick="backToEnergy()">Back to Energy & Utilities Solutions</button>
       </div>
     </div>
 
@@ -1243,7 +1429,7 @@
       </div>
       
       <div style="text-align: center;">
-        <button class="back-button" onclick="backToUrbanPlanning()">Back to Urban Planning Solutions</button>
+        <button class="back-button" onclick="backToDigitalTwin()">Back to PF-DIGITAL TWIN Solutions</button>
       </div>
     </div>
 
@@ -1308,7 +1494,7 @@
 
     <!-- Crop Health Assessment Section -->
     <div id="crop-health" style="display: none;">
-      <h2 style="text-align: center; color: #00d4ff;">Crop Health Assessment</h2>
+      <h2 style="text-align: center; color: #00d4ff;">PF - C.H.A (Crop Health Assessment)</h2>
       <div class="image-container">
         <div class="image-card">
           <h3>NDVI Map</h3>
@@ -1332,7 +1518,7 @@
           </div>
         </div>
         <div class="summary-card">
-          <h3>Crop Health Assessment – Summary</h3>
+          <h3>PF - C.H.A (Crop Health Assessment) – Summary</h3>
           <ul>
             <li><b>Healthy and well-watered crops (best fields)</b>: Green, well-hydrated areas with strong development; likely good yields if conditions persist.</li>
             <li><b>Healthy but dry crops</b>: Green fields showing early water limitation; need timely rain or irrigation to maintain vigor.</li>
@@ -1465,6 +1651,21 @@
         const view = document.getElementById('weather-solutions');
         view.style.display = 'block';
         addEnterAnimation(view);
+      } else if (sector === 'digital-twin') {
+        document.getElementById('main-products').style.display = 'none';
+        const view = document.getElementById('digital-twin-solutions');
+        view.style.display = 'block';
+        addEnterAnimation(view);
+      } else if (sector === 'environment') {
+        document.getElementById('main-products').style.display = 'none';
+        const view = document.getElementById('environment-solutions');
+        view.style.display = 'block';
+        addEnterAnimation(view);
+      } else if (sector === 'transportation') {
+        document.getElementById('main-products').style.display = 'none';
+        const view = document.getElementById('transportation-solutions');
+        view.style.display = 'block';
+        addEnterAnimation(view);
       } else {
         alert(`Explore PF-GEOINT solutions for ${sector}!`);
         // Replace with actual logic for other sectors
@@ -1494,7 +1695,7 @@
     }
 
     function showDigitalTwin() {
-      document.getElementById('urban-planning-solutions').style.display = 'none';
+      document.getElementById('digital-twin-solutions').style.display = 'none';
       const view = document.getElementById('digital-twin');
       view.style.display = 'block';
       addEnterAnimation(view);
@@ -1503,6 +1704,54 @@
       enableImageZoom('burjImage');
       enableImageZoom('hongkongImage');
       enableImageZoom('madridImage');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showUrbanScope() {
+      document.getElementById('urban-planning-solutions').style.display = 'none';
+      const view = document.getElementById('urban-scope');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showFloodRisk() {
+      document.getElementById('environment-solutions').style.display = 'none';
+      const view = document.getElementById('flood-risk');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showGeoShift() {
+      document.getElementById('environment-solutions').style.display = 'none';
+      const view = document.getElementById('geoshift');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showLogiTrack() {
+      document.getElementById('transportation-solutions').style.display = 'none';
+      const view = document.getElementById('logitrack');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showFlowSafe() {
+      document.getElementById('energy-solutions').style.display = 'none';
+      const view = document.getElementById('flowsafe');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showEcosphere() {
+      document.getElementById('energy-solutions').style.display = 'none';
+      const view = document.getElementById('ecosphere');
+      view.style.display = 'block';
+      addEnterAnimation(view);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1596,11 +1845,54 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    function backToDigitalTwin() {
+      document.getElementById('digital-twin').style.display = 'none';
+      const view = document.getElementById('digital-twin-solutions');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function backToEnvironment() {
+      const fr = document.getElementById('flood-risk');
+      if (fr) fr.style.display = 'none';
+      const gs = document.getElementById('geoshift');
+      if (gs) gs.style.display = 'none';
+      const view = document.getElementById('environment-solutions');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function backToTransportation() {
+      const lt = document.getElementById('logitrack');
+      if (lt) lt.style.display = 'none';
+      const view = document.getElementById('transportation-solutions');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function backToEnergy() {
+      const fs = document.getElementById('flowsafe');
+      if (fs) fs.style.display = 'none';
+      const es = document.getElementById('ecosphere');
+      if (es) es.style.display = 'none';
+      const view = document.getElementById('energy-solutions');
+      view.style.display = 'block';
+      addEnterAnimation(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     function backToMain() {
       document.getElementById('agriculture-solutions').style.display = 'none';
       document.getElementById('defense-solutions').style.display = 'none';
       document.getElementById('urban-planning-solutions').style.display = 'none';
+      document.getElementById('environment-solutions').style.display = 'none';
+      document.getElementById('transportation-solutions').style.display = 'none';
       document.getElementById('energy-solutions').style.display = 'none';
+      document.getElementById('weather-solutions').style.display = 'none';
+      document.getElementById('digital-twin-solutions').style.display = 'none';
       const view = document.getElementById('main-products');
       view.style.display = 'grid';
       addEnterAnimation(view);
@@ -2302,7 +2594,7 @@
       const solutionDatabase = {
         // Agriculture Solutions
         'crop_health': {
-          name: 'Crop Health Assessment',
+          name: 'PF - C.H.A (Crop Health Assessment)',
           sector: 'agriculture',
           keywords: ['crop', 'health', 'vegetation', 'ndvi', 'ndwi', 'plant', 'farming', 'agriculture', 'yield', 'harvest'],
           description: 'Advanced crop health monitoring using NDVI/NDWI analysis with 3D visualization',
@@ -2528,7 +2820,7 @@
       
       // Handle questions about sectors
       if (lowerMessage.includes('sectors') || lowerMessage.includes('industries') || lowerMessage.includes('what sectors')) {
-        return `🌐 PF-GEOINT Sectors & Solutions\n\n🌱 Agriculture & Farming:\n• Crop Health Assessment (NDVI/NDWI analysis)\n• Precision Farming (zone-specific optimization)\n• Yield prediction and cost analysis\n\n🛡️ Defense & Security:\n• PF-GEOTRACE (tactical geolocation platform)\n• Tactical Surveillance systems\n• Intelligence gathering and analysis\n\n🏙️ Urban Planning & Infrastructure:\n• Smart City Development\n• Infrastructure Monitoring\n• Traffic optimization and planning\n\n🌍 Environmental & Conservation:\n• Climate Tracking and monitoring\n• Conservation and wildlife protection\n• Environmental impact assessment\n\n🚛 Transportation & Logistics:\n• Fleet Management and tracking\n• Traffic Optimization\n• Route planning and logistics\n\n⚡ Energy & Utilities:\n• Grid Monitoring and analysis\n• Renewable Energy Planning\n• Energy optimization and forecasting\n\nWhich sector interests you most? I can provide detailed information about any of these areas!`;
+        return `🌐 PF-GEOINT Sectors & Solutions\n\n🌱 Agriculture & Farming:\n• PF - C.H.A (Crop Health Assessment) (NDVI/NDWI analysis)\n• Precision Farming (zone-specific optimization)\n• Yield prediction and cost analysis\n\n🛡️ Defense & Security:\n• PF-GEOTRACE (tactical geolocation platform)\n• Tactical Surveillance systems\n• Intelligence gathering and analysis\n\n🏙️ Urban Planning & Infrastructure:\n• Smart City Development\n• Infrastructure Monitoring\n• Traffic optimization and planning\n\n🌍 Environmental & Conservation:\n• Climate Tracking and monitoring\n• Conservation and wildlife protection\n• Environmental impact assessment\n\n🚛 Transportation & Logistics:\n• Fleet Management and tracking\n• Traffic Optimization\n• Route planning and logistics\n\n⚡ Energy & Utilities:\n• Grid Monitoring and analysis\n• Renewable Energy Planning\n• Energy optimization and forecasting\n\nWhich sector interests you most? I can provide detailed information about any of these areas!`;
       }
       
       // Handle technical questions
