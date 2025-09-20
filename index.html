@@ -191,65 +191,6 @@
       gap: 25px;
       padding: 30px 0;
     }
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      padding: 20px 0;
-    }
-    .standalone-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    .standalone-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 25px;
-      align-items: stretch;
-    }
-    .standalone-center {
-      justify-content: center;
-    }
-    .standalone-center .product-card {
-      max-width: 400px;
-      margin: 0 auto;
-    }
-    .standalone-card {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .standalone-card h3 {
-      font-size: 1.6em;
-      margin-bottom: 15px;
-    }
-    .standalone-card p {
-      font-size: 0.95em;
-      line-height: 1.5;
-      flex-grow: 1;
-      margin-bottom: 20px;
-    }
-    .standalone-card button {
-      margin-top: auto;
-    }
-    @media (max-width: 1024px) {
-      .standalone-row {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    @media (max-width: 768px) {
-      .standalone-row {
-        grid-template-columns: 1fr;
-      }
-      .standalone-center .product-card {
-        max-width: 100%;
-      }
-    }
     .product-card {
       background: 
         linear-gradient(135deg, rgba(17, 30, 54, 0.8) 0%, rgba(25, 45, 75, 0.6) 50%, rgba(15, 25, 45, 0.9) 100%);
@@ -1089,88 +1030,6 @@
       </div>
     </div>
 
-    <!-- Standalone Products Section -->
-    <div id="standalone-products" style="margin-top: 60px; padding: 40px 0;">
-      <h2 style="text-align: center; color: #00d4ff; margin-bottom: 50px; font-size: 2.5em; font-weight: 700;">Standalone Products</h2>
-      <div class="standalone-grid">
-        <div class="standalone-row">
-          <div class="product-card standalone-card">
-            <h3>PF ASSET-WATCH</h3>
-            <p>Monitor your Real Estate Assets from space. Advanced satellite monitoring for property management and asset tracking.</p>
-            <button onclick="showAssetWatch()">View Details</button>
-          </div>
-          <div class="product-card standalone-card">
-            <h3>PF GEOTRACE</h3>
-            <p>Real-Time Geolocation Platform. Cutting-edge geolocation technology for precise positioning and tracking.</p>
-            <button onclick="showGeoTrace()">View Details</button>
-          </div>
-          <div class="product-card standalone-card">
-            <h3>PF VISTA</h3>
-            <p>Enable monitoring with the use of Satellite, Drone, CCTV and Geo data. Comprehensive surveillance and monitoring platform.</p>
-            <button onclick="showVista()">View Details</button>
-          </div>
-        </div>
-        <div class="standalone-row">
-          <div class="product-card standalone-card">
-            <h3>PF GEOSHIFT</h3>
-            <p>Environmental Change Detection. Track deforestation, land use changes, and environmental impacts with precision geospatial analysis.</p>
-            <button onclick="showGeoShift()">View Details</button>
-          </div>
-          <div class="product-card standalone-card">
-            <h3>PF CAELUS</h3>
-            <p>Real-Time Weather Intelligence Platform. Interactive weather monitoring with forecasts, alerts, and climate analysis.</p>
-            <button onclick="showCaelus()">View Details</button>
-          </div>
-          <div class="product-card standalone-card">
-            <h3>PF ATLAS</h3>
-            <p>Geospatial Intelligence Solution LLM. AI-powered geospatial analysis and intelligence platform for advanced decision making.</p>
-            <button onclick="showAtlas()">View Details</button>
-          </div>
-        </div>
-        <div class="standalone-row">
-          <div class="product-card standalone-card">
-            <h3>PF DIGITAL TWIN</h3>
-            <p>For Smart City Development, Monitoring Predictive Analysis. Revolutionary digital twin technology for comprehensive 3D city modeling.</p>
-            <button onclick="showDigitalTwin()">View Details</button>
-          </div>
-          <div class="product-card standalone-card">
-            <h3>PF OrbitFence</h3>
-            <p>A smart geofencing solution that enables real-time tracking, automation, and control within defined virtual zones.</p>
-            <button onclick="showOrbitFence()">View Details</button>
-          </div>
-          <div class="product-card standalone-card">
-            <h3>PF LogiTrack</h3>
-            <p>Logistics and Delivery Management App. Comprehensive logistics solution with real-time tracking and route optimization.</p>
-            <button onclick="showLogiTrack()">View Details</button>
-          </div>
-        </div>
-        <div class="standalone-row">
-          <div class="product-card standalone-card">
-            <h3>PF FlowSafe</h3>
-            <p>Pipeline Monitoring: Real Time Pipeline Integrity with Leak Detection. Advanced pipeline safety and monitoring system.</p>
-            <button onclick="showFlowSafe()">View Details</button>
-          </div>
-          <div class="product-card standalone-card">
-            <h3>PF Urban Scope</h3>
-            <p>Geospatial platform for Urban growth analysis, Land use modelling & Infrastructure planning. Comprehensive urban development solutions.</p>
-            <button onclick="showUrbanScope()">View Details</button>
-          </div>
-          <div class="product-card standalone-card">
-            <h3>PF F.R.A.</h3>
-            <p>Flood Risk Assessment. Advanced flood risk assessment and monitoring system with real-time prediction and early warning.</p>
-            <button onclick="showFloodRisk()">View Details</button>
-          </div>
-        </div>
-        <div class="standalone-row standalone-center">
-          <div class="product-card standalone-card">
-            <h3>PF Ecosphere</h3>
-            <p>Renewable Energy Planning: Optimized Site Selection for Solar Farms. Comprehensive renewable energy planning and site optimization.</p>
-            <button onclick="showEcosphere()">View Details</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Agriculture Solutions Section -->
     <div id="agriculture-solutions" style="display: none;">
       <h2 style="text-align: center; color: #00d4ff;">Agriculture Solutions</h2>
@@ -1508,75 +1367,6 @@
       
       <div style="text-align: center;">
         <button class="back-button" onclick="backToEnergy()">Back to Energy & Utilities Solutions</button>
-      </div>
-    </div>
-
-    <!-- PF VISTA Section -->
-    <div id="vista" style="display: none;">
-      <h2 style="text-align: center; color: #00d4ff;">PF VISTA</h2>
-      <div class="summary-card">
-        <h3>PF VISTA – Multi-Source Monitoring Platform</h3>
-        <p><b>PF VISTA</b> enables comprehensive monitoring using Satellite, Drone, CCTV and Geo data. A unified surveillance and monitoring platform that integrates multiple data sources for complete situational awareness.</p>
-        <p><b>Key Features:</b></p>
-        <ul>
-          <li><b>Satellite Integration</b>: Real-time satellite imagery and data processing</li>
-          <li><b>Drone Surveillance</b>: Autonomous drone monitoring and data collection</li>
-          <li><b>CCTV Network</b>: Ground-based camera network integration and management</li>
-          <li><b>Geospatial Analysis</b>: Advanced location-based intelligence and mapping</li>
-          <li><b>Real-time Monitoring</b>: Live data streaming and instant alerts</li>
-          <li><b>Multi-source Fusion</b>: Intelligent data integration from all sources</li>
-        </ul>
-        <p><b>Applications:</b> Security monitoring, infrastructure surveillance, environmental monitoring, emergency response, and comprehensive situational awareness.</p>
-      </div>
-      
-      <div style="text-align: center;">
-        <button class="back-button" onclick="backToStandalone()">Back to Standalone Products</button>
-      </div>
-    </div>
-
-    <!-- PF ATLAS Section -->
-    <div id="atlas" style="display: none;">
-      <h2 style="text-align: center; color: #00d4ff;">PF ATLAS</h2>
-      <div class="summary-card">
-        <h3>PF ATLAS – Geospatial Intelligence Solution LLM</h3>
-        <p><b>PF ATLAS</b> is an AI-powered geospatial intelligence solution LLM that provides advanced geospatial analysis and intelligence for sophisticated decision making and strategic planning.</p>
-        <p><b>Key Features:</b></p>
-        <ul>
-          <li><b>AI-Powered Analysis</b>: Large Language Model for geospatial intelligence processing</li>
-          <li><b>Natural Language Queries</b>: Ask complex geospatial questions in plain language</li>
-          <li><b>Predictive Analytics</b>: Advanced forecasting and trend analysis</li>
-          <li><b>Pattern Recognition</b>: Identify complex patterns in geospatial data</li>
-          <li><b>Automated Insights</b>: Generate intelligent reports and recommendations</li>
-          <li><b>Multi-domain Intelligence</b>: Cross-sector analysis and correlation</li>
-        </ul>
-        <p><b>Applications:</b> Strategic intelligence, predictive analysis, complex geospatial queries, automated reporting, and advanced decision support systems.</p>
-      </div>
-      
-      <div style="text-align: center;">
-        <button class="back-button" onclick="backToStandalone()">Back to Standalone Products</button>
-      </div>
-    </div>
-
-    <!-- PF OrbitFence Section -->
-    <div id="orbitfence" style="display: none;">
-      <h2 style="text-align: center; color: #00d4ff;">PF OrbitFence</h2>
-      <div class="summary-card">
-        <h3>PF OrbitFence – Smart Geofencing Solution</h3>
-        <p><b>PF OrbitFence</b> is a smart geofencing solution that enables real-time tracking, automation, and control within defined virtual zones. Advanced location-based services for precise boundary management.</p>
-        <p><b>Key Features:</b></p>
-        <ul>
-          <li><b>Virtual Zone Creation</b>: Define custom geofenced areas with precise boundaries</li>
-          <li><b>Real-time Tracking</b>: Live monitoring of objects and personnel within zones</li>
-          <li><b>Automated Alerts</b>: Instant notifications for zone entry/exit events</li>
-          <li><b>Access Control</b>: Manage permissions and restrictions within zones</li>
-          <li><b>Analytics Dashboard</b>: Comprehensive reporting and zone activity analysis</li>
-          <li><b>Integration APIs</b>: Seamless integration with existing systems</li>
-        </ul>
-        <p><b>Applications:</b> Fleet management, security perimeters, asset tracking, personnel monitoring, automated workflows, and location-based services.</p>
-      </div>
-      
-      <div style="text-align: center;">
-        <button class="back-button" onclick="backToStandalone()">Back to Standalone Products</button>
       </div>
     </div>
 
@@ -1965,30 +1755,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function showVista() {
-      document.getElementById('standalone-products').style.display = 'none';
-      const view = document.getElementById('vista');
-      view.style.display = 'block';
-      addEnterAnimation(view);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function showAtlas() {
-      document.getElementById('standalone-products').style.display = 'none';
-      const view = document.getElementById('atlas');
-      view.style.display = 'block';
-      addEnterAnimation(view);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function showOrbitFence() {
-      document.getElementById('standalone-products').style.display = 'none';
-      const view = document.getElementById('orbitfence');
-      view.style.display = 'block';
-      addEnterAnimation(view);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
     function showCaelus() {
       document.getElementById('weather-solutions').style.display = 'none';
       const view = document.getElementById('caelus');
@@ -2118,19 +1884,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function backToStandalone() {
-      const vista = document.getElementById('vista');
-      if (vista) vista.style.display = 'none';
-      const atlas = document.getElementById('atlas');
-      if (atlas) atlas.style.display = 'none';
-      const orbitfence = document.getElementById('orbitfence');
-      if (orbitfence) orbitfence.style.display = 'none';
-      const view = document.getElementById('standalone-products');
-      view.style.display = 'block';
-      addEnterAnimation(view);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
     function backToMain() {
       document.getElementById('agriculture-solutions').style.display = 'none';
       document.getElementById('defense-solutions').style.display = 'none';
@@ -2140,7 +1893,6 @@
       document.getElementById('energy-solutions').style.display = 'none';
       document.getElementById('weather-solutions').style.display = 'none';
       document.getElementById('digital-twin-solutions').style.display = 'none';
-      document.getElementById('standalone-products').style.display = 'block';
       const view = document.getElementById('main-products');
       view.style.display = 'grid';
       addEnterAnimation(view);
