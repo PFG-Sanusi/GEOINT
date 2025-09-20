@@ -56,6 +56,369 @@
       position: relative;
       z-index: 2;
     }
+
+    /* Navigation Styles */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .nav-container {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 0 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .nav-logo h1 {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.8em;
+      font-weight: 700;
+      background: linear-gradient(45deg, #00d4ff, #7b00ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 40px;
+    }
+
+    .nav-link {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1em;
+      padding: 10px 20px;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .nav-link:hover::before {
+      left: 100%;
+    }
+
+    .nav-link:hover {
+      color: #00d4ff;
+      background: rgba(0, 212, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .nav-link.active {
+      color: #00d4ff;
+      background: rgba(0, 212, 255, 0.15);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .bar {
+      width: 25px;
+      height: 3px;
+      background: #00d4ff;
+      margin: 3px 0;
+      transition: 0.3s;
+      border-radius: 2px;
+    }
+
+    /* Page Content */
+    .page-content {
+      display: none;
+    }
+
+    .page-content.active {
+      display: block;
+    }
+
+    /* Adjust header margin for fixed navbar */
+    .header {
+      margin-top: 70px;
+    }
+
+    /* Mobile Responsive */
+    @media screen and (max-width: 768px) {
+      .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background: rgba(10, 10, 10, 0.98);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        padding: 20px 0;
+        backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(0, 212, 255, 0.3);
+      }
+
+      .nav-menu.active {
+        left: 0;
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+
+      .nav-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+      }
+
+      .nav-toggle.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+
+      .nav-toggle.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+
+      .nav-container {
+        padding: 0 20px;
+      }
+
+    .nav-logo h1 {
+      font-size: 1.5em;
+    }
+  }
+
+  /* Product Features Styling */
+  .product-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 15px 0;
+  }
+
+  .feature-tag {
+    background: linear-gradient(45deg, rgba(0, 212, 255, 0.2), rgba(123, 0, 255, 0.2));
+    color: #00d4ff;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: 500;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .feature-tag:hover {
+    background: linear-gradient(45deg, rgba(0, 212, 255, 0.3), rgba(123, 0, 255, 0.3));
+    transform: translateY(-1px);
+  }
+
+  /* Enhanced Product Cards for Standalone Page */
+  #standalone-page .product-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  #standalone-page .product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+    transition: left 0.6s ease;
+  }
+
+  #standalone-page .product-card:hover::before {
+    left: 100%;
+  }
+
+  #standalone-page .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 212, 255, 0.2);
+  }
+
+  /* Product Modal Styles */
+  .product-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+  }
+
+  .product-modal-content {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    margin: 5% auto;
+    padding: 0;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 15px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .product-modal-content .close {
+    color: #00d4ff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    z-index: 2001;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .product-modal-content .close:hover {
+    color: #ff6b35;
+    transform: scale(1.1);
+  }
+
+  #productModalBody {
+    padding: 40px;
+  }
+
+  .product-detail-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .product-detail-header h2 {
+    color: #00d4ff;
+    font-family: 'Orbitron', monospace;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+
+  .product-detail-header .product-badge {
+    display: inline-block;
+    background: linear-gradient(45deg, #00d4ff, #7b00ff);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 0.9em;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .product-detail-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+
+  .product-detail-section h3 {
+    color: #00d4ff;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+  }
+
+  .product-detail-section ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .product-detail-section li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+    position: relative;
+    padding-left: 20px;
+  }
+
+  .product-detail-section li::before {
+    content: '▶';
+    color: #00d4ff;
+    position: absolute;
+    left: 0;
+  }
+
+  .product-detail-section li:last-child {
+    border-bottom: none;
+  }
+
+  .product-detail-cta {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .product-detail-cta button {
+    background: linear-gradient(45deg, #00d4ff, #7b00ff);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+  }
+
+  .product-detail-cta button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+  }
+
+  .product-detail-cta button.secondary {
+    background: transparent;
+    border: 2px solid #00d4ff;
+    color: #00d4ff;
+  }
+
+  .product-detail-cta button.secondary:hover {
+    background: #00d4ff;
+    color: white;
+  }
+
+  @media screen and (max-width: 768px) {
+    .product-modal-content {
+      width: 95%;
+      margin: 10% auto;
+    }
+
+    .product-detail-content {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .product-detail-header h2 {
+      font-size: 2em;
+    }
+
+    #productModalBody {
+      padding: 20px;
+    }
+  }
     
     .header {
       text-align: center;
@@ -980,10 +1343,31 @@
   </style>
 </head>
 <body>
+  <!-- Navigation Menu -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <h1>PF-GEOINT</h1>
+      </div>
+      <div class="nav-menu">
+        <a href="#" class="nav-link active" onclick="showPage('home')">Home</a>
+        <a href="#" class="nav-link" onclick="showPage('standalone')">Standalone Products</a>
+      </div>
+      <div class="nav-toggle">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
   <div class="header">
     <h1>PF-GEOINT</h1>
   </div>
-  <div class="container">
+  
+  <!-- Home Page Content -->
+  <div id="home-page" class="page-content active">
+    <div class="container">
     <div class="intro">
       <p>Discover PF-GEOINT, our state-of-the-art Geospatial Intelligence platform. Powered by advanced satellite imagery, AI-driven analytics, and real-time data, our solutions transform decision-making across industries.</p>
     </div>
@@ -1570,11 +1954,192 @@
         <button class="back-button" onclick="backToAgriculture()">Back to Agriculture Solutions</button>
       </div>
     </div>
+    </div>
   </div>
+
+  <!-- Standalone Products Page -->
+  <div id="standalone-page" class="page-content">
+    <div class="container">
+      <div class="intro">
+        <h2 style="text-align: center; color: #00d4ff; margin-bottom: 20px;">Standalone Products</h2>
+        <p style="text-align: center; font-size: 1.2em; margin-bottom: 40px;">Discover our comprehensive suite of standalone geospatial intelligence products, each designed to address specific industry challenges with cutting-edge technology.</p>
+      </div>
+      
+      <div class="products">
+        <!-- PF Asset-Watch -->
+        <div class="product-card">
+          <span class="product-badge">Featured</span>
+          <h3>PF Asset-Watch</h3>
+          <p>Monitor your real estate assets using satellite technology. Advanced monitoring solution for property management, construction progress tracking, and asset health assessment.</p>
+          <div class="product-features">
+            <span class="feature-tag">Satellite Monitoring</span>
+            <span class="feature-tag">Real Estate</span>
+            <span class="feature-tag">Asset Management</span>
+          </div>
+          <button onclick="showProductDetails('asset-watch')">Learn More</button>
+        </div>
+
+        <!-- PF GeoTrace -->
+        <div class="product-card">
+          <h3>PF GeoTrace</h3>
+          <p>A real-time geolocation platform for accurate tracking. Precision GPS tracking with advanced analytics for fleet management, logistics, and security applications.</p>
+          <div class="product-features">
+            <span class="feature-tag">Real-time Tracking</span>
+            <span class="feature-tag">GPS Precision</span>
+            <span class="feature-tag">Fleet Management</span>
+          </div>
+          <button onclick="showProductDetails('geotrace')">Learn More</button>
+        </div>
+
+        <!-- PF Vista -->
+        <div class="product-card">
+          <h3>PF Vista</h3>
+          <p>Comprehensive monitoring solution with satellite, drone, CCTV, and geospatial data integration. All-in-one surveillance and monitoring platform for complete situational awareness.</p>
+          <div class="product-features">
+            <span class="feature-tag">Multi-source Data</span>
+            <span class="feature-tag">Surveillance</span>
+            <span class="feature-tag">Integration</span>
+          </div>
+          <button onclick="showProductDetails('vista')">Learn More</button>
+        </div>
+
+        <!-- PF GeoShift -->
+        <div class="product-card">
+          <h3>PF GeoShift</h3>
+          <p>Detect environmental changes with advanced geospatial tools. Monitor deforestation, land use changes, and environmental impacts with precision analysis.</p>
+          <div class="product-features">
+            <span class="feature-tag">Change Detection</span>
+            <span class="feature-tag">Environmental</span>
+            <span class="feature-tag">Analysis</span>
+          </div>
+          <button onclick="showProductDetails('geoshift')">Learn More</button>
+        </div>
+
+        <!-- PF Caelus -->
+        <div class="product-card">
+          <h3>PF Caelus</h3>
+          <p>A real-time weather intelligence platform for accurate forecasting. Advanced meteorological data analysis with interactive mapping and alert systems.</p>
+          <div class="product-features">
+            <span class="feature-tag">Weather Intelligence</span>
+            <span class="feature-tag">Forecasting</span>
+            <span class="feature-tag">Real-time Data</span>
+          </div>
+          <button onclick="showProductDetails('caelus')">Learn More</button>
+        </div>
+
+        <!-- PF Atlas -->
+        <div class="product-card">
+          <h3>PF Atlas</h3>
+          <p>A geospatial intelligence solution powered by Large Language Models (LLM). AI-driven geospatial analysis with natural language processing capabilities.</p>
+          <div class="product-features">
+            <span class="feature-tag">AI-Powered</span>
+            <span class="feature-tag">LLM Integration</span>
+            <span class="feature-tag">Intelligence</span>
+          </div>
+          <button onclick="showProductDetails('atlas')">Learn More</button>
+        </div>
+
+        <!-- PF Digital Twin -->
+        <div class="product-card">
+          <h3>PF Digital Twin</h3>
+          <p>A platform for smart city development, predictive analysis, and monitoring. Create comprehensive 3D city models with real-time data integration and predictive analytics.</p>
+          <div class="product-features">
+            <span class="feature-tag">Smart Cities</span>
+            <span class="feature-tag">3D Modeling</span>
+            <span class="feature-tag">Predictive Analytics</span>
+          </div>
+          <button onclick="showProductDetails('digital-twin')">Learn More</button>
+        </div>
+
+        <!-- PF OrbitFence -->
+        <div class="product-card">
+          <h3>PF OrbitFence</h3>
+          <p>A smart geofencing solution for real-time tracking, automation, and control within virtual zones. Advanced perimeter monitoring with automated response systems.</p>
+          <div class="product-features">
+            <span class="feature-tag">Geofencing</span>
+            <span class="feature-tag">Automation</span>
+            <span class="feature-tag">Security</span>
+          </div>
+          <button onclick="showProductDetails('orbitfence')">Learn More</button>
+        </div>
+
+        <!-- PF LogiTrack -->
+        <div class="product-card">
+          <h3>PF LogiTrack</h3>
+          <p>A logistics and delivery management application. Comprehensive supply chain optimization with real-time tracking and route planning capabilities.</p>
+          <div class="product-features">
+            <span class="feature-tag">Logistics</span>
+            <span class="feature-tag">Delivery Management</span>
+            <span class="feature-tag">Supply Chain</span>
+          </div>
+          <button onclick="showProductDetails('logitrack')">Learn More</button>
+        </div>
+
+        <!-- PF FlowSafe -->
+        <div class="product-card">
+          <h3>PF FlowSafe</h3>
+          <p>Real-time pipeline monitoring solution with leak detection for pipeline integrity. Advanced sensor integration for critical infrastructure protection.</p>
+          <div class="product-features">
+            <span class="feature-tag">Pipeline Monitoring</span>
+            <span class="feature-tag">Leak Detection</span>
+            <span class="feature-tag">Infrastructure</span>
+          </div>
+          <button onclick="showProductDetails('flowsafe')">Learn More</button>
+        </div>
+
+        <!-- PF UrbanScope -->
+        <div class="product-card">
+          <h3>PF UrbanScope</h3>
+          <p>A geospatial platform for urban growth analysis, land-use modeling, and infrastructure planning. Comprehensive urban development and planning solutions.</p>
+          <div class="product-features">
+            <span class="feature-tag">Urban Planning</span>
+            <span class="feature-tag">Growth Analysis</span>
+            <span class="feature-tag">Infrastructure</span>
+          </div>
+          <button onclick="showProductDetails('urbanscope')">Learn More</button>
+        </div>
+
+        <!-- PF F.R.A -->
+        <div class="product-card">
+          <h3>PF F.R.A</h3>
+          <p>Flood risk assessment tool for better flood preparedness. Advanced hydrological modeling with real-time monitoring and early warning systems.</p>
+          <div class="product-features">
+            <span class="feature-tag">Flood Assessment</span>
+            <span class="feature-tag">Risk Analysis</span>
+            <span class="feature-tag">Early Warning</span>
+          </div>
+          <button onclick="showProductDetails('fra')">Learn More</button>
+        </div>
+
+        <!-- PF Ecosphere -->
+        <div class="product-card">
+          <h3>PF Ecosphere</h3>
+          <p>Optimized site selection platform for renewable energy planning, specifically solar farms. Advanced environmental and economic analysis for sustainable energy development.</p>
+          <div class="product-features">
+            <span class="feature-tag">Renewable Energy</span>
+            <span class="feature-tag">Site Selection</span>
+            <span class="feature-tag">Solar Planning</span>
+          </div>
+          <button onclick="showProductDetails('ecosphere')">Learn More</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Fullscreen image modal -->
   <div id="imgModal" class="img-modal" onclick="onModalBackgroundClick(event)">
     <span class="close" onclick="closeModal()">×</span>
     <img id="modalImg" src="" alt="Expanded view" />
+  </div>
+
+  <!-- Product Details Modal -->
+  <div id="productModal" class="product-modal" onclick="closeProductModal(event)">
+    <div class="product-modal-content">
+      <span class="close" onclick="closeProductModal()">×</span>
+      <div id="productModalBody">
+        <!-- Product details will be loaded here -->
+      </div>
+    </div>
   </div>
 
   <!-- AI Chatbot -->
@@ -1599,6 +2164,387 @@
     </div>
   </div>
   <script>
+    // Page Routing System
+    function showPage(pageId) {
+      // Hide all pages
+      const pages = document.querySelectorAll('.page-content');
+      pages.forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      // Show selected page
+      const targetPage = document.getElementById(pageId + '-page');
+      if (targetPage) {
+        targetPage.classList.add('active');
+      }
+      
+      // Update navigation links
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      // Activate current page link
+      const activeLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
+      if (activeLink) {
+        activeLink.classList.add('active');
+      }
+      
+      // Close mobile menu if open
+      const navMenu = document.querySelector('.nav-menu');
+      const navToggle = document.querySelector('.nav-toggle');
+      if (navMenu && navToggle) {
+        navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
+      }
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Mobile menu toggle
+    function toggleMobileMenu() {
+      const navMenu = document.querySelector('.nav-menu');
+      const navToggle = document.querySelector('.nav-toggle');
+      
+      if (navMenu && navToggle) {
+        navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
+      }
+    }
+
+    // Product details function for standalone products
+    function showProductDetails(productId) {
+      const productData = {
+        'asset-watch': {
+          name: 'PF Asset-Watch',
+          badge: 'Featured',
+          description: 'Monitor your real estate assets using satellite technology. Advanced monitoring solution for property management, construction progress tracking, and asset health assessment.',
+          features: [
+            'Real-time satellite monitoring',
+            'Construction progress tracking',
+            'Asset health assessment',
+            'Property management tools',
+            'Automated alerts and notifications',
+            'Historical data analysis'
+          ],
+          applications: [
+            'Real estate portfolio management',
+            'Construction project monitoring',
+            'Property investment analysis',
+            'Insurance risk assessment',
+            'Urban development tracking',
+            'Infrastructure monitoring'
+          ]
+        },
+        'geotrace': {
+          name: 'PF GeoTrace',
+          description: 'A real-time geolocation platform for accurate tracking. Precision GPS tracking with advanced analytics for fleet management, logistics, and security applications.',
+          features: [
+            'Sub-meter GPS accuracy',
+            'Real-time tracking capabilities',
+            'Advanced analytics dashboard',
+            'Geofencing and alerts',
+            'Historical route analysis',
+            'Multi-device support'
+          ],
+          applications: [
+            'Fleet management',
+            'Logistics optimization',
+            'Security surveillance',
+            'Emergency response',
+            'Asset tracking',
+            'Field operations'
+          ]
+        },
+        'vista': {
+          name: 'PF Vista',
+          description: 'Comprehensive monitoring solution with satellite, drone, CCTV, and geospatial data integration. All-in-one surveillance and monitoring platform for complete situational awareness.',
+          features: [
+            'Multi-source data integration',
+            'Real-time surveillance feeds',
+            'AI-powered threat detection',
+            'Automated alert systems',
+            '3D visualization capabilities',
+            'Historical data analysis'
+          ],
+          applications: [
+            'Security operations',
+            'Border surveillance',
+            'Critical infrastructure protection',
+            'Emergency response',
+            'Military operations',
+            'Public safety monitoring'
+          ]
+        },
+        'geoshift': {
+          name: 'PF GeoShift',
+          description: 'Detect environmental changes with advanced geospatial tools. Monitor deforestation, land use changes, and environmental impacts with precision analysis.',
+          features: [
+            'Change detection algorithms',
+            'Multi-temporal analysis',
+            'Environmental impact assessment',
+            'Automated reporting',
+            'Custom alert thresholds',
+            'Data visualization tools'
+          ],
+          applications: [
+            'Environmental monitoring',
+            'Deforestation tracking',
+            'Land use planning',
+            'Climate change research',
+            'Conservation efforts',
+            'Regulatory compliance'
+          ]
+        },
+        'caelus': {
+          name: 'PF Caelus',
+          description: 'A real-time weather intelligence platform for accurate forecasting. Advanced meteorological data analysis with interactive mapping and alert systems.',
+          features: [
+            'Real-time weather data',
+            'Advanced forecasting models',
+            'Interactive weather maps',
+            'Custom alert systems',
+            'Historical weather analysis',
+            'API integration capabilities'
+          ],
+          applications: [
+            'Weather forecasting',
+            'Agricultural planning',
+            'Emergency preparedness',
+            'Aviation operations',
+            'Marine navigation',
+            'Energy management'
+          ]
+        },
+        'atlas': {
+          name: 'PF Atlas',
+          description: 'A geospatial intelligence solution powered by Large Language Models (LLM). AI-driven geospatial analysis with natural language processing capabilities.',
+          features: [
+            'AI-powered analysis',
+            'Natural language queries',
+            'Automated insights generation',
+            'Multi-language support',
+            'Advanced data processing',
+            'Intelligent recommendations'
+          ],
+          applications: [
+            'Intelligence analysis',
+            'Research and development',
+            'Data exploration',
+            'Automated reporting',
+            'Decision support systems',
+            'Knowledge management'
+          ]
+        },
+        'digital-twin': {
+          name: 'PF Digital Twin',
+          description: 'A platform for smart city development, predictive analysis, and monitoring. Create comprehensive 3D city models with real-time data integration and predictive analytics.',
+          features: [
+            '3D city modeling',
+            'Real-time data integration',
+            'Predictive analytics',
+            'IoT connectivity',
+            'Simulation capabilities',
+            'Interactive visualization'
+          ],
+          applications: [
+            'Smart city development',
+            'Urban planning',
+            'Infrastructure management',
+            'Disaster response',
+            'Traffic optimization',
+            'Environmental monitoring'
+          ]
+        },
+        'orbitfence': {
+          name: 'PF OrbitFence',
+          description: 'A smart geofencing solution for real-time tracking, automation, and control within virtual zones. Advanced perimeter monitoring with automated response systems.',
+          features: [
+            'Dynamic geofencing',
+            'Real-time tracking',
+            'Automated responses',
+            'Custom zone management',
+            'Alert systems',
+            'Integration capabilities'
+          ],
+          applications: [
+            'Security monitoring',
+            'Fleet management',
+            'Asset protection',
+            'Access control',
+            'Emergency response',
+            'Operational automation'
+          ]
+        },
+        'logitrack': {
+          name: 'PF LogiTrack',
+          description: 'A logistics and delivery management application. Comprehensive supply chain optimization with real-time tracking and route planning capabilities.',
+          features: [
+            'Route optimization',
+            'Real-time tracking',
+            'Fleet management',
+            'Delivery scheduling',
+            'Performance analytics',
+            'Customer notifications'
+          ],
+          applications: [
+            'Last-mile delivery',
+            'Supply chain management',
+            'Fleet operations',
+            'E-commerce logistics',
+            'Warehouse management',
+            'Customer service'
+          ]
+        },
+        'flowsafe': {
+          name: 'PF FlowSafe',
+          description: 'Real-time pipeline monitoring solution with leak detection for pipeline integrity. Advanced sensor integration for critical infrastructure protection.',
+          features: [
+            'Leak detection systems',
+            'Real-time monitoring',
+            'Predictive maintenance',
+            'Sensor integration',
+            'Alert management',
+            'Data analytics'
+          ],
+          applications: [
+            'Oil and gas pipelines',
+            'Water distribution',
+            'Chemical transport',
+            'Infrastructure safety',
+            'Environmental protection',
+            'Regulatory compliance'
+          ]
+        },
+        'urbanscope': {
+          name: 'PF UrbanScope',
+          description: 'A geospatial platform for urban growth analysis, land-use modeling, and infrastructure planning. Comprehensive urban development and planning solutions.',
+          features: [
+            'Urban growth analysis',
+            'Land-use modeling',
+            'Infrastructure planning',
+            'Population analytics',
+            'Development simulation',
+            'Policy impact assessment'
+          ],
+          applications: [
+            'Urban planning',
+            'City development',
+            'Infrastructure design',
+            'Policy planning',
+            'Population studies',
+            'Sustainable development'
+          ]
+        },
+        'fra': {
+          name: 'PF F.R.A',
+          description: 'Flood risk assessment tool for better flood preparedness. Advanced hydrological modeling with real-time monitoring and early warning systems.',
+          features: [
+            'Hydrological modeling',
+            'Risk assessment algorithms',
+            'Early warning systems',
+            'Real-time monitoring',
+            'Impact analysis',
+            'Emergency planning tools'
+          ],
+          applications: [
+            'Flood preparedness',
+            'Emergency response',
+            'Insurance assessment',
+            'Urban planning',
+            'Infrastructure protection',
+            'Community safety'
+          ]
+        },
+        'ecosphere': {
+          name: 'PF Ecosphere',
+          description: 'Optimized site selection platform for renewable energy planning, specifically solar farms. Advanced environmental and economic analysis for sustainable energy development.',
+          features: [
+            'Site suitability analysis',
+            'Environmental impact assessment',
+            'Economic modeling',
+            'Solar potential mapping',
+            'Grid connectivity analysis',
+            'Regulatory compliance checking'
+          ],
+          applications: [
+            'Solar farm development',
+            'Renewable energy planning',
+            'Site selection',
+            'Investment analysis',
+            'Environmental assessment',
+            'Energy infrastructure'
+          ]
+        }
+      };
+      
+      const product = productData[productId];
+      if (!product) return;
+      
+      const modal = document.getElementById('productModal');
+      const modalBody = document.getElementById('productModalBody');
+      
+      modalBody.innerHTML = `
+        <div class="product-detail-header">
+          <h2>${product.name}</h2>
+          ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+          <p>${product.description}</p>
+        </div>
+        
+        <div class="product-detail-content">
+          <div class="product-detail-section">
+            <h3>Key Features</h3>
+            <ul>
+              ${product.features.map(feature => `<li>${feature}</li>`).join('')}
+            </ul>
+          </div>
+          
+          <div class="product-detail-section">
+            <h3>Applications</h3>
+            <ul>
+              ${product.applications.map(app => `<li>${app}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+        
+        <div class="product-detail-cta">
+          <button onclick="requestDemo('${productId}')">Request Demo</button>
+          <button class="secondary" onclick="contactSales('${productId}')">Contact Sales</button>
+        </div>
+      `;
+      
+      modal.style.display = 'block';
+    }
+
+    // Close product modal
+    function closeProductModal(event) {
+      if (event && event.target !== event.currentTarget) return;
+      document.getElementById('productModal').style.display = 'none';
+    }
+
+    // Demo request function
+    function requestDemo(productId) {
+      // Redirect to Proforce Galaxies website
+      window.open('http://proforcegalaxies.com/', '_blank');
+      closeProductModal();
+    }
+
+    // Contact sales function
+    function contactSales(productId) {
+      // Redirect to Proforce Galaxies website
+      window.open('http://proforcegalaxies.com/', '_blank');
+      closeProductModal();
+    }
+
+    // Initialize mobile menu event listener
+    document.addEventListener('DOMContentLoaded', function() {
+      const navToggle = document.querySelector('.nav-toggle');
+      if (navToggle) {
+        navToggle.addEventListener('click', toggleMobileMenu);
+      }
+    });
+
     // Auto-hide logic for product badges (e.g., "New")
     (function initProductBadges() {
       try {
@@ -2943,4 +3889,3 @@
   </script>
 </body>
 </html>
-
