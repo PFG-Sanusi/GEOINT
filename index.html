@@ -163,8 +163,355 @@
       margin-top: 70px;
     }
 
-    /* Mobile Responsive */
-    @media screen and (max-width: 768px) {
+  /* Loading Animations */
+  .loading-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 8px;
+  }
+
+  @keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .page-transition {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+  }
+
+  .page-transition.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Enhanced Animations */
+  .fade-in {
+    animation: fadeIn 0.8s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide-in-left {
+    animation: slideInLeft 0.8s ease-out;
+  }
+
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .slide-in-right {
+    animation: slideInRight 0.8s ease-out;
+  }
+
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Parallax Effects */
+  .parallax-element {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  /* Back to Top Button */
+  .back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(45deg, #00d4ff, #7b00ff);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .back-to-top:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+  }
+
+  /* Search and Filter */
+  .search-filter-container {
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(0, 212, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 20px;
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    border-radius: 25px;
+    background: rgba(10, 10, 10, 0.8);
+    color: #e0e0e0;
+    font-size: 1em;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  }
+
+  .filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .filter-btn {
+    padding: 8px 16px;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    background: transparent;
+    color: #00d4ff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+  }
+
+  .filter-btn.active,
+  .filter-btn:hover {
+    background: linear-gradient(45deg, #00d4ff, #7b00ff);
+    color: white;
+    border-color: transparent;
+  }
+
+  /* Product Comparison */
+  .comparison-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(0, 212, 255, 0.3);
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 1500;
+  }
+
+  .comparison-container.visible {
+    transform: translateY(0);
+  }
+
+  .comparison-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .comparison-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .comparison-product {
+    background: rgba(0, 212, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+  }
+
+  /* Favorites System */
+  .favorite-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 15;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .favorite-btn:hover {
+    background: rgba(0, 212, 255, 0.2);
+    border-color: #00d4ff;
+    transform: scale(1.1);
+  }
+
+  .favorite-btn.favorited {
+    background: linear-gradient(45deg, #ff6b35, #ff8c42);
+    border-color: #ff6b35;
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 107, 53, 0.4);
+  }
+
+  .favorite-btn.favorited:hover {
+    background: linear-gradient(45deg, #ff8c42, #ff6b35);
+    transform: scale(1.15);
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
+  }
+
+  /* Breadcrumbs */
+  .breadcrumbs {
+    margin: 20px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+  }
+
+  .breadcrumb-item {
+    color: #00d4ff;
+    text-decoration: none;
+    margin-right: 10px;
+    transition: color 0.3s ease;
+  }
+
+  .breadcrumb-item:hover {
+    color: #ff6b35;
+  }
+
+  .breadcrumb-item::after {
+    content: ' > ';
+    color: #666;
+    margin-left: 10px;
+  }
+
+  .breadcrumb-item:last-child::after {
+    display: none;
+  }
+
+  /* Testimonials Section */
+  .testimonials-section {
+    margin: 60px 0;
+    padding: 40px 0;
+    background: rgba(0, 212, 255, 0.05);
+    border-radius: 20px;
+  }
+
+  .testimonial-card {
+    background: rgba(10, 10, 10, 0.8);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    margin: 20px 0;
+    position: relative;
+  }
+
+  .testimonial-card::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-size: 60px;
+    color: #00d4ff;
+    font-family: serif;
+  }
+
+  .testimonial-text {
+    font-style: italic;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #00d4ff, #7b00ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+  }
+
+  /* FAQ Section */
+  .faq-section {
+    margin: 60px 0;
+  }
+
+  .faq-item {
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 10px;
+    margin: 10px 0;
+    overflow: hidden;
+  }
+
+  .faq-question {
+    padding: 20px;
+    background: rgba(0, 212, 255, 0.1);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s ease;
+  }
+
+  .faq-question:hover {
+    background: rgba(0, 212, 255, 0.2);
+  }
+
+  .faq-answer {
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .faq-answer.active {
+    padding: 20px;
+    max-height: 200px;
+  }
+
+  .faq-toggle {
+    transition: transform 0.3s ease;
+  }
+
+  .faq-toggle.active {
+    transform: rotate(180deg);
+  }
+
+  /* Mobile Responsive */
+  @media screen and (max-width: 768px) {
       .nav-menu {
         position: fixed;
         left: -100%;
@@ -203,10 +550,108 @@
         padding: 0 20px;
       }
 
-    .nav-logo h1 {
-      font-size: 1.5em;
+      .nav-logo h1 {
+        font-size: 1.5em;
+      }
+
+      /* Mobile-specific enhancements */
+      .search-filter-container {
+        margin: 20px 0;
+        padding: 15px;
+      }
+
+      .filter-buttons {
+        justify-content: center;
+      }
+
+      .filter-btn {
+        font-size: 0.8em;
+        padding: 6px 12px;
+      }
+
+      .product-card {
+        margin: 15px 0;
+      }
+
+      .favorite-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+        top: 12px;
+        left: 12px;
+      }
+
+      .product-features {
+        justify-content: center;
+      }
+
+      .feature-tag {
+        font-size: 0.75em;
+        padding: 3px 8px;
+      }
+
+      .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+      }
+
+      .comparison-container {
+        padding: 15px;
+      }
+
+      .comparison-products {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .testimonial-card {
+        padding: 20px;
+        margin: 15px 0;
+      }
+
+      .testimonial-text {
+        font-size: 0.9em;
+      }
+
+      .faq-question {
+        padding: 15px;
+        font-size: 0.9em;
+      }
+
+      .faq-answer {
+        font-size: 0.85em;
+      }
+
+      /* Touch gestures */
+      .product-card {
+        touch-action: manipulation;
+      }
+
+      .product-card:active {
+        transform: scale(0.98);
+      }
+
+      /* Swipe indicators */
+      .swipe-indicator {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #00d4ff;
+        font-size: 12px;
+        opacity: 0.7;
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+        40% { transform: translateX(-50%) translateY(-10px); }
+        60% { transform: translateX(-50%) translateY(-5px); }
+      }
     }
-  }
 
   /* Product Features Styling */
   .product-features {
@@ -1960,14 +2405,41 @@
   <!-- Standalone Products Page -->
   <div id="standalone-page" class="page-content">
     <div class="container">
+      <!-- Breadcrumbs -->
+      <div class="breadcrumbs">
+        <a href="#" class="breadcrumb-item" onclick="showPage('home')">Home</a>
+        <span class="breadcrumb-item">Standalone Products</span>
+      </div>
+
       <div class="intro">
         <h2 style="text-align: center; color: #00d4ff; margin-bottom: 20px;">Standalone Products</h2>
         <p style="text-align: center; font-size: 1.2em; margin-bottom: 40px;">Discover our comprehensive suite of standalone geospatial intelligence products, each designed to address specific industry challenges with cutting-edge technology.</p>
       </div>
+
+      <!-- Search and Filter -->
+      <div class="search-filter-container">
+        <input type="text" class="search-input" id="productSearch" placeholder="Search products..." onkeyup="filterProducts()">
+        <div class="filter-buttons">
+          <button class="filter-btn active" onclick="filterByCategory('all')">All Products</button>
+          <button class="filter-btn" onclick="filterByCategory('monitoring')">Monitoring</button>
+          <button class="filter-btn" onclick="filterByCategory('tracking')">Tracking</button>
+          <button class="filter-btn" onclick="filterByCategory('analysis')">Analysis</button>
+          <button class="filter-btn" onclick="filterByCategory('intelligence')">Intelligence</button>
+          <button class="filter-btn" onclick="filterByCategory('planning')">Planning</button>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+          <span id="productCount" style="color: #00d4ff; font-weight: 500;">13 products found</span>
+          <div>
+            <button class="filter-btn" onclick="toggleComparison()" id="comparisonBtn">Compare Products (0)</button>
+            <button class="filter-btn" onclick="viewFavorites()" id="favoritesBtn">Favorites (0)</button>
+          </div>
+        </div>
+      </div>
       
       <div class="products">
         <!-- PF Asset-Watch -->
-        <div class="product-card">
+        <div class="product-card" data-category="monitoring" data-name="PF Asset-Watch">
+          <button class="favorite-btn" onclick="toggleFavorite('asset-watch')">♡</button>
           <span class="product-badge">Featured</span>
           <h3>PF Asset-Watch</h3>
           <p>Monitor your real estate assets using satellite technology. Advanced monitoring solution for property management, construction progress tracking, and asset health assessment.</p>
@@ -1976,11 +2448,15 @@
             <span class="feature-tag">Real Estate</span>
             <span class="feature-tag">Asset Management</span>
           </div>
-          <button onclick="showProductDetails('asset-watch')">Learn More</button>
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button onclick="showProductDetails('asset-watch')">Learn More</button>
+            <button class="secondary" onclick="addToComparison('asset-watch')">Compare</button>
+          </div>
         </div>
 
         <!-- PF GeoTrace -->
-        <div class="product-card">
+        <div class="product-card" data-category="tracking" data-name="PF GeoTrace">
+          <button class="favorite-btn" onclick="toggleFavorite('geotrace')">♡</button>
           <h3>PF GeoTrace</h3>
           <p>A real-time geolocation platform for accurate tracking. Precision GPS tracking with advanced analytics for fleet management, logistics, and security applications.</p>
           <div class="product-features">
@@ -1988,11 +2464,15 @@
             <span class="feature-tag">GPS Precision</span>
             <span class="feature-tag">Fleet Management</span>
           </div>
-          <button onclick="showProductDetails('geotrace')">Learn More</button>
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button onclick="showProductDetails('geotrace')">Learn More</button>
+            <button class="secondary" onclick="addToComparison('geotrace')">Compare</button>
+          </div>
         </div>
 
         <!-- PF Vista -->
-        <div class="product-card">
+        <div class="product-card" data-category="monitoring" data-name="PF Vista">
+          <button class="favorite-btn" onclick="toggleFavorite('vista')">♡</button>
           <h3>PF Vista</h3>
           <p>Comprehensive monitoring solution with satellite, drone, CCTV, and geospatial data integration. All-in-one surveillance and monitoring platform for complete situational awareness.</p>
           <div class="product-features">
@@ -2000,11 +2480,15 @@
             <span class="feature-tag">Surveillance</span>
             <span class="feature-tag">Integration</span>
           </div>
-          <button onclick="showProductDetails('vista')">Learn More</button>
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button onclick="showProductDetails('vista')">Learn More</button>
+            <button class="secondary" onclick="addToComparison('vista')">Compare</button>
+          </div>
         </div>
 
         <!-- PF GeoShift -->
-        <div class="product-card">
+        <div class="product-card" data-category="analysis" data-name="PF GeoShift">
+          <button class="favorite-btn" onclick="toggleFavorite('geoshift')">♡</button>
           <h3>PF GeoShift</h3>
           <p>Detect environmental changes with advanced geospatial tools. Monitor deforestation, land use changes, and environmental impacts with precision analysis.</p>
           <div class="product-features">
@@ -2012,11 +2496,15 @@
             <span class="feature-tag">Environmental</span>
             <span class="feature-tag">Analysis</span>
           </div>
-          <button onclick="showProductDetails('geoshift')">Learn More</button>
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button onclick="showProductDetails('geoshift')">Learn More</button>
+            <button class="secondary" onclick="addToComparison('geoshift')">Compare</button>
+          </div>
         </div>
 
         <!-- PF Caelus -->
-        <div class="product-card">
+        <div class="product-card" data-category="intelligence" data-name="PF Caelus">
+          <button class="favorite-btn" onclick="toggleFavorite('caelus')">♡</button>
           <h3>PF Caelus</h3>
           <p>A real-time weather intelligence platform for accurate forecasting. Advanced meteorological data analysis with interactive mapping and alert systems.</p>
           <div class="product-features">
@@ -2024,11 +2512,15 @@
             <span class="feature-tag">Forecasting</span>
             <span class="feature-tag">Real-time Data</span>
           </div>
-          <button onclick="showProductDetails('caelus')">Learn More</button>
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button onclick="showProductDetails('caelus')">Learn More</button>
+            <button class="secondary" onclick="addToComparison('caelus')">Compare</button>
+          </div>
         </div>
 
         <!-- PF Atlas -->
-        <div class="product-card">
+        <div class="product-card" data-category="intelligence" data-name="PF Atlas">
+          <button class="favorite-btn" onclick="toggleFavorite('atlas')">♡</button>
           <h3>PF Atlas</h3>
           <p>A geospatial intelligence solution powered by Large Language Models (LLM). AI-driven geospatial analysis with natural language processing capabilities.</p>
           <div class="product-features">
@@ -2036,11 +2528,15 @@
             <span class="feature-tag">LLM Integration</span>
             <span class="feature-tag">Intelligence</span>
           </div>
-          <button onclick="showProductDetails('atlas')">Learn More</button>
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button onclick="showProductDetails('atlas')">Learn More</button>
+            <button class="secondary" onclick="addToComparison('atlas')">Compare</button>
+          </div>
         </div>
 
         <!-- PF Digital Twin -->
-        <div class="product-card">
+        <div class="product-card" data-category="planning" data-name="PF Digital Twin">
+          <button class="favorite-btn" onclick="toggleFavorite('digital-twin')">♡</button>
           <h3>PF Digital Twin</h3>
           <p>A platform for smart city development, predictive analysis, and monitoring. Create comprehensive 3D city models with real-time data integration and predictive analytics.</p>
           <div class="product-features">
@@ -2048,11 +2544,15 @@
             <span class="feature-tag">3D Modeling</span>
             <span class="feature-tag">Predictive Analytics</span>
           </div>
-          <button onclick="showProductDetails('digital-twin')">Learn More</button>
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button onclick="showProductDetails('digital-twin')">Learn More</button>
+            <button class="secondary" onclick="addToComparison('digital-twin')">Compare</button>
+          </div>
         </div>
 
         <!-- PF OrbitFence -->
-        <div class="product-card">
+        <div class="product-card" data-category="tracking" data-name="PF OrbitFence">
+          <button class="favorite-btn" onclick="toggleFavorite('orbitfence')">♡</button>
           <h3>PF OrbitFence</h3>
           <p>A smart geofencing solution for real-time tracking, automation, and control within virtual zones. Advanced perimeter monitoring with automated response systems.</p>
           <div class="product-features">
@@ -2060,11 +2560,15 @@
             <span class="feature-tag">Automation</span>
             <span class="feature-tag">Security</span>
           </div>
-          <button onclick="showProductDetails('orbitfence')">Learn More</button>
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button onclick="showProductDetails('orbitfence')">Learn More</button>
+            <button class="secondary" onclick="addToComparison('orbitfence')">Compare</button>
+          </div>
         </div>
 
         <!-- PF LogiTrack -->
-        <div class="product-card">
+        <div class="product-card" data-category="tracking" data-name="PF LogiTrack">
+          <button class="favorite-btn" onclick="toggleFavorite('logitrack')">♡</button>
           <h3>PF LogiTrack</h3>
           <p>A logistics and delivery management application. Comprehensive supply chain optimization with real-time tracking and route planning capabilities.</p>
           <div class="product-features">
@@ -2072,11 +2576,15 @@
             <span class="feature-tag">Delivery Management</span>
             <span class="feature-tag">Supply Chain</span>
           </div>
-          <button onclick="showProductDetails('logitrack')">Learn More</button>
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button onclick="showProductDetails('logitrack')">Learn More</button>
+            <button class="secondary" onclick="addToComparison('logitrack')">Compare</button>
+          </div>
         </div>
 
         <!-- PF FlowSafe -->
-        <div class="product-card">
+        <div class="product-card" data-category="monitoring" data-name="PF FlowSafe">
+          <button class="favorite-btn" onclick="toggleFavorite('flowsafe')">♡</button>
           <h3>PF FlowSafe</h3>
           <p>Real-time pipeline monitoring solution with leak detection for pipeline integrity. Advanced sensor integration for critical infrastructure protection.</p>
           <div class="product-features">
@@ -2084,11 +2592,15 @@
             <span class="feature-tag">Leak Detection</span>
             <span class="feature-tag">Infrastructure</span>
           </div>
-          <button onclick="showProductDetails('flowsafe')">Learn More</button>
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button onclick="showProductDetails('flowsafe')">Learn More</button>
+            <button class="secondary" onclick="addToComparison('flowsafe')">Compare</button>
+          </div>
         </div>
 
         <!-- PF UrbanScope -->
-        <div class="product-card">
+        <div class="product-card" data-category="planning" data-name="PF UrbanScope">
+          <button class="favorite-btn" onclick="toggleFavorite('urbanscope')">♡</button>
           <h3>PF UrbanScope</h3>
           <p>A geospatial platform for urban growth analysis, land-use modeling, and infrastructure planning. Comprehensive urban development and planning solutions.</p>
           <div class="product-features">
@@ -2096,11 +2608,15 @@
             <span class="feature-tag">Growth Analysis</span>
             <span class="feature-tag">Infrastructure</span>
           </div>
-          <button onclick="showProductDetails('urbanscope')">Learn More</button>
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button onclick="showProductDetails('urbanscope')">Learn More</button>
+            <button class="secondary" onclick="addToComparison('urbanscope')">Compare</button>
+          </div>
         </div>
 
         <!-- PF F.R.A -->
-        <div class="product-card">
+        <div class="product-card" data-category="analysis" data-name="PF F.R.A">
+          <button class="favorite-btn" onclick="toggleFavorite('fra')">♡</button>
           <h3>PF F.R.A</h3>
           <p>Flood risk assessment tool for better flood preparedness. Advanced hydrological modeling with real-time monitoring and early warning systems.</p>
           <div class="product-features">
@@ -2108,11 +2624,15 @@
             <span class="feature-tag">Risk Analysis</span>
             <span class="feature-tag">Early Warning</span>
           </div>
-          <button onclick="showProductDetails('fra')">Learn More</button>
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button onclick="showProductDetails('fra')">Learn More</button>
+            <button class="secondary" onclick="addToComparison('fra')">Compare</button>
+          </div>
         </div>
 
         <!-- PF Ecosphere -->
-        <div class="product-card">
+        <div class="product-card" data-category="planning" data-name="PF Ecosphere">
+          <button class="favorite-btn" onclick="toggleFavorite('ecosphere')">♡</button>
           <h3>PF Ecosphere</h3>
           <p>Optimized site selection platform for renewable energy planning, specifically solar farms. Advanced environmental and economic analysis for sustainable energy development.</p>
           <div class="product-features">
@@ -2120,11 +2640,107 @@
             <span class="feature-tag">Site Selection</span>
             <span class="feature-tag">Solar Planning</span>
           </div>
-          <button onclick="showProductDetails('ecosphere')">Learn More</button>
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button onclick="showProductDetails('ecosphere')">Learn More</button>
+            <button class="secondary" onclick="addToComparison('ecosphere')">Compare</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonials Section -->
+      <div class="testimonials-section">
+        <h2 style="text-align: center; color: #00d4ff; margin-bottom: 40px;">What Our Clients Say</h2>
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "PF-GEOINT has revolutionized our urban planning operations. The 3D city modeling capabilities and real-time data integration have transformed how we approach infrastructure development."
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">JS</div>
+            <div>
+              <div style="font-weight: 600; color: #00d4ff;">John Smith</div>
+              <div style="color: #999; font-size: 0.9em;">City Planning Director, Lagos</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "The satellite monitoring capabilities of PF Asset-Watch have been game-changing for our real estate portfolio management. We can now track construction progress and asset health in real-time."
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">MA</div>
+            <div>
+              <div style="font-weight: 600; color: #00d4ff;">Maria Ahmed</div>
+              <div style="color: #999; font-size: 0.9em;">Real Estate Investment Manager</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="faq-section">
+        <h2 style="text-align: center; color: #00d4ff; margin-bottom: 40px;">Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>What is PF-GEOINT and how does it work?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">
+            PF-GEOINT is our comprehensive geospatial intelligence platform that combines satellite imagery, AI-driven analytics, and real-time data to provide actionable insights across various industries. It processes satellite data, drone imagery, and ground-based sensors to deliver precise geospatial intelligence.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>How accurate is the satellite data provided?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">
+            Our satellite data provides sub-meter accuracy for most applications, with some capabilities reaching centimeter-level precision. The accuracy depends on the specific product and use case, but we maintain industry-leading standards across all our solutions.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>Can I integrate PF-GEOINT with my existing systems?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">
+            Yes, PF-GEOINT is designed with integration in mind. We provide APIs, SDKs, and various integration options to seamlessly connect with your existing infrastructure, databases, and business applications.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>What kind of support do you provide?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">
+            We offer comprehensive support including 24/7 technical assistance, training programs, documentation, and dedicated account managers. Our support team is available to help with implementation, troubleshooting, and optimization.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>How do I get started with PF-GEOINT?</span>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">
+            Getting started is easy! You can request a demo through our website, contact our sales team, or start with a free trial for most products. We'll work with you to understand your specific needs and recommend the best solutions.
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Product Comparison Container -->
+  <div id="comparisonContainer" class="comparison-container">
+    <div class="comparison-header">
+      <h3>Product Comparison</h3>
+      <button onclick="toggleComparison()" style="background: #ff6b35; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer;">Close</button>
+    </div>
+    <div class="comparison-products" id="comparisonProducts">
+      <!-- Comparison products will be added here -->
+    </div>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" onclick="scrollToTop()" id="backToTop">↑</button>
 
   <!-- Fullscreen image modal -->
   <div id="imgModal" class="img-modal" onclick="onModalBackgroundClick(event)">
@@ -2537,12 +3153,267 @@
       closeProductModal();
     }
 
-    // Initialize mobile menu event listener
+    // Global variables for new features
+    let favorites = JSON.parse(localStorage.getItem('pfFavorites') || '[]');
+    let comparisonList = [];
+    let currentFilter = 'all';
+
+    // Search and filter functionality
+    function filterProducts() {
+      const searchTerm = document.getElementById('productSearch').value.toLowerCase();
+      const productCards = document.querySelectorAll('#standalone-page .product-card');
+      let visibleCount = 0;
+
+      productCards.forEach(card => {
+        const productName = card.dataset.name.toLowerCase();
+        const category = card.dataset.category;
+        const isVisible = (currentFilter === 'all' || category === currentFilter) && 
+                         (searchTerm === '' || productName.includes(searchTerm));
+        
+        card.style.display = isVisible ? 'block' : 'none';
+        if (isVisible) visibleCount++;
+      });
+
+      document.getElementById('productCount').textContent = `${visibleCount} products found`;
+    }
+
+    function filterByCategory(category) {
+      currentFilter = category;
+      
+      // Update filter buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      filterProducts();
+    }
+
+    // Favorites functionality
+    function toggleFavorite(productId) {
+      const btn = event.target;
+      const index = favorites.indexOf(productId);
+      
+      if (index > -1) {
+        favorites.splice(index, 1);
+        btn.textContent = '♡';
+        btn.classList.remove('favorited');
+      } else {
+        favorites.push(productId);
+        btn.textContent = '♥';
+        btn.classList.add('favorited');
+      }
+      
+      localStorage.setItem('pfFavorites', JSON.stringify(favorites));
+      updateFavoritesCount();
+    }
+
+    function updateFavoritesCount() {
+      document.getElementById('favoritesBtn').textContent = `Favorites (${favorites.length})`;
+    }
+
+    function viewFavorites() {
+      const productCards = document.querySelectorAll('#standalone-page .product-card');
+      productCards.forEach(card => {
+        const productId = card.querySelector('.favorite-btn').onclick.toString().match(/'([^']+)'/)[1];
+        card.style.display = favorites.includes(productId) ? 'block' : 'none';
+      });
+      document.getElementById('productCount').textContent = `${favorites.length} favorite products`;
+    }
+
+    // Product comparison functionality
+    function addToComparison(productId) {
+      if (comparisonList.length >= 4) {
+        alert('You can compare up to 4 products at once.');
+        return;
+      }
+      
+      if (!comparisonList.includes(productId)) {
+        comparisonList.push(productId);
+        updateComparisonUI();
+      }
+    }
+
+    function updateComparisonUI() {
+      const btn = document.getElementById('comparisonBtn');
+      btn.textContent = `Compare Products (${comparisonList.length})`;
+      
+      if (comparisonList.length > 0) {
+        btn.style.background = 'linear-gradient(45deg, #00d4ff, #7b00ff)';
+        btn.style.color = 'white';
+      } else {
+        btn.style.background = 'transparent';
+        btn.style.color = '#00d4ff';
+      }
+    }
+
+    function toggleComparison() {
+      const container = document.getElementById('comparisonContainer');
+      container.classList.toggle('visible');
+      
+      if (container.classList.contains('visible')) {
+        renderComparisonProducts();
+      }
+    }
+
+    function renderComparisonProducts() {
+      const container = document.getElementById('comparisonProducts');
+      container.innerHTML = '';
+      
+      comparisonList.forEach(productId => {
+        const productData = getProductData(productId);
+        if (productData) {
+          const productDiv = document.createElement('div');
+          productDiv.className = 'comparison-product';
+          productDiv.innerHTML = `
+            <h4>${productData.name}</h4>
+            <p>${productData.description}</p>
+            <button onclick="removeFromComparison('${productId}')" style="background: #ff6b35; color: white; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer; font-size: 0.8em;">Remove</button>
+          `;
+          container.appendChild(productDiv);
+        }
+      });
+    }
+
+    function removeFromComparison(productId) {
+      const index = comparisonList.indexOf(productId);
+      if (index > -1) {
+        comparisonList.splice(index, 1);
+        updateComparisonUI();
+        renderComparisonProducts();
+      }
+    }
+
+    function getProductData(productId) {
+      const productData = {
+        'asset-watch': { name: 'PF Asset-Watch', description: 'Monitor your real estate assets using satellite technology.' },
+        'geotrace': { name: 'PF GeoTrace', description: 'A real-time geolocation platform for accurate tracking.' },
+        'vista': { name: 'PF Vista', description: 'Comprehensive monitoring solution with satellite, drone, CCTV integration.' },
+        'geoshift': { name: 'PF GeoShift', description: 'Detect environmental changes with advanced geospatial tools.' },
+        'caelus': { name: 'PF Caelus', description: 'A real-time weather intelligence platform for accurate forecasting.' },
+        'atlas': { name: 'PF Atlas', description: 'A geospatial intelligence solution powered by Large Language Models.' },
+        'digital-twin': { name: 'PF Digital Twin', description: 'A platform for smart city development and predictive analysis.' },
+        'orbitfence': { name: 'PF OrbitFence', description: 'A smart geofencing solution for real-time tracking and automation.' },
+        'logitrack': { name: 'PF LogiTrack', description: 'A logistics and delivery management application.' },
+        'flowsafe': { name: 'PF FlowSafe', description: 'Real-time pipeline monitoring solution with leak detection.' },
+        'urbanscope': { name: 'PF UrbanScope', description: 'A geospatial platform for urban growth analysis and planning.' },
+        'fra': { name: 'PF F.R.A', description: 'Flood risk assessment tool for better flood preparedness.' },
+        'ecosphere': { name: 'PF Ecosphere', description: 'Optimized site selection platform for renewable energy planning.' }
+      };
+      return productData[productId];
+    }
+
+    // FAQ functionality
+    function toggleFAQ(element) {
+      const answer = element.nextElementSibling;
+      const toggle = element.querySelector('.faq-toggle');
+      
+      answer.classList.toggle('active');
+      toggle.classList.toggle('active');
+    }
+
+    // Back to top functionality
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Show/hide back to top button
+    function toggleBackToTop() {
+      const backToTop = document.getElementById('backToTop');
+      if (window.pageYOffset > 300) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    }
+
+    // Page transition effects
+    function addPageTransitions() {
+      const pages = document.querySelectorAll('.page-content');
+      pages.forEach(page => {
+        page.classList.add('page-transition');
+      });
+    }
+
+    function showPageWithTransition(pageId) {
+      // Hide all pages
+      const pages = document.querySelectorAll('.page-content');
+      pages.forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      // Show selected page with transition
+      const targetPage = document.getElementById(pageId + '-page');
+      if (targetPage) {
+        targetPage.classList.add('active');
+        setTimeout(() => {
+          targetPage.classList.add('fade-in');
+        }, 100);
+      }
+      
+      // Update navigation links
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      const activeLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
+      if (activeLink) {
+        activeLink.classList.add('active');
+      }
+      
+      // Close mobile menu if open
+      const navMenu = document.querySelector('.nav-menu');
+      const navToggle = document.querySelector('.nav-toggle');
+      if (navMenu && navToggle) {
+        navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
+      }
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Initialize favorites on page load
+    function initializeFavorites() {
+      const favoriteBtns = document.querySelectorAll('.favorite-btn');
+      favoriteBtns.forEach(btn => {
+        const productId = btn.onclick.toString().match(/'([^']+)'/)[1];
+        if (favorites.includes(productId)) {
+          btn.textContent = '♥';
+          btn.classList.add('favorited');
+        }
+      });
+      updateFavoritesCount();
+    }
+
+    // Enhanced page routing with transitions
+    function showPage(pageId) {
+      showPageWithTransition(pageId);
+    }
+
+    // Initialize all features on page load
     document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu
       const navToggle = document.querySelector('.nav-toggle');
       if (navToggle) {
         navToggle.addEventListener('click', toggleMobileMenu);
       }
+
+      // Initialize new features
+      initializeFavorites();
+      addPageTransitions();
+      
+      // Back to top button
+      window.addEventListener('scroll', toggleBackToTop);
+      
+      // Initialize page transitions
+      setTimeout(() => {
+        const activePage = document.querySelector('.page-content.active');
+        if (activePage) {
+          activePage.classList.add('fade-in');
+        }
+      }, 100);
     });
 
     // Auto-hide logic for product badges (e.g., "New")
