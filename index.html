@@ -4044,6 +4044,23 @@
       }
     };
 
+    // Lightweight product catalog for concise chatbot answers
+    const productCatalog = {
+      'geotrace': { name: 'PF-GEOTRACE', description: 'Real-time GPS tracking, geofencing, and satellite maps for missions and security.' },
+      'digital twin': { name: 'PF-DIGITAL TWIN', description: '3D city models with live data for planning and city operations.' },
+      'digital-twin': { name: 'PF-DIGITAL TWIN', description: '3D city models with live data for planning and city operations.' },
+      'caelus': { name: 'PF-CAELUS', description: 'Real-time weather intelligence with forecasts, alerts, and live maps.' },
+      'asset-watch': { name: 'PF Asset-Watch', description: 'Satellite-based monitoring for real estate and construction assets.' },
+      'geoshift': { name: 'PF GeoShift', description: 'Environmental change detection and monitoring over time.' },
+      'atlas': { name: 'PF Atlas', description: 'AI-powered geospatial analysis with natural language queries.' },
+      'flowsafe': { name: 'PF FlowSafe', description: 'Pipeline monitoring with leak detection and alerts.' },
+      'logitrack': { name: 'PF LogiTrack', description: 'Logistics tracking with route optimization and fleet management.' },
+      'orbitfence': { name: 'PF OrbitFence', description: 'Smart geofencing for tracking and automated zone actions.' },
+      'vista': { name: 'PF Vista', description: 'Unified monitoring with satellite, drone, and CCTV data.' },
+      'urbanscope': { name: 'PF - Urban Scope', description: 'Urban planning analytics and infrastructure monitoring.' },
+      'ecosphere': { name: 'PF - Ecosphere', description: 'Renewable energy site selection and planning.' }
+    };
+
     function toggleChatbot() {
       const chatbot = document.getElementById('chatbot');
       const toggle = document.getElementById('chatbotToggle');
@@ -4674,6 +4691,21 @@
 
     function processChatbotMessage(message) {
       const lowerMessage = message.toLowerCase();
+      // Update entities and lightweight context
+      const entities = extractEntities ? extractEntities(message) : [];
+      // Direct product lookup (concise, plain text)
+      for (const [id, info] of Object.entries(productCatalog)) {
+        if (lowerMessage.includes(id) || lowerMessage.includes((info.name || '').toLowerCase())) {
+          return `${info.name}: ${info.description} What would you like to do next?`;
+        }
+      }
+
+      if (lowerMessage.includes('agriculture') || lowerMessage.includes('crop') || lowerMessage.includes('farm')) {
+        conversationContext.currentTopic = 'agriculture';
+        if (!conversationContext.userProfile.preferences.includes('agriculture')) {
+          conversationContext.userProfile.preferences.push('agriculture');
+        }
+      }
       
       // Company information queries
       if (lowerMessage.includes('boss') || lowerMessage.includes('who is your boss')) {
@@ -4723,29 +4755,38 @@
       
       // Specific product queries
       if (lowerMessage.includes('geotrace') || lowerMessage.includes('pf-geotrace')) {
-        return `🎯 **PF-GEOTRACE** is our flagship geolocation platform!\n\n**Core Capabilities:**\n• Real-time GPS precision with sub-meter accuracy\n• Dynamic marker systems for tactical operations\n• Strategic buffer zones for mission planning\n• High-resolution satellite imagery integration\n• AI-powered threat detection and assessment\n\n**Applications:**\n• Military operations and mission planning\n• Border security and surveillance\n• Intelligence gathering and analysis\n• Tactical operations support\n\nWhat specific aspect of PF-GEOTRACE interests you?`;
+        return `PF-GEOTRACE: real-time GPS tracking, geofencing, and satellite maps for missions and security. What would you like to know?`;
       }
       
       if (lowerMessage.includes('digital twin') || lowerMessage.includes('pf-digital twin')) {
-        return `🏙️ **PF-DIGITAL TWIN** revolutionizes urban planning!\n\n**3D City Modeling:**\n• Complete 3D models of cities and infrastructure\n• Real-time data integration and monitoring\n• Population density and demographic analysis\n• Urban development planning and simulation\n\n**Smart City Features:**\n• Traffic flow optimization and management\n• Utility network monitoring and maintenance\n• Environmental impact assessment\n• IoT connectivity and integration\n\n**Applications:**\n• City planning and urban development\n• Infrastructure monitoring and maintenance\n• Smart city implementation\n\nWhat specific urban planning challenges can I help you with?`;
+        return `PF-DIGITAL TWIN: 3D city models with live data for planning and operations. What would you like to know?`;
       }
       
       if (lowerMessage.includes('agriculture') || lowerMessage.includes('crop') || lowerMessage.includes('farm')) {
-        return `🌱 **Agriculture Solutions** for precision farming!\n\n**Key Features:**\n• Real-time crop health assessment using NDVI and NDWI indices\n• Disease and pest detection through AI-powered analysis\n• Precision irrigation recommendations based on soil moisture data\n• Weather-based farming guidance and alerts\n• Yield prediction and optimization algorithms\n\n**Applications:**\n• Crop monitoring and health assessment\n• Precision agriculture and smart farming\n• Disease and pest management\n• Water resource optimization\n\nWhat specific agricultural challenges are you facing?`;
+        return `🌱 Agriculture help: crop health, irrigation, weather alerts, and yield. What do you need help with?`;
+      }
+
+      // Context-aware recommendation request
+      if (lowerMessage.includes('recommend') || (lowerMessage.includes('which') && (lowerMessage.includes('product') || lowerMessage.includes('solution')))) {
+        // Use remembered topic for concise recommendation
+        if (conversationContext.currentTopic === 'agriculture') {
+          return `🎯 Recommendation: PF - C.H.A (Crop Health Assessment) for agriculture. It monitors crop health and guides irrigation with weather insights. Want details?`;
+        }
       }
       
       // Product recommendation based on best match
       if (maxScore > 0) {
-        return `🎯 Based on your query, I recommend our **${bestProduct.name}** solution!\n\n**${bestProduct.description}**\n\n**Key Features:**\n${bestProduct.features.map(feature => `• ${feature}`).join('\n')}\n\n**Applications:**\n${bestProduct.applications.map(app => `• ${app}`).join('\n')}\n\nWhat specific aspect of ${bestProduct.name} would you like to know more about?`;
+        return `Recommendation: ${bestProduct.name} — ${bestProduct.description} Want a quick overview or setup steps?`;
       }
       
       // General help and guidance
       if (lowerMessage.includes('help') || lowerMessage.includes('what can you do') || lowerMessage.includes('capabilities')) {
-        return "🤖 I'm your PF-GEOINT AI assistant! Here's how I can help you:\n\n**Our Solutions:**\n• 🌱 **Agriculture**: Precision farming, crop health, NDVI/NDWI analysis\n• 🎯 **Defense & Security**: PF-GEOTRACE platform, surveillance, threat detection\n• 🏙️ **Urban Planning**: PF-DIGITAL TWIN, 3D city modeling, smart cities\n• 🌍 **Environmental**: Climate monitoring, deforestation tracking, sustainability\n• 🚗 **Transportation**: Traffic optimization, route planning, infrastructure monitoring\n• ⚡ **Energy**: Pipeline monitoring, power grid analysis, renewable energy\n\n**What I can do:**\n• Analyze your specific requirements\n• Recommend the best solutions for your needs\n• Provide detailed technical information\n• Answer questions about our products\n\n**Just ask me:**\n• \"I need help with crop monitoring\"\n• \"Tell me about PF-GEOTRACE\"\n• \"How can I optimize traffic flow?\"\n• \"What's your agriculture solution?\"\n\nWhat challenges are you facing? I'm here to help!";
+        const hint = "Try: 'Help with farming', 'Recommend a product for pipeline monitoring', 'Tell me about Caelus', 'Compare GeoTrace and OrbitFence'.";
+        return `I match your needs to the right PF-GEOINT solution and give simple next steps. ${hint}`;
       }
       
       // Default response with product overview
-      return "I'm here to help you find the perfect PF-GEOINT solution! We offer comprehensive geospatial intelligence solutions across multiple industries:\n\n**Our Solutions:**\n• 🌱 **Agriculture**: Precision farming and crop monitoring\n• 🎯 **Defense & Security**: Advanced surveillance and mission planning\n• 🏙️ **Urban Planning**: 3D city modeling and smart cities\n• 🌍 **Environmental**: Climate monitoring and sustainability\n• 🚗 **Transportation**: Traffic optimization and logistics\n• ⚡ **Energy**: Infrastructure monitoring and renewable energy\n\n**Tell me:**\n• What industry are you in?\n• What challenges are you facing?\n• What specific solutions do you need?\n\nI'll analyze your requirements and recommend the best approach for your needs!";
+      return "I can help best if you say what you need and where. Try: 'Help with urban traffic', 'Recommend a product for flood risk', 'Tell me about Digital Twin', 'Compare GeoTrace and LogiTrack'.";
     }
 
     // Initialize chatbot on page load
