@@ -1768,6 +1768,13 @@
         transform: translateY(-20px); 
       }
     }
+    
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(-10px); }
+      20% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-10px); }
+    }
     @media (max-width: 600px) {
       .header h1 {
         font-size: 2.2em;
@@ -2791,12 +2798,12 @@
   <!-- AI Chatbot -->
   <div id="chatbot" class="chatbot-container">
     <div class="chatbot-header" onclick="toggleChatbot()">
-      <h3>🤖 PF-GEOINT Assistant</h3>
+      <h3>🤖 PFG-BOT</h3>
       <button class="chatbot-toggle" id="chatbotToggle">−</button>
     </div>
     <div class="chatbot-messages" id="chatbotMessages">
       <div class="chatbot-message bot">
-        👋 Hello! I'm your PF-GEOINT assistant. I can help you find the right geospatial solutions for your needs. What can I help you with today?
+        👋 Hello! I'm PFG-BOT. I can help you find the right geospatial solutions for your needs. What can I help you with today?
       </div>
     </div>
     <div class="chatbot-typing" id="chatbotTyping">
@@ -4114,6 +4121,26 @@
       
       if (!message) return;
       
+      // Check for special learning commands
+      if (message.toLowerCase().includes('show learning stats') || message.toLowerCase().includes('bot stats')) {
+        const stats = botLearning.getLearningStats();
+        const statsMessage = `🧠 PFG-BOT Learning Statistics:\n\n📊 Total Conversation Patterns: ${stats.totalPatterns}\n🔑 Learned Keywords: ${stats.totalKeywords}\n💬 Total Interactions: ${stats.totalInteractions}\n💾 Memory Size: ${Math.round(stats.memorySize / 1024)}KB\n🕒 Last Updated: ${stats.lastUpdated}\n\nI'm continuously learning and improving! 🚀`;
+        addChatbotMessage(message, 'user');
+        input.value = '';
+        addChatbotMessage(statsMessage, 'bot');
+        return;
+      }
+      
+      // Check for reset learning command
+      if (message.toLowerCase().includes('reset learning') || message.toLowerCase().includes('clear memory')) {
+        localStorage.removeItem('pfg-bot-memory');
+        botLearning.memory = botLearning.loadMemory();
+        addChatbotMessage(message, 'user');
+        input.value = '';
+        addChatbotMessage("🧠 Learning memory cleared! I'll start fresh and learn from our new conversations. 🚀", 'bot');
+        return;
+      }
+      
       // Add user message
       addChatbotMessage(message, 'user');
       input.value = '';
@@ -4126,6 +4153,12 @@
         hideTypingIndicator();
         const response = processChatbotMessage(message);
         addChatbotMessage(response, 'bot');
+        
+        // Learn from this interaction (with delay to allow user to react)
+        setTimeout(() => {
+          const userReaction = botLearning.detectUserReaction(message);
+          botLearning.learnFromInteraction(message, response, userReaction);
+        }, 2000);
       }, 800 + Math.random() * 400); // Random delay for natural feel
     }
 
@@ -4134,8 +4167,93 @@
       const messageDiv = document.createElement('div');
       messageDiv.className = `chatbot-message ${sender}`;
       messageDiv.textContent = text;
+      
+      // Add feedback buttons for bot messages
+      if (sender === 'bot') {
+        const feedbackDiv = document.createElement('div');
+        feedbackDiv.className = 'feedback-buttons';
+        feedbackDiv.style.cssText = `
+          display: flex;
+          gap: 8px;
+          margin-top: 8px;
+          opacity: 0.7;
+          transition: opacity 0.3s ease;
+        `;
+        
+        const thumbsUp = document.createElement('button');
+        thumbsUp.innerHTML = '👍';
+        thumbsUp.style.cssText = `
+          background: rgba(0, 255, 0, 0.2);
+          border: 1px solid rgba(0, 255, 0, 0.5);
+          border-radius: 4px;
+          padding: 4px 8px;
+          cursor: pointer;
+          font-size: 12px;
+          transition: all 0.2s ease;
+        `;
+        thumbsUp.onclick = () => giveFeedback('positive', text);
+        
+        const thumbsDown = document.createElement('button');
+        thumbsDown.innerHTML = '👎';
+        thumbsDown.style.cssText = `
+          background: rgba(255, 0, 0, 0.2);
+          border: 1px solid rgba(255, 0, 0, 0.5);
+          border-radius: 4px;
+          padding: 4px 8px;
+          cursor: pointer;
+          font-size: 12px;
+          transition: all 0.2s ease;
+        `;
+        thumbsDown.onclick = () => giveFeedback('negative', text);
+        
+        feedbackDiv.appendChild(thumbsUp);
+        feedbackDiv.appendChild(thumbsDown);
+        messageDiv.appendChild(feedbackDiv);
+        
+        // Show feedback buttons on hover
+        messageDiv.addEventListener('mouseenter', () => {
+          feedbackDiv.style.opacity = '1';
+        });
+        messageDiv.addEventListener('mouseleave', () => {
+          feedbackDiv.style.opacity = '0.7';
+        });
+      }
+      
       messagesContainer.appendChild(messageDiv);
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+    
+    // Feedback mechanism for bot responses
+    function giveFeedback(feedback, responseText) {
+      // Learn from explicit feedback
+      botLearning.updateResponseEffectiveness(
+        botLearning.extractResponsePattern(responseText), 
+        feedback
+      );
+      
+      // Show feedback confirmation
+      const confirmation = document.createElement('div');
+      confirmation.textContent = feedback === 'positive' ? '👍 Thanks for the feedback!' : '👎 Thanks for the feedback!';
+      confirmation.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${feedback === 'positive' ? 'rgba(0, 255, 0, 0.9)' : 'rgba(255, 0, 0, 0.9)'};
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        z-index: 10000;
+        font-size: 14px;
+        animation: fadeInOut 2s ease-in-out;
+      `;
+      
+      document.body.appendChild(confirmation);
+      setTimeout(() => {
+        document.body.removeChild(confirmation);
+      }, 2000);
+      
+      // Save the learning
+      botLearning.saveMemory();
     }
 
     function showTypingIndicator() {
@@ -4721,8 +4839,511 @@
       return null; // No universal response found
     }
 
+    // ===== INTELLIGENT LEARNING SYSTEM =====
+    
+    // Persistent Learning Memory System
+    class BotLearningSystem {
+      constructor() {
+        this.memory = this.loadMemory();
+        this.conversationPatterns = this.memory.patterns || {};
+        this.successfulResponses = this.memory.responses || {};
+        this.userPreferences = this.memory.preferences || {};
+        this.adaptiveKeywords = this.memory.keywords || {};
+        this.responseEffectiveness = this.memory.effectiveness || {};
+        this.learningRate = 0.1; // How fast the bot learns
+        this.confidenceThreshold = 0.7; // Minimum confidence for adaptive responses
+      }
+      
+      // Load memory from localStorage
+      loadMemory() {
+        try {
+          const stored = localStorage.getItem('pfg-bot-memory');
+          return stored ? JSON.parse(stored) : {
+            patterns: {},
+            responses: {},
+            preferences: {},
+            keywords: {},
+            effectiveness: {},
+            version: '1.0',
+            lastUpdated: Date.now()
+          };
+        } catch (e) {
+          console.log('Initializing new bot memory...');
+          return {
+            patterns: {},
+            responses: {},
+            preferences: {},
+            keywords: {},
+            effectiveness: {},
+            version: '1.0',
+            lastUpdated: Date.now()
+          };
+        }
+      }
+      
+      // Save memory to localStorage
+      saveMemory() {
+        try {
+          this.memory.patterns = this.conversationPatterns;
+          this.memory.responses = this.successfulResponses;
+          this.memory.preferences = this.userPreferences;
+          this.memory.keywords = this.adaptiveKeywords;
+          this.memory.effectiveness = this.responseEffectiveness;
+          this.memory.lastUpdated = Date.now();
+          localStorage.setItem('pfg-bot-memory', JSON.stringify(this.memory));
+        } catch (e) {
+          console.log('Memory save failed:', e);
+        }
+      }
+      
+      // Learn from conversation patterns
+      learnFromInteraction(userMessage, botResponse, userReaction = 'neutral') {
+        const messageKey = this.extractMessagePattern(userMessage);
+        const responseKey = this.extractResponsePattern(botResponse);
+        
+        // Track conversation patterns
+        if (!this.conversationPatterns[messageKey]) {
+          this.conversationPatterns[messageKey] = {
+            count: 0,
+            successfulResponses: {},
+            userReactions: {},
+            lastUsed: Date.now()
+          };
+        }
+        
+        this.conversationPatterns[messageKey].count++;
+        this.conversationPatterns[messageKey].lastUsed = Date.now();
+        
+        // Track successful responses
+        if (!this.conversationPatterns[messageKey].successfulResponses[responseKey]) {
+          this.conversationPatterns[messageKey].successfulResponses[responseKey] = 0;
+        }
+        this.conversationPatterns[messageKey].successfulResponses[responseKey]++;
+        
+        // Track user reactions
+        if (!this.conversationPatterns[messageKey].userReactions[userReaction]) {
+          this.conversationPatterns[messageKey].userReactions[userReaction] = 0;
+        }
+        this.conversationPatterns[messageKey].userReactions[userReaction]++;
+        
+        // Learn adaptive keywords
+        this.learnKeywords(userMessage, botResponse);
+        
+        // Update response effectiveness
+        this.updateResponseEffectiveness(responseKey, userReaction);
+        
+        this.saveMemory();
+      }
+      
+      // Extract message pattern for learning
+      extractMessagePattern(message) {
+        const lowerMessage = message.toLowerCase();
+        const words = lowerMessage.split(/\s+/).filter(word => word.length > 2);
+        const pattern = words.slice(0, 3).join(' '); // First 3 meaningful words
+        return pattern;
+      }
+      
+      // Extract response pattern for learning
+      extractResponsePattern(response) {
+        const lowerResponse = response.toLowerCase();
+        if (lowerResponse.includes('recommendation')) return 'recommendation';
+        if (lowerResponse.includes('pf-')) return 'product_info';
+        if (lowerResponse.includes('hello') || lowerResponse.includes('hi')) return 'greeting';
+        if (lowerResponse.includes('thank')) return 'gratitude';
+        if (lowerResponse.includes('help')) return 'help';
+        return 'general';
+      }
+      
+      // Learn keywords that lead to successful interactions
+      learnKeywords(userMessage, botResponse) {
+        const words = userMessage.toLowerCase().split(/\s+/);
+        const responseType = this.extractResponsePattern(botResponse);
+        
+        words.forEach(word => {
+          if (word.length > 3 && !this.isCommonWord(word)) {
+            if (!this.adaptiveKeywords[word]) {
+              this.adaptiveKeywords[word] = {};
+            }
+            if (!this.adaptiveKeywords[word][responseType]) {
+              this.adaptiveKeywords[word][responseType] = 0;
+            }
+            this.adaptiveKeywords[word][responseType]++;
+          }
+        });
+      }
+      
+      // Check if word is common (not useful for learning)
+      isCommonWord(word) {
+        const commonWords = ['the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'is', 'are', 'was', 'were', 'be', 'been', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 'can', 'this', 'that', 'these', 'those', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her', 'us', 'them'];
+        return commonWords.includes(word);
+      }
+      
+      // Update response effectiveness based on user reaction
+      updateResponseEffectiveness(responseKey, userReaction) {
+        if (!this.responseEffectiveness[responseKey]) {
+          this.responseEffectiveness[responseKey] = {
+            positive: 0,
+            neutral: 0,
+            negative: 0,
+            total: 0
+          };
+        }
+        
+        this.responseEffectiveness[responseKey][userReaction]++;
+        this.responseEffectiveness[responseKey].total++;
+      }
+      
+      // Generate adaptive response based on learned patterns
+      generateAdaptiveResponse(userMessage) {
+        const messagePattern = this.extractMessagePattern(userMessage);
+        const learnedPattern = this.conversationPatterns[messagePattern];
+        
+        if (!learnedPattern || learnedPattern.count < 2) {
+          return null; // Not enough data to adapt
+        }
+        
+        // Find the most successful response for this pattern
+        const responses = learnedPattern.successfulResponses;
+        const bestResponse = Object.keys(responses).reduce((a, b) => 
+          responses[a] > responses[b] ? a : b
+        );
+        
+        // Check if this response type is effective
+        const effectiveness = this.responseEffectiveness[bestResponse];
+        if (effectiveness && effectiveness.total > 3) {
+          const successRate = effectiveness.positive / effectiveness.total;
+          if (successRate >= this.confidenceThreshold) {
+            return this.generateResponseByType(bestResponse, userMessage);
+          }
+        }
+        
+        return null;
+      }
+      
+      // Generate response based on learned type
+      generateResponseByType(type, userMessage) {
+        const lowerMessage = userMessage.toLowerCase();
+        
+        switch (type) {
+          case 'recommendation':
+            return this.generateSmartRecommendation(lowerMessage);
+          case 'product_info':
+            return this.generateProductInfo(lowerMessage);
+          case 'greeting':
+            return this.generateAdaptiveGreeting();
+          case 'gratitude':
+            return this.generateAdaptiveGratitude();
+          case 'help':
+            return this.generateAdaptiveHelp(lowerMessage);
+          default:
+            return null;
+        }
+      }
+      
+      // Generate smart recommendations based on learned patterns
+      generateSmartRecommendation(message) {
+        const learnedKeywords = Object.keys(this.adaptiveKeywords);
+        const relevantKeywords = learnedKeywords.filter(keyword => 
+          message.includes(keyword) && this.adaptiveKeywords[keyword].recommendation > 0
+        );
+        
+        if (relevantKeywords.length > 0) {
+          const topKeyword = relevantKeywords.reduce((a, b) => 
+            this.adaptiveKeywords[a].recommendation > this.adaptiveKeywords[b].recommendation ? a : b
+          );
+          return `Based on your interest in ${topKeyword}, I'd recommend exploring our specialized solutions. What specific challenges are you facing with ${topKeyword}?`;
+        }
+        
+        return null;
+      }
+      
+      // Generate adaptive greetings
+      generateAdaptiveGreeting() {
+        const greetings = [
+          "Hello! 👋 I'm PFG-BOT, your intelligent geospatial assistant. I've been learning from our conversations to better serve you. What can I help you with today?",
+          "Hi there! 🤖 I'm continuously improving my responses based on our interactions. How can I assist you with geospatial solutions?",
+          "Greetings! 🚀 I'm evolving with each conversation to provide better assistance. What geospatial challenges can I help you solve?"
+        ];
+        return greetings[Math.floor(Math.random() * greetings.length)];
+      }
+      
+      // Generate adaptive gratitude responses
+      generateAdaptiveGratitude() {
+        const gratitudeResponses = [
+          "You're welcome! 😊 I'm learning from our interactions to provide even better assistance. Is there anything else I can help you with?",
+          "My pleasure! 🤖 I'm continuously improving based on our conversations. Feel free to ask me anything else.",
+          "You're welcome! 🚀 I'm growing smarter with each interaction. What else can I do for you?"
+        ];
+        return gratitudeResponses[Math.floor(Math.random() * gratitudeResponses.length)];
+      }
+      
+      // Generate adaptive help responses
+      generateAdaptiveHelp(message) {
+        const learnedTopics = Object.keys(this.userPreferences);
+        if (learnedTopics.length > 0) {
+          return `I can help you with geospatial solutions! Based on our previous conversations, I know you're interested in ${learnedTopics.join(', ')}. What specific help do you need?`;
+        }
+        return null;
+      }
+      
+      // Detect user reaction to bot response (simplified)
+      detectUserReaction(userMessage) {
+        const lowerMessage = userMessage.toLowerCase();
+        if (lowerMessage.includes('thank') || lowerMessage.includes('great') || lowerMessage.includes('perfect') || lowerMessage.includes('excellent')) {
+          return 'positive';
+        }
+        if (lowerMessage.includes('wrong') || lowerMessage.includes('bad') || lowerMessage.includes('not helpful') || lowerMessage.includes('useless')) {
+          return 'negative';
+        }
+        return 'neutral';
+      }
+      
+      // Get learning statistics
+      getLearningStats() {
+        const totalPatterns = Object.keys(this.conversationPatterns).length;
+        const totalKeywords = Object.keys(this.adaptiveKeywords).length;
+        const totalInteractions = Object.values(this.conversationPatterns).reduce((sum, pattern) => sum + pattern.count, 0);
+        
+        return {
+          totalPatterns,
+          totalKeywords,
+          totalInteractions,
+          memorySize: JSON.stringify(this.memory).length,
+          lastUpdated: new Date(this.memory.lastUpdated).toLocaleString()
+        };
+      }
+    }
+    
+    // Initialize the learning system
+    const botLearning = new BotLearningSystem();
+    
+    // Demo Response Generator - Universal for ALL Products
+    function generateDemoResponse(productName, productId) {
+      const demoResponses = {
+        'caelus': {
+          message: `🌤️ Perfect! Let's get you started with PF-CAELUS!\n\n🚀 **Free Trial Available:**\nClick the "Free Trial" button below to access PF-CAELUS in a new tab.\n\n📋 **What you'll get:**\n• Live interactive weather map\n• Real-time storm tracking\n• City-level forecasts\n• Historical climate data\n• Mobile-responsive interface\n\n💡 **Pro Tip:** Bookmark the trial page for easy access!\n\nReady to explore weather intelligence?`,
+          action: 'showCaelusDemo'
+        },
+        'geotrace': {
+          message: `📍 Excellent choice! PF-GEOTRACE is perfect for tracking and security.\n\n🚀 **Free Trial Available:**\nI'll guide you to the PF-GEOTRACE trial page.\n\n📋 **What you'll experience:**\n• Real-time GPS tracking\n• Advanced geofencing\n• Satellite map integration\n• Mission planning tools\n• Security monitoring features\n\nReady to start tracking?`,
+          action: 'showGeoTraceDemo'
+        },
+        'digital twin': {
+          message: `🏙️ Great! PF-DIGITAL TWIN offers incredible 3D city modeling.\n\n🚀 **Free Trial Available:**\nLet me show you the PF-DIGITAL TWIN demo.\n\n📋 **What you'll explore:**\n• 3D city models\n• Live data integration\n• Urban planning tools\n• Infrastructure monitoring\n• Interactive visualization\n\nReady to see your city in 3D?`,
+          action: 'showDigitalTwinDemo'
+        },
+        'digital-twin': {
+          message: `🏙️ Great! PF-DIGITAL TWIN offers incredible 3D city modeling.\n\n🚀 **Free Trial Available:**\nLet me show you the PF-DIGITAL TWIN demo.\n\n📋 **What you'll explore:**\n• 3D city models\n• Live data integration\n• Urban planning tools\n• Infrastructure monitoring\n• Interactive visualization\n\nReady to see your city in 3D?`,
+          action: 'showDigitalTwinDemo'
+        },
+        'atlas': {
+          message: `🤖 Fantastic! PF Atlas brings AI-powered geospatial analysis.\n\n🚀 **Free Trial Available:**\nI'll connect you with PF Atlas.\n\n📋 **What you'll discover:**\n• AI-powered analysis\n• Natural language queries\n• Advanced geospatial insights\n• Automated reporting\n• Smart recommendations\n\nReady to experience AI geospatial intelligence?`,
+          action: 'showAtlasDemo'
+        },
+        'asset-watch': {
+          message: `🏢 Perfect! PF Asset-Watch provides comprehensive asset monitoring.\n\n🚀 **Free Trial Available:**\nI'll guide you to the PF Asset-Watch trial.\n\n📋 **What you'll monitor:**\n• Real estate portfolio tracking\n• Construction progress monitoring\n• Asset health assessment\n• Property management tools\n• Automated alerts and notifications\n\nReady to monitor your assets?`,
+          action: 'showAssetWatchDemo'
+        },
+        'geoshift': {
+          message: `🌍 Excellent! PF GeoShift detects environmental changes over time.\n\n🚀 **Free Trial Available:**\nLet me show you PF GeoShift in action.\n\n📋 **What you'll analyze:**\n• Environmental change detection\n• Historical data comparison\n• Trend analysis and reporting\n• Impact assessment tools\n• Time-series visualization\n\nReady to track environmental changes?`,
+          action: 'showGeoShiftDemo'
+        },
+        'flowsafe': {
+          message: `🛢️ Great choice! PF FlowSafe provides real-time pipeline monitoring.\n\n🚀 **Free Trial Available:**\nI'll connect you with PF FlowSafe.\n\n📋 **What you'll monitor:**\n• Real-time pipeline surveillance\n• Leak detection and alerts\n• Pressure monitoring\n• Flow rate analysis\n• Emergency response tools\n\nReady to secure your pipelines?`,
+          action: 'showFlowSafeDemo'
+        },
+        'logitrack': {
+          message: `🚛 Perfect! PF LogiTrack optimizes logistics and fleet management.\n\n🚀 **Free Trial Available:**\nLet me show you PF LogiTrack capabilities.\n\n📋 **What you'll manage:**\n• Route optimization\n• Fleet tracking and management\n• Delivery scheduling\n• Performance analytics\n• Real-time monitoring\n\nReady to optimize your logistics?`,
+          action: 'showLogiTrackDemo'
+        },
+        'orbitfence': {
+          message: `🎯 Fantastic! PF OrbitFence provides smart geofencing solutions.\n\n🚀 **Free Trial Available:**\nI'll guide you to PF OrbitFence.\n\n📋 **What you'll create:**\n• Smart geofencing zones\n• Real-time tracking alerts\n• Automated zone actions\n• Custom boundary management\n• Event-triggered responses\n\nReady to create smart boundaries?`,
+          action: 'showOrbitFenceDemo'
+        },
+        'vista': {
+          message: `👁️ Excellent! PF Vista offers unified monitoring solutions.\n\n🚀 **Free Trial Available:**\nLet me show you PF Vista's capabilities.\n\n📋 **What you'll integrate:**\n• Satellite data monitoring\n• Drone surveillance feeds\n• CCTV integration\n• Unified dashboard view\n• Multi-source analytics\n\nReady to unify your monitoring?`,
+          action: 'showVistaDemo'
+        },
+        'urbanscope': {
+          message: `🏘️ Great! PF Urban Scope provides urban planning analytics.\n\n🚀 **Free Trial Available:**\nI'll connect you with PF Urban Scope.\n\n📋 **What you'll analyze:**\n• Urban growth patterns\n• Infrastructure planning\n• Population density analysis\n• Development impact assessment\n• Smart city planning tools\n\nReady to plan smarter cities?`,
+          action: 'showUrbanScopeDemo'
+        },
+        'ecosphere': {
+          message: `🌱 Perfect! PF Ecosphere optimizes renewable energy planning.\n\n🚀 **Free Trial Available:**\nLet me show you PF Ecosphere.\n\n📋 **What you'll optimize:**\n• Renewable energy site selection\n• Solar farm planning\n• Environmental impact assessment\n• Economic modeling\n• Grid connectivity analysis\n\nReady to plan renewable energy?`,
+          action: 'showEcosphereDemo'
+        }
+      };
+      
+      const response = demoResponses[productId] || {
+        message: `🚀 Awesome! Let's get you a demo of ${productName}!\n\n📋 **What you'll get:**\n• Full access to all features\n• Real-time data and insights\n• Interactive interface\n• No commitment required\n• Expert support available\n\nReady to explore ${productName}?`,
+        action: 'showGeneralDemo'
+      };
+      
+      // Add action button to response
+      setTimeout(() => {
+        addDemoActionButton(response.action, productName, productId);
+      }, 100);
+      
+      return response.message;
+    }
+    
+    // Add demo action button to chat
+    function addDemoActionButton(action, productName, productId) {
+      const messagesContainer = document.getElementById('chatbotMessages');
+      const lastMessage = messagesContainer.lastElementChild;
+      
+      if (lastMessage && lastMessage.classList.contains('bot')) {
+        const actionButton = document.createElement('button');
+        actionButton.textContent = `🚀 Start ${productName} Free Trial`;
+        actionButton.style.cssText = `
+          margin-top: 10px;
+          padding: 12px 20px;
+          background: linear-gradient(45deg, #00d4ff, #7b00ff);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 14px;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        `;
+        
+        actionButton.addEventListener('mouseenter', () => {
+          actionButton.style.transform = 'translateY(-2px)';
+          actionButton.style.boxShadow = '0 6px 20px rgba(0, 212, 255, 0.4)';
+        });
+        
+        actionButton.addEventListener('mouseleave', () => {
+          actionButton.style.transform = 'translateY(0)';
+          actionButton.style.boxShadow = '0 4px 15px rgba(0, 212, 255, 0.3)';
+        });
+        
+        actionButton.onclick = () => {
+          executeDemoAction(action, productName, productId);
+        };
+        
+        lastMessage.appendChild(actionButton);
+      }
+    }
+    
+    // Execute demo action - Universal for ALL Products
+    function executeDemoAction(action, productName, productId) {
+      // Navigate to standalone products page first
+      showPage('standalone');
+      
+      setTimeout(() => {
+        let targetSection = null;
+        let sectionId = '';
+        
+        switch (action) {
+          case 'showCaelusDemo':
+            sectionId = 'caelus';
+            targetSection = document.getElementById(sectionId);
+            break;
+            
+          case 'showGeoTraceDemo':
+            sectionId = 'geotrace';
+            targetSection = document.getElementById(sectionId);
+            break;
+            
+          case 'showDigitalTwinDemo':
+            sectionId = 'digital-twin';
+            targetSection = document.getElementById(sectionId);
+            break;
+            
+          case 'showAtlasDemo':
+            sectionId = 'atlas';
+            targetSection = document.getElementById(sectionId);
+            break;
+            
+          case 'showAssetWatchDemo':
+            sectionId = 'asset-watch';
+            targetSection = document.getElementById(sectionId);
+            break;
+            
+          case 'showGeoShiftDemo':
+            sectionId = 'geoshift';
+            targetSection = document.getElementById(sectionId);
+            break;
+            
+          case 'showFlowSafeDemo':
+            sectionId = 'flowsafe';
+            targetSection = document.getElementById(sectionId);
+            break;
+            
+          case 'showLogiTrackDemo':
+            sectionId = 'logitrack';
+            targetSection = document.getElementById(sectionId);
+            break;
+            
+          case 'showOrbitFenceDemo':
+            sectionId = 'orbitfence';
+            targetSection = document.getElementById(sectionId);
+            break;
+            
+          case 'showVistaDemo':
+            sectionId = 'vista';
+            targetSection = document.getElementById(sectionId);
+            break;
+            
+          case 'showUrbanScopeDemo':
+            sectionId = 'urbanscope';
+            targetSection = document.getElementById(sectionId);
+            break;
+            
+          case 'showEcosphereDemo':
+            sectionId = 'ecosphere';
+            targetSection = document.getElementById(sectionId);
+            break;
+            
+          default:
+            // General demo - just show standalone products page
+            addChatbotMessage(`🎉 Taking you to explore all PF-GEOINT products! Browse the standalone products page above.`, 'bot');
+            return;
+        }
+        
+        if (targetSection) {
+          // Show the specific product section
+          targetSection.style.display = 'block';
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+          
+          // For CAELUS, auto-click the free trial button
+          if (action === 'showCaelusDemo') {
+            setTimeout(() => {
+              const trialButton = targetSection.querySelector('.product-card');
+              if (trialButton) {
+                trialButton.click();
+              }
+            }, 1000);
+          }
+          
+          // Add confirmation message
+          setTimeout(() => {
+            addChatbotMessage(`🎉 Taking you to the ${productName} section! Look for the free trial or demo options above.`, 'bot');
+          }, 1500);
+        } else {
+          // Fallback if section not found
+          addChatbotMessage(`🎉 Taking you to explore ${productName}! Check the standalone products page above for trial options.`, 'bot');
+        }
+      }, 500);
+    }
+    
+    // Enhanced message processing with learning
     function processChatbotMessage(message) {
       const lowerMessage = message.toLowerCase();
+      
+      // Try adaptive response first
+      const adaptiveResponse = botLearning.generateAdaptiveResponse(message);
+      if (adaptiveResponse) {
+        // Learn from this interaction
+        setTimeout(() => {
+          const userReaction = botLearning.detectUserReaction(message);
+          botLearning.learnFromInteraction(message, adaptiveResponse, userReaction);
+        }, 1000);
+        return adaptiveResponse;
+      }
+      
       // Update entities and lightweight context
       const entities = extractEntities ? extractEntities(message) : [];
       // Direct product lookup (concise, plain text)
@@ -4730,6 +5351,30 @@
         if (lowerMessage.includes(id) || lowerMessage.includes((info.name || '').toLowerCase())) {
           return `${info.name}: ${info.description} What would you like to do next?`;
         }
+      }
+      
+      // Intelligent Demo/Trial Request Handling
+      if (lowerMessage.includes('demo') || lowerMessage.includes('trial') || lowerMessage.includes('test') || lowerMessage.includes('try')) {
+        // Check if user mentioned a specific product
+        for (const [id, info] of Object.entries(productCatalog)) {
+          if (lowerMessage.includes(id) || lowerMessage.includes((info.name || '').toLowerCase())) {
+            return generateDemoResponse(info.name, id);
+          }
+        }
+        
+        // Check conversation context for recently mentioned products
+        const recentMessages = document.querySelectorAll('.chatbot-message.bot');
+        if (recentMessages.length > 0) {
+          const lastBotMessage = recentMessages[recentMessages.length - 1].textContent;
+          for (const [id, info] of Object.entries(productCatalog)) {
+            if (lastBotMessage.includes(info.name)) {
+              return generateDemoResponse(info.name, id);
+            }
+          }
+        }
+        
+        // General demo response - List ALL products
+        return `🚀 Great! I'd love to help you get a demo. Which PF-GEOINT solution interests you most?\n\n**Available Demos:**\n• 🌤️ PF-CAELUS (Weather Intelligence)\n• 📍 PF-GEOTRACE (GPS Tracking)\n• 🏙️ PF-DIGITAL TWIN (3D City Models)\n• 🤖 PF Atlas (AI Analysis)\n• 🏢 PF Asset-Watch (Asset Monitoring)\n• 🌍 PF GeoShift (Environmental Changes)\n• 🛢️ PF FlowSafe (Pipeline Monitoring)\n• 🚛 PF LogiTrack (Logistics Management)\n• 🎯 PF OrbitFence (Smart Geofencing)\n• 👁️ PF Vista (Unified Monitoring)\n• 🏘️ PF Urban Scope (Urban Planning)\n• 🌱 PF Ecosphere (Renewable Energy)\n\nJust tell me which one you'd like to try!`;
       }
 
       if (lowerMessage.includes('agriculture') || lowerMessage.includes('crop') || lowerMessage.includes('farm')) {
@@ -4752,6 +5397,10 @@
         return `👨‍💼 Our CEO/GMD/MD is **${companyInfo.ceo}**. He leads Proforce Galaxies Limited in delivering innovative geospatial solutions worldwide.`;
       }
       
+      if (lowerMessage.includes('head of operations') || lowerMessage.includes('hoo') || lowerMessage.includes('operations head')) {
+        return `⚙️ Our Head of Operations (HOO) is **Engr Bami Ogundeyin**. He oversees our operational excellence and ensures smooth delivery of geospatial intelligence solutions.`;
+      }
+      
       if (lowerMessage.includes('proforce') || lowerMessage.includes('company') || lowerMessage.includes('about proforce')) {
         return `🏢 **Proforce Galaxies Limited** is a leading geospatial intelligence company specializing in:\n\n• Advanced satellite imagery analysis\n• AI-powered geospatial solutions\n• Defense and security applications\n• Agricultural monitoring systems\n• Urban planning and infrastructure development\n\nWe're committed to transforming how organizations use geospatial data for decision-making.`;
       }
@@ -4759,11 +5408,21 @@
       // Enhanced greeting responses
       if (lowerMessage.includes('hi') || lowerMessage.includes('hello') || lowerMessage.includes('hey')) {
         const greetings = [
-          "Hello! 👋 I'm your PF-GEOINT AI assistant. I can help you find the perfect geospatial intelligence solution for your needs. What challenges are you facing?",
+          "Hello! 👋 I'm PFG-BOT. I can help you find the perfect geospatial intelligence solution for your needs. What challenges are you facing?",
           "Hi there! 🤖 I'm here to analyze your requirements and recommend the most suitable PF-GEOINT solutions. Tell me about your project.",
           "Greetings! 🚀 I'm an advanced AI trained on geospatial intelligence. I can help you navigate our solutions and find exactly what you need."
         ];
         return greetings[Math.floor(Math.random() * greetings.length)];
+      }
+      
+      // Gratitude responses
+      if (lowerMessage.includes('thank you') || lowerMessage.includes('thanks') || lowerMessage.includes('appreciate')) {
+        const thanksResponses = [
+          "You're very welcome! 😊 I'm here whenever you need help with geospatial solutions. Is there anything else I can assist you with?",
+          "My pleasure! 🤖 Happy to help with your geospatial intelligence needs. Feel free to ask me anything else.",
+          "You're welcome! 🚀 I'm always ready to help you find the perfect PF-GEOINT solution. What else can I do for you?"
+        ];
+        return thanksResponses[Math.floor(Math.random() * thanksResponses.length)];
       }
       
       // Advanced product matching with comprehensive keyword analysis
@@ -4833,4 +5492,3 @@
   </script>
 </body>
 </html>
-
