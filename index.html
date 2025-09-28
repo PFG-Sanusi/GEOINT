@@ -2114,6 +2114,12 @@
         </ul>
         <p><b>Applications:</b> Disaster preparedness, emergency response planning, infrastructure protection, insurance risk assessment, and community safety planning.</p>
       </div>
+      <div class="products">
+        <div class="product-card" onclick="window.open('https://pfg-sanusi.github.io/PF-F.R.A/', '_blank')" style="cursor: pointer;">
+          <h3>Free Trial</h3>
+          <p>Start your PF - F.R.A free trial in a new tab.</p>
+        </div>
+      </div>
       
       <div style="text-align: center;">
         <button class="back-button" onclick="backToEnvironment()">Back to Environmental Monitoring Solutions</button>
@@ -4097,7 +4103,10 @@
       'orbitfence': { name: 'PF OrbitFence', description: 'Smart geofencing for tracking and automated zone actions.' },
       'vista': { name: 'PF Vista', description: 'Unified monitoring with satellite, drone, and CCTV data.' },
       'urbanscope': { name: 'PF - Urban Scope', description: 'Urban planning analytics and infrastructure monitoring.' },
-      'ecosphere': { name: 'PF - Ecosphere', description: 'Renewable energy site selection and planning.' }
+      'ecosphere': { name: 'PF - Ecosphere', description: 'Renewable energy site selection and planning.' },
+      'fra': { name: 'PF - F.R.A', description: 'AI-powered flood risk assessment with real-time monitoring and predictions.' },
+      'f.r.a': { name: 'PF - F.R.A', description: 'AI-powered flood risk assessment with real-time monitoring and predictions.' },
+      'flood risk': { name: 'PF - F.R.A', description: 'AI-powered flood risk assessment with real-time monitoring and predictions.' }
     };
 
     function toggleChatbot() {
@@ -5171,6 +5180,18 @@
         'ecosphere': {
           message: `🌱 Perfect! PF Ecosphere optimizes renewable energy planning.\n\n🚀 **Free Trial Available:**\nLet me show you PF Ecosphere.\n\n📋 **What you'll optimize:**\n• Renewable energy site selection\n• Solar farm planning\n• Environmental impact assessment\n• Economic modeling\n• Grid connectivity analysis\n\nReady to plan renewable energy?`,
           action: 'showEcosphereDemo'
+        },
+        'fra': {
+          message: `🌊 Excellent! PF - F.R.A provides AI-powered flood risk assessment.\n\n🚀 **Free Trial Available:**\nI'll connect you with PF - F.R.A.\n\n📋 **What you'll assess:**\n• Real-time flood risk monitoring\n• AI-powered flood predictions\n• Advanced risk modeling\n• Early warning systems\n• Disaster preparedness tools\n• 99.7% accuracy rate\n\nReady to assess flood risks?`,
+          action: 'showFRADemo'
+        },
+        'f.r.a': {
+          message: `🌊 Excellent! PF - F.R.A provides AI-powered flood risk assessment.\n\n🚀 **Free Trial Available:**\nI'll connect you with PF - F.R.A.\n\n📋 **What you'll assess:**\n• Real-time flood risk monitoring\n• AI-powered flood predictions\n• Advanced risk modeling\n• Early warning systems\n• Disaster preparedness tools\n• 99.7% accuracy rate\n\nReady to assess flood risks?`,
+          action: 'showFRADemo'
+        },
+        'flood risk': {
+          message: `🌊 Excellent! PF - F.R.A provides AI-powered flood risk assessment.\n\n🚀 **Free Trial Available:**\nI'll connect you with PF - F.R.A.\n\n📋 **What you'll assess:**\n• Real-time flood risk monitoring\n• AI-powered flood predictions\n• Advanced risk modeling\n• Early warning systems\n• Disaster preparedness tools\n• 99.7% accuracy rate\n\nReady to assess flood risks?`,
+          action: 'showFRADemo'
         }
       };
       
@@ -5297,6 +5318,12 @@
             targetSection = document.getElementById(sectionId);
             break;
             
+          case 'showFRADemo':
+            // For FRA, directly open the trial URL since it's a standalone platform
+            window.open('https://pfg-sanusi.github.io/PF-F.R.A/', '_blank');
+            addChatbotMessage(`🎉 Opening PF - F.R.A free trial in a new tab! Experience the AI-powered flood risk assessment platform.`, 'bot');
+            return;
+            
           default:
             // General demo - just show standalone products page
             addChatbotMessage(`🎉 Taking you to explore all PF-GEOINT products! Browse the standalone products page above.`, 'bot');
@@ -5374,7 +5401,7 @@
         }
         
         // General demo response - List ALL products
-        return `🚀 Great! I'd love to help you get a demo. Which PF-GEOINT solution interests you most?\n\n**Available Demos:**\n• 🌤️ PF-CAELUS (Weather Intelligence)\n• 📍 PF-GEOTRACE (GPS Tracking)\n• 🏙️ PF-DIGITAL TWIN (3D City Models)\n• 🤖 PF Atlas (AI Analysis)\n• 🏢 PF Asset-Watch (Asset Monitoring)\n• 🌍 PF GeoShift (Environmental Changes)\n• 🛢️ PF FlowSafe (Pipeline Monitoring)\n• 🚛 PF LogiTrack (Logistics Management)\n• 🎯 PF OrbitFence (Smart Geofencing)\n• 👁️ PF Vista (Unified Monitoring)\n• 🏘️ PF Urban Scope (Urban Planning)\n• 🌱 PF Ecosphere (Renewable Energy)\n\nJust tell me which one you'd like to try!`;
+        return `🚀 Great! I'd love to help you get a demo. Which PF-GEOINT solution interests you most?\n\n**Available Demos:**\n• 🌤️ PF-CAELUS (Weather Intelligence)\n• 📍 PF-GEOTRACE (GPS Tracking)\n• 🏙️ PF-DIGITAL TWIN (3D City Models)\n• 🤖 PF Atlas (AI Analysis)\n• 🏢 PF Asset-Watch (Asset Monitoring)\n• 🌍 PF GeoShift (Environmental Changes)\n• 🛢️ PF FlowSafe (Pipeline Monitoring)\n• 🚛 PF LogiTrack (Logistics Management)\n• 🎯 PF OrbitFence (Smart Geofencing)\n• 👁️ PF Vista (Unified Monitoring)\n• 🏘️ PF Urban Scope (Urban Planning)\n• 🌱 PF Ecosphere (Renewable Energy)\n• 🌊 PF - F.R.A (Flood Risk Assessment)\n\nJust tell me which one you'd like to try!`;
       }
 
       if (lowerMessage.includes('agriculture') || lowerMessage.includes('crop') || lowerMessage.includes('farm')) {
